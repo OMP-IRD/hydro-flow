@@ -27,17 +27,17 @@ export class ZoomComponent implements OnInit {
     if (!view) {
       return
     }
-    const currentZoom = view.getZoom();
+    const currentZoom = view.getZoom()
     if (currentZoom !== undefined) {
-      const newZoom = view.getConstrainedZoom(currentZoom + delta);
-        if (view.getAnimating()) {
-          view.cancelAnimations();
-        }
-        view.animate({
-          zoom: newZoom,
-          duration: DURATION,
-          easing: easeOut,
-        });
+      const newZoom = view.getConstrainedZoom(currentZoom + delta)
+      if (view.getAnimating()) {
+        view.cancelAnimations()
+      }
+      view.animate({
+        zoom: newZoom,
+        duration: DURATION,
+        easing: easeOut,
+      })
     }
   }
 }

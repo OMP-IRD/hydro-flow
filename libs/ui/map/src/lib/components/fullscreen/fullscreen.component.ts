@@ -18,8 +18,7 @@ import toggleFullscreen, {
 export class FullscreenComponent implements OnInit {
   enabled: boolean
 
-  constructor(    private _changeDetectionRef: ChangeDetectorRef
-  ) {}
+  constructor(private _changeDetectionRef: ChangeDetectorRef) {}
 
   ngOnInit() {
     fullscreenChange(() => {

@@ -1,5 +1,5 @@
-import { Component, ElementRef, Input, OnInit } from '@angular/core';
-import Map from 'ol/Map';
+import { Component, ElementRef, Input, OnInit } from '@angular/core'
+import Map from 'ol/Map'
 
 @Component({
   selector: 'ui-map',
@@ -7,11 +7,11 @@ import Map from 'ol/Map';
   styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnInit {
-  @Input() map: Map;
+  @Input() map: Map
 
   constructor(private _element: ElementRef) {}
 
   ngOnInit() {
-    this.map.setTarget(this._element.nativeElement.querySelector('.map'));
+    this.map.setTarget(this._element.nativeElement.querySelector('.map'))
   }
 }
