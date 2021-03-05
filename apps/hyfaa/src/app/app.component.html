@@ -1,7 +1,23 @@
-<header class="flex">
-</header>
-<main>
-</main>
-<footer>
-  hello
-</footer>
+<div class="d-flex flex-column vh-100">
+  <main class="flex-grow-1">
+    <div class="toolbar-container d-flex flex-column p-2">
+      <div class="d-flex flex-column">
+        <ui-zoom [map]="map"></ui-zoom>
+      </div>
+      <div class="d-flex flex-column mt-2">
+        <ui-fullscreen></ui-fullscreen>
+      </div>
+    </div>
+    <ui-map [map]="map"></ui-map>
+  </main>
+  <footer>
+    <ui-scale-line [map]="map"></ui-scale-line>
+    <ui-mouse-position
+        [map]="map"
+        [projection]="mousePositionProj"
+        [formatByProjection]="formatByProjection"
+        class="ml-2"
+    >
+    </ui-mouse-position>
+  </footer>
+</div>

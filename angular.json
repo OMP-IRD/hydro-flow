@@ -36,7 +36,7 @@
       "projectType": "application",
       "root": "apps/hyfaa",
       "sourceRoot": "apps/hyfaa/src",
-      "prefix": "hydro-flow",
+      "prefix": "hyfaa",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -48,7 +48,8 @@
             "tsConfig": "apps/hyfaa/tsconfig.app.json",
             "aot": true,
             "assets": ["apps/hyfaa/src/favicon.ico", "apps/hyfaa/src/assets"],
-            "styles": ["apps/hyfaa/src/styles.scss"],
+            "styles": ["apps/hyfaa/src/styles.scss", "node_modules/ol/ol.css",               "node_modules/@fortawesome/fontawesome-free/css/all.css"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -147,7 +148,7 @@
       "projectType": "library",
       "root": "libs/ui/map",
       "sourceRoot": "libs/ui/map/src",
-      "prefix": "hydro-flow",
+      "prefix": "ui",
       "architect": {
         "lint": {
           "builder": "@nrwl/linter:eslint",
