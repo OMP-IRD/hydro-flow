@@ -1,0 +1,10 @@
+:host ::ng-deep {
+  .ol-scale-line, .ol-scale-line-inner {
+    position: initial;
+    background-color: transparent;
+    border-color: black;
+    color: black;
+    font-size: inherit;
+    bottom: auto;
+  }
+}
