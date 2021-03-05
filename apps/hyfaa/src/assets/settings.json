@@ -1,0 +1,4 @@
+{
+  "apiUrl": "",
+  "riverMVTUrl": "http://hydroweb.bn.pigeosolutions.fr:81/data/bn-rivers/{z}/{x}/{y}.pbf"
+}

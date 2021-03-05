@@ -44,6 +44,7 @@
     "rxjs": "~6.6.3",
     "toggle-fullscreen": "^0.4.2",
     "tslib": "^2.0.0",
+    "whatwg-fetch": "^3.6.2",
     "zone.js": "^0.10.2"
   },
   "devDependencies": {
