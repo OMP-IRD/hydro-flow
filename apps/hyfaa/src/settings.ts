@@ -1,7 +1,9 @@
 import 'whatwg-fetch'
 
 class Settings {
-  apiUrl: ''
+  apiUrl = ''
+  riverMVTUrl = ''
+  mapContext = {}
 
   init() {
     return fetch('assets/settings.json')
