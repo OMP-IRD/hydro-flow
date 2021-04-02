@@ -1,0 +1,10 @@
+.toolbar-container {
+  z-index: 10;
+  position: absolute;
+  right: 0;
+  top: 0;
+  > div {
+    background: white;
+    border-radius: 0.2rem;
+  }
+}
