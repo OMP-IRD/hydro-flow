@@ -3,12 +3,14 @@ import Map from 'ol/Map'
 import View from 'ol/View'
 import TileLayer from 'ol/layer/Tile'
 import OSM from 'ol/source/OSM'
+import Feature from 'ol/Feature'
 
 @Injectable({
   providedIn: 'root',
 })
 export class MapManagerService {
   map: Map
+  private hlSegment: Feature
 
   constructor() {
     this.map = new Map({
@@ -19,11 +21,19 @@ export class MapManagerService {
         }),
       ],
       view: new View({
-        center: [1190239.4936596497, 2422899.318825233],
+        center: [252017.62097741175, 1212528.606331404],
         multiWorld: true,
         constrainResolution: true,
-        zoom: 5,
+        zoom: 6,
       }),
     })
+  }
+
+  setHLSegment(segment: Feature): void {
+    this.hlSegment = segment
+  }
+
+  getHLSegment(): Feature {
+    return this.hlSegment
   }
 }
