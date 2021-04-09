@@ -3,6 +3,7 @@ import 'whatwg-fetch'
 class Settings {
   apiUrl = ''
   riverMVTUrl = ''
+  stationMVTUrl = ''
   mapContext = {}
 
   init() {

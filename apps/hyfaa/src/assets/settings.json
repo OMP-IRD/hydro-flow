@@ -1,4 +1,5 @@
 {
   "apiUrl": "",
-  "riverMVTUrl": "http://localhost/tiles/hyfaa.data_with_assim_aggregate_geo/{z}/{x}/{y}.pbf"
+  "riverMVTUrl": "http://localhost/tiles/hyfaa.data_with_assim_aggregate_geo/{z}/{x}/{y}.pbf",
+  "stationMVTUrl": "http://localhost/tiles/geospatial.stations_geo/{z}/{x}/{y}.pbf"
 }
