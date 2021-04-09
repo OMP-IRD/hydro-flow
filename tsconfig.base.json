@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@hydro-flow/ui/map": ["libs/ui/map/src/index.ts"]
+      "@hydro-flow/ui/map": ["libs/ui/map/src/index.ts"],
+      "@hydro-flow/ui/time": ["libs/ui/time/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

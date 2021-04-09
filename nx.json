@@ -18,6 +18,7 @@
   "projects": {
     "hyfaa": { "tags": [] },
     "hyfaa-e2e": { "tags": [], "implicitDependencies": ["hyfaa"] },
-    "ui-map": { "tags": [] }
+    "ui-map": { "tags": [] },
+    "ui-time": { "tags": [] }
   }
 }

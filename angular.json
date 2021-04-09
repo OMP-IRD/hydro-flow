@@ -172,6 +172,31 @@
           }
         }
       }
+    },
+    "ui-time": {
+      "projectType": "library",
+      "root": "libs/ui/time",
+      "sourceRoot": "libs/ui/time/src",
+      "prefix": "ui",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/ui/time/src/**/*.ts",
+              "libs/ui/time/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/ui/time"],
+          "options": {
+            "jestConfig": "libs/ui/time/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }
