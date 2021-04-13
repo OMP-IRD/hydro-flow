@@ -1,6 +1,6 @@
 import { Style as GSStyle } from 'geostyler-style'
 
-export const RIVER_SEGMENT_STYLE_GS: GSStyle = {
+export const RIVER_SEGMENT_STYLE_GS_WIDTH: GSStyle = {
   name: 'Basic style',
   rules: [
     {
@@ -385,3 +385,5 @@ export const RIVER_SEGMENT_STYLE_GS_JET: GSStyle = {
     },
   ],
 }
+
+export const RIVER_SEGMENT_STYLE_GS_COLOR: GSStyle = RIVER_SEGMENT_STYLE_GS_JET

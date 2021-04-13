@@ -45,7 +45,7 @@ export class StationLayer {
   }
 
   private styleFn(feature: Feature, resolution: number): Style {
-    const color = 'rgb(222, 103, 185)'
+    const color = 'rgb(222, 43, 178)'
     const radius = 8
     const width = radius - 2
     return new Style({

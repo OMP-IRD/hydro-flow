@@ -1,27 +1,26 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
+import { matchFilter } from '@hydro-flow/feature/map'
 import OpenlayersParser from 'geostyler-openlayers-parser'
-import { Style as GSStyle } from 'geostyler-style'
-import { pointerMove } from 'ol/events/condition'
+import QGISParser from 'geostyler-qgis-parser'
+import { Style as GSStyle, LineSymbolizer } from 'geostyler-style'
 import { Extent } from 'ol/extent'
 import Feature from 'ol/Feature'
 import MVT from 'ol/format/MVT'
-import Select from 'ol/interaction/Select'
 import VectorTileLayer from 'ol/layer/VectorTile'
+import { unByKey } from 'ol/Observable'
 import VectorTileSource from 'ol/source/VectorTile'
-import { Stroke, Style } from 'ol/style'
+import { Style, Stroke } from 'ol/style'
 import { fromPromise } from 'rxjs/internal-compatibility'
-import { mergeMap } from 'rxjs/operators'
+import { filter, map, mergeMap } from 'rxjs/operators'
 import { HyfaaFacade } from '../+state/hyfaa.facade'
 import SETTINGS from '../../settings'
 import { MapManagerService } from '../map/map-manager.service'
 import {
-  RIVER_SEGMENT_STYLE_GS,
+  RIVER_SEGMENT_STYLE_GS_COLOR,
   RIVER_SEGMENT_STYLE_GS_JET,
-  RIVER_SEGMENT_STYLE_GS_VIRIDIS,
+  RIVER_SEGMENT_STYLE_GS_WIDTH,
 } from './river-segment.style'
-import { unByKey } from 'ol/Observable'
-import QGISParser from 'geostyler-qgis-parser'
 
 const olParser = new OpenlayersParser()
 const qgisParser = new QGISParser()
@@ -32,8 +31,9 @@ const qgisParser = new QGISParser()
 export class RiverSegmentLayer {
   private layer: VectorTileLayer
   private source: VectorTileSource
-  public selectPointerMove: Select
-  rootStyleFn: (feature, resolution) => undefined
+  colorStyleFn: (feature, resolution) => undefined
+  widthStyleFn: (feature, resolution) => undefined
+  currentDate: string
 
   constructor(
     private http: HttpClient,
@@ -66,9 +66,31 @@ export class RiverSegmentLayer {
       }
     })
 
-    fromPromise(olParser.writeStyle(RIVER_SEGMENT_STYLE_GS_JET)).subscribe(
-      (style) => (this.rootStyleFn = style)
+    this.source.on('tileloadend', (event) => {
+      const tile = event.tile
+      tile
+        .getFeatures()
+        .forEach((feature) =>
+          feature.set('values', JSON.parse(feature.get('values')))
+        )
+    })
+
+    fromPromise(olParser.writeStyle(RIVER_SEGMENT_STYLE_GS_COLOR)).subscribe(
+      (style) => (this.colorStyleFn = style)
     )
+    fromPromise(olParser.writeStyle(RIVER_SEGMENT_STYLE_GS_WIDTH)).subscribe(
+      (style) => (this.widthStyleFn = style)
+    )
+
+    this.facade.currentDate$
+      .pipe(
+        filter((date) => !!date),
+        map((date: Date) => this.formatDate(date))
+      )
+      .subscribe((date) => {
+        this.currentDate = date
+        this.layer.changed()
+      })
 
     // this.parseQgisStyle('style_debit_jetcustom')
   }
@@ -86,20 +108,61 @@ export class RiverSegmentLayer {
   }
 
   private styleFn(feature: Feature, resolution: number): Style {
-    const rootStyleFnOutput = this.rootStyleFn(feature, resolution)
+    let styleWidth = 1
+    let styleColor = '#013CFF'
+
+    let { rules } = RIVER_SEGMENT_STYLE_GS_WIDTH
+    const width = feature.get('width')
+    for (let i = 0; i < rules.length; i++) {
+      const rule = rules[i]
+      const { filter } = rule
+      if (matchFilter(width, filter)) {
+        styleWidth = (rule.symbolizers[0] as LineSymbolizer).width
+        break
+      }
+    }
+
+    rules = RIVER_SEGMENT_STYLE_GS_COLOR.rules
+    const flow = feature
+      .get('values')
+      .find((value) => value.date === this.currentDate).flow_median
+    for (let i = 0; i < rules.length; i++) {
+      const rule = rules[i]
+      const { filter } = rule
+      if (matchFilter(flow, filter)) {
+        styleColor = (rule.symbolizers[0] as LineSymbolizer).color
+        break
+      }
+    }
+
+    const style = new Style({
+      stroke: new Stroke({
+        color: styleColor,
+        width: styleWidth,
+      }),
+    })
+    return style
+
+    const colorStyleFnOutput = this.colorStyleFn(feature, resolution)
+    const widthStyleFnOutput = this.widthStyleFn(feature, resolution)
     const hlFeature = this.mapManager.getHLSegment()
 
-    if (!rootStyleFnOutput) {
+    if (!colorStyleFnOutput && !widthStyleFnOutput) {
       return
     }
     // @ts-ignore
-    const rootStyle = rootStyleFnOutput[0]
+    const widthStyle = widthStyleFnOutput[0]
+    // @ts-ignore
+    const colorStyle = colorStyleFnOutput[0]
+
+    widthStyle.getStroke().setColor(colorStyle.getStroke().getColor())
+    // @ts-ignore
     if (hlFeature) {
       if (feature.get('cell_id') === hlFeature.get('cell_id')) {
-        rootStyle.getStroke().setColor('red')
+        widthStyle.getStroke().setColor('red')
       }
     }
-    return rootStyle
+    return widthStyle
     /*
     const width = feature.get('width')
     let color = width > 60 ? 'blue' : 'green'
@@ -110,6 +173,12 @@ export class RiverSegmentLayer {
     style.getStroke().setWidth(width / resolution)
     return style
 */
+  }
+
+  private formatDate(date: Date): string {
+    return `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${(
+      '0' + date.getDate()
+    ).slice(-2)}`
   }
 
   private parseQgisStyle(filename: string) {
