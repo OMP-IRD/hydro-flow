@@ -1,0 +1,9 @@
+<div class="legend">
+  <div class="title mb-1">
+    <h4 class="m-0">{{ spec.title }}</h4>
+    <div>{{ spec.description }}</div>
+  </div>
+  <div *ngFor="let rule of spec.rules" class="mx-2">
+    <span [style.background-color]="rule.color"></span>{{ rule.label }}
+  </div>
+</div>
