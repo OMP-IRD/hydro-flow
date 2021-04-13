@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import OpenlayersParser from 'geostyler-openlayers-parser'
 import { Style as GSStyle } from 'geostyler-style'
@@ -10,11 +11,20 @@ import VectorTileLayer from 'ol/layer/VectorTile'
 import VectorTileSource from 'ol/source/VectorTile'
 import { Stroke, Style } from 'ol/style'
 import { fromPromise } from 'rxjs/internal-compatibility'
+import { mergeMap } from 'rxjs/operators'
+import { HyfaaFacade } from '../+state/hyfaa.facade'
 import SETTINGS from '../../settings'
 import { MapManagerService } from '../map/map-manager.service'
-import { RIVER_SEGMENT_STYLE_GS } from './river-segment.style'
+import {
+  RIVER_SEGMENT_STYLE_GS,
+  RIVER_SEGMENT_STYLE_GS_JET,
+  RIVER_SEGMENT_STYLE_GS_VIRIDIS,
+} from './river-segment.style'
+import { unByKey } from 'ol/Observable'
+import QGISParser from 'geostyler-qgis-parser'
 
 const olParser = new OpenlayersParser()
+const qgisParser = new QGISParser()
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +35,11 @@ export class RiverSegmentLayer {
   public selectPointerMove: Select
   rootStyleFn: (feature, resolution) => undefined
 
-  constructor(private mapManager: MapManagerService) {
+  constructor(
+    private http: HttpClient,
+    private mapManager: MapManagerService,
+    private facade: HyfaaFacade
+  ) {
     this.source = new VectorTileSource({
       format: new MVT({
         featureClass: Feature,
@@ -40,9 +54,23 @@ export class RiverSegmentLayer {
       style: this.styleFn.bind(this),
     })
 
-    fromPromise(olParser.writeStyle(RIVER_SEGMENT_STYLE_GS)).subscribe(
+    // store dates from MVT in state.dates
+    const subKey = this.source.on('tileloadend', (event) => {
+      const tile = event.tile
+      const feature = tile.getFeatures()[0]
+      if (feature) {
+        const dates = this.mapManager.getDatesFromSegment(feature)
+        facade.setDates(dates)
+        facade.setCurrentDate(dates[dates.length - 1])
+        unByKey(subKey)
+      }
+    })
+
+    fromPromise(olParser.writeStyle(RIVER_SEGMENT_STYLE_GS_JET)).subscribe(
       (style) => (this.rootStyleFn = style)
     )
+
+    // this.parseQgisStyle('style_debit_jetcustom')
   }
 
   public getLayer(): VectorTileLayer {
@@ -67,11 +95,7 @@ export class RiverSegmentLayer {
     // @ts-ignore
     const rootStyle = rootStyleFnOutput[0]
     if (hlFeature) {
-      // if (feature.getId() === hlFeature.getId()) {
-      if (
-        feature.get('flow_median_yearly_average') ===
-        hlFeature.get('flow_median_yearly_average')
-      ) {
+      if (feature.get('cell_id') === hlFeature.get('cell_id')) {
         rootStyle.getStroke().setColor('red')
       }
     }
@@ -86,6 +110,17 @@ export class RiverSegmentLayer {
     style.getStroke().setWidth(width / resolution)
     return style
 */
+  }
+
+  private parseQgisStyle(filename: string) {
+    const options = {
+      responseType: 'text' as 'text',
+    }
+    this.http
+      .get(`assets/${filename}.qml`, options)
+      .pipe(mergeMap((response) => fromPromise(qgisParser.readStyle(response))))
+
+      .subscribe((style) => console.log(this.fixQgisStyle(style)))
   }
 
   private fixQgisStyle(style: GSStyle): GSStyle {

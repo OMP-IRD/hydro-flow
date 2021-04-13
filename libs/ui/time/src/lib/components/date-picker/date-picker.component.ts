@@ -3,7 +3,15 @@ import {
   OnInit,
   ChangeDetectionStrategy,
   Input,
+  Output,
+  EventEmitter,
 } from '@angular/core'
+
+const formatOptions = {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+}
 
 @Component({
   selector: 'ui-date-picker',
@@ -12,9 +20,19 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DatePickerComponent implements OnInit {
-  @Input() dates: Date[] = [new Date('10/23/2020')]
+  @Input() dates!: Date[]
+  @Input() currentDate: Date
+  @Output() currentDateChange = new EventEmitter<Date>()
 
   constructor() {}
 
+  format(date: Date) {
+    return date.toLocaleDateString(undefined, formatOptions)
+  }
+
+  setDate(date: Date): void {
+    // this.currentDate = date
+    this.currentDateChange.emit(date)
+  }
   ngOnInit(): void {}
 }

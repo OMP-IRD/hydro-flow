@@ -6,8 +6,24 @@
     <ui-fullscreen></ui-fullscreen>
   </div>
 </div>
-<div class="position-absolute date">
-  <ui-date-picker></ui-date-picker>
+<div class="position-absolute date" *ngIf="facade.currentDate$ | async as date">
+  <ng-container *ngIf="facade.dates$ | async as dates">
+    <ui-date-picker
+      [dates]="facade.dates$ | async"
+      [currentDate]="date"
+      (currentDateChange)="onDateChange($event)"
+    ></ui-date-picker>
+    <ui-animator
+      class="mx-3"
+      [size]="dates.length"
+      [index]="dates.indexOf(date)"
+      (indexChange)="onAnimatorIndexChange($event)"
+    ></ui-animator>
+  </ng-container>
 </div>
+<div class="position-absolute legend-container">
+  <ui-legend [spec]="segmentLegend"></ui-legend>
+</div>
+
 <ui-map [map]="mapManager.map"></ui-map>
 <hyfaa-river-segment-overlay></hyfaa-river-segment-overlay>

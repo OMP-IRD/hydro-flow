@@ -3,5 +3,6 @@ module.exports = {
     '<rootDir>/apps/hyfaa',
     '<rootDir>/libs/ui/map',
     '<rootDir>/libs/ui/time',
+    '<rootDir>/libs/feature/map',
   ],
 }

@@ -5,6 +5,7 @@ import { MapComponent } from './components/map/map.component'
 import { MousePositionComponent } from './components/mouse-position/mouse-position.component'
 import { ScaleLineComponent } from './components/scale-line/scale-line.component'
 import { ZoomComponent } from './components/zoom/zoom.component'
+import { LegendComponent } from './components/legend/legend.component'
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { ZoomComponent } from './components/zoom/zoom.component'
     ScaleLineComponent,
     FullscreenComponent,
     ZoomComponent,
+    LegendComponent,
   ],
   imports: [CommonModule],
   exports: [
@@ -21,6 +23,7 @@ import { ZoomComponent } from './components/zoom/zoom.component'
     ScaleLineComponent,
     FullscreenComponent,
     ZoomComponent,
+    LegendComponent,
   ],
   providers: [DecimalPipe],
 })

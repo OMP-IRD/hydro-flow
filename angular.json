@@ -54,7 +54,7 @@
               "node_modules/@fortawesome/fontawesome-free/css/all.css"
             ],
             "allowedCommonJsDependencies": ["toggle-fullscreen"],
-            "scripts": []
+            "scripts": ["node_modules/bootstrap/dist/js/bootstrap.bundle.js"]
           },
           "configurations": {
             "production": {
@@ -193,6 +193,31 @@
           "outputs": ["coverage/libs/ui/time"],
           "options": {
             "jestConfig": "libs/ui/time/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "feature-map": {
+      "projectType": "library",
+      "root": "libs/feature/map",
+      "sourceRoot": "libs/feature/map/src",
+      "prefix": "hydro-flow",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/feature/map/src/**/*.ts",
+              "libs/feature/map/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/feature/map"],
+          "options": {
+            "jestConfig": "libs/feature/map/jest.config.js",
             "passWithNoTests": true
           }
         }

@@ -1,3 +1,21 @@
-<div class="bg-white">
-  {{ dates[0] }}
+<div class="btn-group">
+  <button
+    class="btn btn-secondary btn-lg dropdown-toggle"
+    type="button"
+    data-bs-toggle="dropdown"
+    aria-expanded="false"
+  >
+    {{ format(currentDate) }}
+  </button>
+  <ul class="dropdown-menu">
+    <li *ngFor="let date of dates" (click)="setDate(date)">
+      <button
+        class="dropdown-item"
+        [class.active]="currentDate === date"
+        type="button"
+      >
+        {{ format(date) }}
+      </button>
+    </li>
+  </ul>
 </div>

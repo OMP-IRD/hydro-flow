@@ -4,6 +4,7 @@ class Settings {
   apiUrl = ''
   riverMVTUrl = ''
   stationMVTUrl = ''
+  backgroundLayers = []
   mapContext = {}
 
   init() {

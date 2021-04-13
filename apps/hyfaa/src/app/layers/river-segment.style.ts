@@ -1,7 +1,7 @@
 import { Style as GSStyle } from 'geostyler-style'
 
 export const RIVER_SEGMENT_STYLE_GS: GSStyle = {
-  name: 'QGIS Style',
+  name: 'Basic style',
   rules: [
     {
       name: '1 - 100',
@@ -80,6 +80,306 @@ export const RIVER_SEGMENT_STYLE_GS: GSStyle = {
           dasharray: [5, 2],
           perpendicularOffset: 0,
           width: 5,
+        },
+      ],
+    },
+  ],
+}
+
+export const RIVER_SEGMENT_STYLE_GS_VIRIDIS: GSStyle = {
+  name: 'Viridis',
+  rules: [
+    {
+      name: '0 - 50',
+      filter: ['&&', ['>=', 'width', 0], ['<=', 'width', 50]],
+      symbolizers: [
+        {
+          kind: 'Line',
+          opacity: 1,
+          color: '#440154',
+          cap: 'square',
+          join: 'bevel',
+          dasharray: [5, 2],
+          perpendicularOffset: 0,
+          width: 2.46,
+        },
+      ],
+    },
+    {
+      name: '50 - 100',
+      filter: ['&&', ['>=', 'width', 50], ['<=', 'width', 100]],
+      symbolizers: [
+        {
+          kind: 'Line',
+          opacity: 1,
+          color: '#462C7B',
+          cap: 'square',
+          join: 'bevel',
+          dasharray: [5, 2],
+          perpendicularOffset: 0,
+          width: 2.46,
+        },
+      ],
+    },
+    {
+      name: '100 - 250',
+      filter: ['&&', ['>=', 'width', 100], ['<=', 'width', 250]],
+      symbolizers: [
+        {
+          kind: 'Line',
+          opacity: 1,
+          color: '#3A528B',
+          cap: 'square',
+          join: 'bevel',
+          dasharray: [5, 2],
+          perpendicularOffset: 0,
+          width: 2.46,
+        },
+      ],
+    },
+    {
+      name: '250 - 500',
+      filter: ['&&', ['>=', 'width', 250], ['<=', 'width', 500]],
+      symbolizers: [
+        {
+          kind: 'Line',
+          opacity: 1,
+          color: '#2B728E',
+          cap: 'square',
+          join: 'bevel',
+          dasharray: [5, 2],
+          perpendicularOffset: 0,
+          width: 2.46,
+        },
+      ],
+    },
+    {
+      name: '500 - 1000',
+      filter: ['&&', ['>=', 'width', 500], ['<=', 'width', 1000]],
+      symbolizers: [
+        {
+          kind: 'Line',
+          opacity: 1,
+          color: '#20908D',
+          cap: 'square',
+          join: 'bevel',
+          dasharray: [5, 2],
+          perpendicularOffset: 0,
+          width: 2.46,
+        },
+      ],
+    },
+    {
+      name: '1000 - 2500',
+      filter: ['&&', ['>=', 'width', 1000], ['<=', 'width', 2500]],
+      symbolizers: [
+        {
+          kind: 'Line',
+          opacity: 1,
+          color: '#27AE80',
+          cap: 'square',
+          join: 'bevel',
+          dasharray: [5, 2],
+          perpendicularOffset: 0,
+          width: 2.46,
+        },
+      ],
+    },
+    {
+      name: '2500 - 5000',
+      filter: ['&&', ['>=', 'width', 2500], ['<=', 'width', 5000]],
+      symbolizers: [
+        {
+          kind: 'Line',
+          opacity: 1,
+          color: '#5DC962',
+          cap: 'square',
+          join: 'bevel',
+          dasharray: [5, 2],
+          perpendicularOffset: 0,
+          width: 2.46,
+        },
+      ],
+    },
+    {
+      name: '5000 - 10000',
+      filter: ['&&', ['>=', 'width', 5000], ['<=', 'width', 10000]],
+      symbolizers: [
+        {
+          kind: 'Line',
+          opacity: 1,
+          color: '#ABDC32',
+          cap: 'square',
+          join: 'bevel',
+          dasharray: [5, 2],
+          perpendicularOffset: 0,
+          width: 2.46,
+        },
+      ],
+    },
+    {
+      name: '10000 - 22260',
+      filter: ['&&', ['>=', 'width', 10000], ['<=', 'width', 22260]],
+      symbolizers: [
+        {
+          kind: 'Line',
+          opacity: 1,
+          color: '#FDE725',
+          cap: 'square',
+          join: 'bevel',
+          dasharray: [5, 2],
+          perpendicularOffset: 0,
+          width: 2.46,
+        },
+      ],
+    },
+  ],
+}
+
+export const RIVER_SEGMENT_STYLE_GS_JET: GSStyle = {
+  name: 'Jet Custom',
+  rules: [
+    {
+      name: '0 - 50',
+      filter: ['&&', ['>=', 'width', 0], ['<=', 'width', 50]],
+      symbolizers: [
+        {
+          kind: 'Line',
+          opacity: 1,
+          color: '#0149FF',
+          cap: 'square',
+          join: 'bevel',
+          dasharray: [5, 2],
+          perpendicularOffset: 0,
+          width: 2.46,
+        },
+      ],
+    },
+    {
+      name: '50 - 100',
+      filter: ['&&', ['>=', 'width', 50], ['<=', 'width', 100]],
+      symbolizers: [
+        {
+          kind: 'Line',
+          opacity: 1,
+          color: '#019B90',
+          cap: 'square',
+          join: 'bevel',
+          dasharray: [5, 2],
+          perpendicularOffset: 0,
+          width: 2.46,
+        },
+      ],
+    },
+    {
+      name: '100 - 250',
+      filter: ['&&', ['>=', 'width', 100], ['<=', 'width', 250]],
+      symbolizers: [
+        {
+          kind: 'Line',
+          opacity: 1,
+          color: '#02EE20',
+          cap: 'square',
+          join: 'bevel',
+          dasharray: [5, 2],
+          perpendicularOffset: 0,
+          width: 2.46,
+        },
+      ],
+    },
+    {
+      name: '250 - 500',
+      filter: ['&&', ['>=', 'width', 250], ['<=', 'width', 500]],
+      symbolizers: [
+        {
+          kind: 'Line',
+          opacity: 1,
+          color: '#76FD08',
+          cap: 'square',
+          join: 'bevel',
+          dasharray: [5, 2],
+          perpendicularOffset: 0,
+          width: 2.46,
+        },
+      ],
+    },
+    {
+      name: '500 - 1000',
+      filter: ['&&', ['>=', 'width', 500], ['<=', 'width', 1000]],
+      symbolizers: [
+        {
+          kind: 'Line',
+          opacity: 1,
+          color: '#FFFF00',
+          cap: 'square',
+          join: 'bevel',
+          dasharray: [5, 2],
+          perpendicularOffset: 0,
+          width: 2.46,
+        },
+      ],
+    },
+    {
+      name: '1000 - 2500',
+      filter: ['&&', ['>=', 'width', 1000], ['<=', 'width', 2500]],
+      symbolizers: [
+        {
+          kind: 'Line',
+          opacity: 1,
+          color: '#FEBD00',
+          cap: 'square',
+          join: 'bevel',
+          dasharray: [5, 2],
+          perpendicularOffset: 0,
+          width: 2.46,
+        },
+      ],
+    },
+    {
+      name: '2500 - 5000',
+      filter: ['&&', ['>=', 'width', 2500], ['<=', 'width', 5000]],
+      symbolizers: [
+        {
+          kind: 'Line',
+          opacity: 1,
+          color: '#FD7A00',
+          cap: 'square',
+          join: 'bevel',
+          dasharray: [5, 2],
+          perpendicularOffset: 0,
+          width: 2.46,
+        },
+      ],
+    },
+    {
+      name: '5000 - 10000',
+      filter: ['&&', ['>=', 'width', 5000], ['<=', 'width', 10000]],
+      symbolizers: [
+        {
+          kind: 'Line',
+          opacity: 1,
+          color: '#FE3D02',
+          cap: 'square',
+          join: 'bevel',
+          dasharray: [5, 2],
+          perpendicularOffset: 0,
+          width: 2.46,
+        },
+      ],
+    },
+    {
+      name: '10000 - 22260',
+      filter: ['&&', ['>=', 'width', 10000], ['<=', 'width', 22260]],
+      symbolizers: [
+        {
+          kind: 'Line',
+          opacity: 1,
+          color: '#FF0105',
+          cap: 'square',
+          join: 'bevel',
+          dasharray: [5, 2],
+          perpendicularOffset: 0,
+          width: 2.46,
         },
       ],
     },
