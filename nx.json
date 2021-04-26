@@ -20,6 +20,7 @@
     "hyfaa-e2e": { "tags": [], "implicitDependencies": ["hyfaa"] },
     "ui-map": { "tags": [] },
     "ui-time": { "tags": [] },
-    "feature-map": { "tags": [] }
+    "feature-map": { "tags": [] },
+    "data-access-hyfaa": { "tags": [] }
   }
 }

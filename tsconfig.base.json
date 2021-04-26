@@ -17,7 +17,8 @@
     "paths": {
       "@hydro-flow/ui/map": ["libs/ui/map/src/index.ts"],
       "@hydro-flow/ui/time": ["libs/ui/time/src/index.ts"],
-      "@hydro-flow/feature/map": ["libs/feature/map/src/index.ts"]
+      "@hydro-flow/feature/map": ["libs/feature/map/src/index.ts"],
+      "@hydro-flow/data-access/hyfaa": ["libs/data-access/hyfaa/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
