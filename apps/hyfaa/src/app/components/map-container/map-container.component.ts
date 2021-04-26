@@ -5,7 +5,7 @@ import { take } from 'rxjs/operators'
 import { HyfaaFacade } from '../../+state/hyfaa.facade'
 import { RiverSegmentLayer } from '../../layers/river-segment.layer'
 import { RIVER_SEGMENT_STYLE_GS_JET } from '../../layers/river-segment.style'
-import { StationLayer } from '../../layers/station.layer'
+import { STATION_COLOR, StationLayer } from '../../layers/station.layer'
 import { MapManagerService } from '../../map/map-manager.service'
 
 @Component({
@@ -16,8 +16,24 @@ import { MapManagerService } from '../../map/map-manager.service'
 export class MapContainerComponent implements OnInit {
   segmentLegend: LegendSpec = {
     title: 'Segments',
-    description: 'by average flow',
+    description: 'by daily flow',
     rules: geostylerToLegend(RIVER_SEGMENT_STYLE_GS_JET),
+  }
+  stationLegend: LegendSpec = {
+    title: 'Stations',
+    rules: [
+      {
+        label: 'Virtual stations',
+        color: STATION_COLOR,
+      },
+    ],
+  }
+
+  get segmentVisibility(): boolean {
+    return this.riverLayer.getLayer().getVisible()
+  }
+  get stationVisibility(): boolean {
+    return this.stationLayer.getLayer().getVisible()
   }
 
   constructor(
@@ -39,5 +55,13 @@ export class MapContainerComponent implements OnInit {
     this.facade.dates$
       .pipe(take(1))
       .subscribe((dates) => this.facade.setCurrentDate(dates[index]))
+  }
+
+  onStationVisibilityToggle(visible: boolean): void {
+    this.stationLayer.getLayer().setVisible(visible)
+  }
+
+  onSegmentVisibilityToggle(visible: boolean): void {
+    this.riverLayer.getLayer().setVisible(visible)
   }
 }

@@ -9,6 +9,7 @@ import SETTINGS from '../../settings'
 import { MapManagerService } from '../map/map-manager.service'
 import { setRgbOpacity } from '../utils'
 
+export const STATION_COLOR = 'rgb(222, 43, 178)'
 @Injectable({
   providedIn: 'root',
 })
@@ -45,7 +46,7 @@ export class StationLayer {
   }
 
   private styleFn(feature: Feature, resolution: number): Style {
-    const color = 'rgb(222, 43, 178)'
+    const color = STATION_COLOR
     const radius = 8
     const width = radius - 2
     return new Style({

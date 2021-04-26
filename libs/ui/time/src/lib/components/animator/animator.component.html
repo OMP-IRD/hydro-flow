@@ -1,21 +1,13 @@
-<button
-  class="btn btn-secondary btn-lg mx-1"
-  [disabled]="active"
-  (click)="setPreviousIndex()"
->
+<button class="btn" [disabled]="active" (click)="setPreviousIndex()">
   <span class="fa fa-fw fa-backward"></span>
 </button>
-<button class="btn btn-secondary btn-lg mx-1" (click)="toggleActive()">
+<button class="btn" (click)="toggleActive()">
   <span
     class="fa fa-fw"
     [class.fa-play]="!active"
     [class.fa-stop]="active"
   ></span>
 </button>
-<button
-  class="btn btn-secondary btn-lg mx-1"
-  [disabled]="active"
-  (click)="setNextIndex()"
->
+<button class="btn" [disabled]="active" (click)="setNextIndex()">
   <span class="fa fa-fw fa-forward"></span>
 </button>

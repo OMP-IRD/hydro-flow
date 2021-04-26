@@ -9,8 +9,13 @@ import {
 import Map from 'ol/Map'
 import Overlay from 'ol/Overlay'
 import { Feature } from 'ol/Feature'
+import { filter, map } from 'rxjs/operators'
+import { HyfaaFacade } from '../../+state/hyfaa.facade'
 import { MapManagerService } from '../../map/map-manager.service'
+import { formatDate } from '../../utils'
 import { RiverSegmentLayer } from '../river-segment.layer'
+
+export const SEGMENT_HOVER_MIN_RESOLUTION = 615
 
 @Component({
   selector: 'hyfaa-river-segment-overlay',
@@ -21,16 +26,26 @@ import { RiverSegmentLayer } from '../river-segment.layer'
 export class RiverSegmentOverlayComponent implements OnInit {
   @Input() map: Map
   private _overlay: Overlay
+  currentDate: string
 
-  get properties(): object {
+  get properties(): object[] {
     return this.mapManager.getHLSegment()?.getProperties()
+  }
+
+  get currentFlow(): number {
+    return
+    this.mapManager
+      .getHLSegment()
+      ?.get('values')
+      ?.find((value) => value.date === this.currentDate).flow_median
   }
 
   constructor(
     private _element: ElementRef,
     private mapManager: MapManagerService,
     private riverSegmentLayer: RiverSegmentLayer,
-    private _changeDetectionRef: ChangeDetectorRef
+    private _changeDetectionRef: ChangeDetectorRef,
+    private facade: HyfaaFacade
   ) {}
 
   ngOnInit() {
@@ -49,6 +64,10 @@ export class RiverSegmentOverlayComponent implements OnInit {
     this.map.addOverlay(this._overlay)
 
     this.map.on('pointermove', (event) => {
+      const resolution = this.map.getView().getResolution()
+      if (resolution > SEGMENT_HOVER_MIN_RESOLUTION) {
+        return
+      }
       const hit = this.getHit(event.pixel)
       if (hit) {
         this.map.getTarget().style.cursor = 'pointer'
@@ -70,6 +89,15 @@ export class RiverSegmentOverlayComponent implements OnInit {
         })
       }
     })
+
+    this.facade.currentDate$
+      .pipe(
+        filter((date) => !!date),
+        map((date: Date) => formatDate(date))
+      )
+      .subscribe((date) => {
+        this.currentDate = date
+      })
   }
 
   private getHit(pixel: number[]) {

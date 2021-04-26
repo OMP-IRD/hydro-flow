@@ -3,6 +3,8 @@ import {
   OnInit,
   ChangeDetectionStrategy,
   Input,
+  Output,
+  EventEmitter,
 } from '@angular/core'
 import { LegendSpec } from '@hydro-flow/ui/map'
 
@@ -14,8 +16,14 @@ import { LegendSpec } from '@hydro-flow/ui/map'
 })
 export class LegendComponent implements OnInit {
   @Input() spec: LegendSpec
+  @Input() visible: boolean
+  @Output() changeVisibility = new EventEmitter<boolean>()
 
   constructor() {}
 
   ngOnInit(): void {}
+
+  onCheckboxClick(): void {
+    this.changeVisibility.emit(!this.visible)
+  }
 }

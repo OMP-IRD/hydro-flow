@@ -1,12 +1,15 @@
-<div class="toolbar-container d-flex flex-column p-2">
-  <div class="d-flex flex-column">
+<div class="toolbar-container position-absolute d-flex flex-column p-2">
+  <div class="d-flex flex-column shadow-sm bg-white border-0">
     <ui-zoom [map]="mapManager.map"></ui-zoom>
   </div>
-  <div class="d-flex flex-column mt-2">
+  <div class="d-flex flex-column mt-2 shadow-sm bg-white border-0">
     <ui-fullscreen></ui-fullscreen>
   </div>
 </div>
-<div class="position-absolute date" *ngIf="facade.currentDate$ | async as date">
+<div
+  class="position-absolute date bg-white p-2 shadow-sm"
+  *ngIf="facade.currentDate$ | async as date"
+>
   <ng-container *ngIf="facade.dates$ | async as dates">
     <ui-date-picker
       [dates]="facade.dates$ | async"
@@ -21,8 +24,17 @@
     ></ui-animator>
   </ng-container>
 </div>
-<div class="position-absolute legend-container">
-  <ui-legend [spec]="segmentLegend"></ui-legend>
+<div class="position-absolute legend-container bg-white px-2 small shadow-sm">
+  <ui-legend
+    [spec]="stationLegend"
+    (changeVisibility)="onStationVisibilityToggle($event)"
+    [visible]="stationVisibility"
+  ></ui-legend>
+  <ui-legend
+    [spec]="segmentLegend"
+    (changeVisibility)="onSegmentVisibilityToggle($event)"
+    [visible]="segmentVisibility"
+  ></ui-legend>
 </div>
 
 <ui-map [map]="mapManager.map"></ui-map>

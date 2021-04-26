@@ -1,6 +1,14 @@
-<div class="legend">
-  <div class="title mb-1">
-    <h4 class="m-0">{{ spec.title }}</h4>
+<div class="legend my-2">
+  <div class="header mb-1">
+    <div class="d-flex title" (click)="onCheckboxClick()">
+      <div class="flex-grow-1 label fw-bold">
+        {{ spec.title }}
+      </div>
+      <div
+        [ngClass]="visible ? 'fa-check-square' : 'fa-square'"
+        class="mt-1 mx-2 fa align-items-end check-box"
+      ></div>
+    </div>
     <div>{{ spec.description }}</div>
   </div>
   <div *ngFor="let rule of spec.rules" class="mx-2">

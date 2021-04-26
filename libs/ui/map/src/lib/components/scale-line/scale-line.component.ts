@@ -19,6 +19,7 @@ import { ViewUtilsService } from '../../services/view-utils.service'
 })
 export class ScaleLineComponent implements OnInit, OnDestroy {
   @Input() map: Map
+  @Input() showScale: boolean = false
   control: ControlScaleLine
   scaleDenominator: string
 

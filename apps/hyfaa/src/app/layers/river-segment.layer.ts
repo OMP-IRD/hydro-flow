@@ -16,6 +16,7 @@ import { filter, map, mergeMap } from 'rxjs/operators'
 import { HyfaaFacade } from '../+state/hyfaa.facade'
 import SETTINGS from '../../settings'
 import { MapManagerService } from '../map/map-manager.service'
+import { formatDate } from '../utils'
 import {
   RIVER_SEGMENT_STYLE_GS_COLOR,
   RIVER_SEGMENT_STYLE_GS_JET,
@@ -24,6 +25,13 @@ import {
 
 const olParser = new OpenlayersParser()
 const qgisParser = new QGISParser()
+
+export const HL_STYLE = new Style({
+  stroke: new Stroke({
+    color: '#53f6f7',
+    width: 2,
+  }),
+})
 
 @Injectable({
   providedIn: 'root',
@@ -75,17 +83,20 @@ export class RiverSegmentLayer {
         )
     })
 
+    /*
+// Load styles function from Geostyler QML
     fromPromise(olParser.writeStyle(RIVER_SEGMENT_STYLE_GS_COLOR)).subscribe(
       (style) => (this.colorStyleFn = style)
     )
     fromPromise(olParser.writeStyle(RIVER_SEGMENT_STYLE_GS_WIDTH)).subscribe(
       (style) => (this.widthStyleFn = style)
     )
+*/
 
     this.facade.currentDate$
       .pipe(
         filter((date) => !!date),
-        map((date: Date) => this.formatDate(date))
+        map((date: Date) => formatDate(date))
       )
       .subscribe((date) => {
         this.currentDate = date
@@ -141,44 +152,17 @@ export class RiverSegmentLayer {
         width: styleWidth,
       }),
     })
-    return style
 
-    const colorStyleFnOutput = this.colorStyleFn(feature, resolution)
-    const widthStyleFnOutput = this.widthStyleFn(feature, resolution)
     const hlFeature = this.mapManager.getHLSegment()
-
-    if (!colorStyleFnOutput && !widthStyleFnOutput) {
-      return
-    }
-    // @ts-ignore
-    const widthStyle = widthStyleFnOutput[0]
-    // @ts-ignore
-    const colorStyle = colorStyleFnOutput[0]
-
-    widthStyle.getStroke().setColor(colorStyle.getStroke().getColor())
-    // @ts-ignore
     if (hlFeature) {
       if (feature.get('cell_id') === hlFeature.get('cell_id')) {
-        widthStyle.getStroke().setColor('red')
+        HL_STYLE.getStroke().setWidth(
+          Math.max(style.getStroke().getWidth() * 3, 8)
+        )
+        return [HL_STYLE, style]
       }
     }
-    return widthStyle
-    /*
-    const width = feature.get('width')
-    let color = width > 60 ? 'blue' : 'green'
-    if (feature.get('_hover')) {
-      color = 'red'
-    }
-    style.getStroke().setColor(color)
-    style.getStroke().setWidth(width / resolution)
     return style
-*/
-  }
-
-  private formatDate(date: Date): string {
-    return `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${(
-      '0' + date.getDate()
-    ).slice(-2)}`
   }
 
   private parseQgisStyle(filename: string) {
