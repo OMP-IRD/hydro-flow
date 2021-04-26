@@ -1,30 +1,31 @@
 import { Injectable } from '@angular/core'
-import { createEffect, Actions, ofType } from '@ngrx/effects'
+import { HyfaaClient } from '@hydro-flow/data-access/hyfaa'
+import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { fetch } from '@nrwl/angular'
-
-import * as HyfaaFeature from './hyfaa.reducer'
+import { map, switchMap } from 'rxjs/operators'
 import * as HyfaaActions from './hyfaa.actions'
 
 @Injectable()
 export class HyfaaEffects {
-  /*
+  constructor(private actions$: Actions, private client: HyfaaClient) {}
+
   init$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(HyfaaActions.init),
-      fetch({
-        run: (action) => {
-          // Your custom service 'load' logic goes here. For now just return a success action...
-          return HyfaaActions.loadHyfaaSuccess({ hyfaa: [] })
-        },
-
-        onError: (action, error) => {
-          console.error('Error', error)
-          return HyfaaActions.loadHyfaaFailure({ error })
-        },
-      })
+      ofType(HyfaaActions.setStationId),
+      switchMap(({ stationId }) => this.client.getStationData(stationId)),
+      map((stationData) => HyfaaActions.setStationData({ stationData }))
     )
   )
-*/
 
-  constructor(private actions$: Actions) {}
+  /*
+      fetch({
+        run: (action) => {
+          return HyfaaActions.setStationData({ stationData: [] })
+        },
+        onError: (action, error) => {
+          console.error('Error', error)
+          return HyfaaActions.setStationData({ stationData: 'error' })
+        },
+      })
+*/
 }

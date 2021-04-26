@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core'
 
 import { select, Store } from '@ngrx/store'
-import { Observable } from 'rxjs'
 import { distinctUntilChanged } from 'rxjs/operators'
 import * as HyfaaActions from './hyfaa.actions'
 import * as HyfaaSelectors from './hyfaa.selectors'
@@ -23,5 +22,14 @@ export class HyfaaFacade {
   setCurrentDate(date: Date): void {
     this.store.dispatch(HyfaaActions.setCurrentDate({ date }))
   }
+
+  setStationId(stationId: number): void {
+    this.store.dispatch(HyfaaActions.setStationId({ stationId }))
+  }
+
+  setStationData(stationData: any): void {
+    this.store.dispatch(HyfaaActions.setStationData({ stationData }))
+  }
+
   init() {}
 }
