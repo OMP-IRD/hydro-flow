@@ -3,12 +3,11 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
-  Input,
   OnInit,
 } from '@angular/core'
+import { Feature } from 'ol/Feature'
 import Map from 'ol/Map'
 import Overlay from 'ol/Overlay'
-import { Feature } from 'ol/Feature'
 import { filter, map } from 'rxjs/operators'
 import { HyfaaFacade } from '../../+state/hyfaa.facade'
 import { MapManagerService } from '../../map/map-manager.service'
@@ -24,7 +23,7 @@ export const SEGMENT_HOVER_MIN_RESOLUTION = 615
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RiverSegmentOverlayComponent implements OnInit {
-  @Input() map: Map
+  map: Map
   private _overlay: Overlay
   currentDate: string
 
@@ -68,17 +67,31 @@ export class RiverSegmentOverlayComponent implements OnInit {
       if (resolution > SEGMENT_HOVER_MIN_RESOLUTION) {
         return
       }
-      const hit = this.getHit(event.pixel)
-      if (hit) {
-        this.map.getTarget().style.cursor = 'pointer'
-        this._overlay.setPosition(event.coordinate)
+
+      const hovering = this.map.forEachLayerAtPixel(
+        event.pixel,
+        (layer) => layer === this.riverSegmentLayer.getLayer()
+      )
+      if (hovering) {
+        const hit = this.getHit(event.pixel)
+        if (hit) {
+          this.map.getTarget().style.cursor = 'pointer'
+          this._overlay.setPosition(event.coordinate)
+          this.mapManager.setHLSegment(hit)
+          this._changeDetectionRef.detectChanges()
+          this.riverSegmentLayer.getLayer().changed()
+        }
       } else {
-        this.map.getTarget().style.cursor = ''
-        this._overlay.setPosition(undefined)
+        console.log('not hovering')
+        if (this.mapManager.getHLSegment()) {
+          console.log('reset hovering')
+          this.map.getTarget().style.cursor = ''
+          this._overlay.setPosition(undefined)
+          this.mapManager.setHLSegment(null)
+          this._changeDetectionRef.detectChanges()
+          this.riverSegmentLayer.getLayer().changed()
+        }
       }
-      this.mapManager.setHLSegment(hit)
-      this._changeDetectionRef.detectChanges()
-      this.riverSegmentLayer.getLayer().changed()
     })
 
     this.map.on('dblclick', (event) => {
