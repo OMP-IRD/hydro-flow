@@ -136,7 +136,7 @@ export class RiverSegmentLayer {
     rules = RIVER_SEGMENT_STYLE_GS_COLOR.rules
     const flow = feature
       .get('values')
-      .find((value) => value.date === this.currentDate).flow_median
+      .find((value) => value.date === this.currentDate).flow
     for (let i = 0; i < rules.length; i++) {
       const rule = rules[i]
       const { filter } = rule

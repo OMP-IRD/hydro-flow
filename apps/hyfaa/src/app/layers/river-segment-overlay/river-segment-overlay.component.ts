@@ -36,7 +36,7 @@ export class RiverSegmentOverlayComponent implements OnInit {
     this.mapManager
       .getHLSegment()
       ?.get('values')
-      ?.find((value) => value.date === this.currentDate).flow_median
+      ?.find((value) => value.date === this.currentDate).flow
   }
 
   constructor(
