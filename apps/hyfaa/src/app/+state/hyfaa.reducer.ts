@@ -1,7 +1,7 @@
+import { HyfaaDataSerie } from '@hydro-flow/feature/hydro'
 import { Action, createReducer, on } from '@ngrx/store'
 
 import * as HyfaaActions from './hyfaa.actions'
-import { HyfaaDataSerie } from './hyfaa.models'
 
 export const HYFAA_FEATURE_KEY = 'hyfaa'
 

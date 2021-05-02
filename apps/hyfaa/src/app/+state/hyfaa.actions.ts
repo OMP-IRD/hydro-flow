@@ -1,5 +1,5 @@
+import { HyfaaDataSerie } from '@hydro-flow/feature/hydro'
 import { createAction, props } from '@ngrx/store'
-import { HyfaaDataSerie } from './hyfaa.models'
 
 export const setDates = createAction(
   '[Hyfaa] Set dates',
@@ -12,6 +12,6 @@ export const setCurrentDate = createAction(
 )
 
 export const setDataSerie = createAction(
-  '[Hyfaa] Set current date',
+  '[Hyfaa] Set data serie',
   props<{ dataSerie: HyfaaDataSerie }>()
 )

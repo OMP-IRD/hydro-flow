@@ -5,6 +5,9 @@ import { EffectsModule } from '@ngrx/effects'
 import * as fromStations from './+state/stations/stations.reducer'
 import { StationsEffects } from './+state/stations/stations.effects'
 import { StationsFacade } from './+state/stations/stations.facade'
+import * as fromStationData from './+state/station-data/station-data.reducer'
+import { StationDataEffects } from './+state/station-data/station-data.effects'
+import { StationDataFacade } from './+state/station-data/station-data.facade'
 
 @NgModule({
   imports: [
@@ -14,9 +17,14 @@ import { StationsFacade } from './+state/stations/stations.facade'
       fromStations.reducer
     ),
     EffectsModule.forFeature([StationsEffects]),
+    StoreModule.forFeature(
+      fromStationData.STATIONDATA_FEATURE_KEY,
+      fromStationData.reducer
+    ),
+    EffectsModule.forFeature([StationDataEffects]),
   ],
   declarations: [],
   exports: [],
-  providers: [StationsFacade],
+  providers: [StationsFacade, StationDataFacade],
 })
 export class FeatureStationsModule {}

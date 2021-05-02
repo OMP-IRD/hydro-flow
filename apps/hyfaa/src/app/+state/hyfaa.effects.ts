@@ -1,32 +1,37 @@
 import { Injectable } from '@angular/core'
-import { HyfaaClient, StationsApiService } from '@hydro-flow/data-access/hyfaa'
-import { ChartMapper, selectStation } from '@hydro-flow/feature/hydro'
+import { loadStationData, selectStation } from '@hydro-flow/feature/hydro'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
-import { fetch } from '@nrwl/angular'
 import { combineLatest, of } from 'rxjs'
-import { map, switchMap, withLatestFrom } from 'rxjs/operators'
+import { startWith, switchMap } from 'rxjs/operators'
 import { setDataSerie } from './hyfaa.actions'
+import { initialState } from './hyfaa.reducer'
 
 @Injectable()
 export class HyfaaEffects {
-  constructor(
-    private actions$: Actions,
-    private stationsApi: StationsApiService
-  ) {}
+  constructor(private actions$: Actions) {}
 
   loadDataSerie$ = createEffect(() =>
     combineLatest([
       this.actions$.pipe(ofType(selectStation)),
-      this.actions$.pipe(ofType(setDataSerie)),
+      this.actions$.pipe(
+        ofType(setDataSerie),
+        startWith({
+          dataSerie: initialState.dataSerie,
+        })
+      ),
     ]).pipe(
-      switchMap(([station, serie]) => {
-        const { selectedId } = station
-        const { dataSerie } = serie
-        return selectedId
-          ? this.stationsApi.getStationData(dataSerie, selectedId)
-          : of(null)
-      }),
-      map((stationData) => HyfaaActions.setStationData({ stationData }))
+      switchMap(([selectStation, setDataSerie]) => {
+        const { selectedId } = selectStation
+        const { dataSerie } = setDataSerie
+        return of(
+          selectedId
+            ? loadStationData({
+                stationId: selectedId,
+                options: { dataSerie },
+              })
+            : null
+        )
+      })
     )
   )
 }

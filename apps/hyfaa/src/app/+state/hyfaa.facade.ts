@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core'
+import { HyfaaDataSerie } from '@hydro-flow/feature/hydro'
 
 import { select, Store } from '@ngrx/store'
 import { distinctUntilChanged } from 'rxjs/operators'
@@ -8,11 +9,11 @@ import * as HyfaaSelectors from './hyfaa.selectors'
 @Injectable()
 export class HyfaaFacade {
   dates$ = this.store.pipe(select(HyfaaSelectors.getHyfaaDates))
+  dataSerie$ = this.store.pipe(select(HyfaaSelectors.getDataSerie))
   currentDate$ = this.store.pipe(
     select(HyfaaSelectors.getHyfaaDate),
     distinctUntilChanged()
   )
-  stationData$ = this.store.pipe(select(HyfaaSelectors.getHyfaaStationData))
 
   constructor(private store: Store) {}
 
@@ -24,13 +25,7 @@ export class HyfaaFacade {
     this.store.dispatch(HyfaaActions.setCurrentDate({ date }))
   }
 
-  setStationId(stationId: number): void {
-    this.store.dispatch(HyfaaActions.setStationId({ stationId }))
+  setDataSerie(dataSerie: HyfaaDataSerie): void {
+    this.store.dispatch(HyfaaActions.setDataSerie({ dataSerie }))
   }
-
-  setStationData(stationData: any): void {
-    this.store.dispatch(HyfaaActions.setStationData({ stationData }))
-  }
-
-  init() {}
 }
