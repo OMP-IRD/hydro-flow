@@ -59,6 +59,7 @@ export class RiverSegmentLayer {
 
     this.layer = new VectorTileLayer({
       source: this.source,
+      className: 'river-layer',
       style: this.styleFn.bind(this),
     })
 

@@ -8,7 +8,7 @@ export class ChartMapper {
     let chartData = apiData.data.mgbstandard.reduce(
       (output, input) => {
         output.dates.push(input.date)
-        output.h.push(input.flow_mean)
+        output.h.push(input.flow)
         return output
       },
       { dates: [], h: [] }

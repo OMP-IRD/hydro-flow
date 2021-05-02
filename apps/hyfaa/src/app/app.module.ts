@@ -1,6 +1,7 @@
 import { HttpClientModule } from '@angular/common/http'
 import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
+import { FeatureStationsModule } from '@hydro-flow/feature/hydro'
 import { UiMapModule } from '@hydro-flow/ui/map'
 import { UiTimeModule } from '@hydro-flow/ui/time'
 
@@ -15,6 +16,7 @@ import * as fromHyfaa from './+state/hyfaa.reducer'
 import { HyfaaEffects } from './+state/hyfaa.effects'
 import { HyfaaFacade } from './+state/hyfaa.facade'
 import { LegendContainerComponent } from './components/legend-container/legend-container.component'
+import { ChartContainerComponent } from './components/chart-container/chart-container.component'
 
 @NgModule({
   declarations: [
@@ -22,19 +24,21 @@ import { LegendContainerComponent } from './components/legend-container/legend-c
     MapContainerComponent,
     RiverSegmentOverlayComponent,
     LegendContainerComponent,
+    ChartContainerComponent,
   ],
   imports: [
     BrowserModule,
     UiMapModule,
     UiTimeModule,
     HttpClientModule,
+    FeatureStationsModule,
     StoreModule.forRoot(
       {},
       {
         metaReducers: !environment.production ? [] : [],
         runtimeChecks: {
-          strictActionImmutability: true,
-          strictStateImmutability: true,
+          strictStateImmutability: false,
+          strictActionImmutability: false,
         },
       }
     ),

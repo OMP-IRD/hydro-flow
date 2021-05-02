@@ -1,4 +1,5 @@
 import { createAction, props } from '@ngrx/store'
+import { HyfaaDataSerie } from './hyfaa.models'
 
 export const setDates = createAction(
   '[Hyfaa] Set dates',
@@ -10,12 +11,7 @@ export const setCurrentDate = createAction(
   props<{ date: Date }>()
 )
 
-export const setStationId = createAction(
-  '[Hyfaa] Set station id',
-  props<{ stationId: number }>()
-)
-
-export const setStationData = createAction(
-  '[Hyfaa] Set station data',
-  props<{ stationData: any }>()
+export const setDataSerie = createAction(
+  '[Hyfaa] Set current date',
+  props<{ dataSerie: HyfaaDataSerie }>()
 )

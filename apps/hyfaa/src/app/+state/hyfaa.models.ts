@@ -1,6 +1,1 @@
-/**
- * Interface for the 'Hyfaa' data
- */
-export interface HyfaaEntity {
-  id: string | number // Primary ID
-}
+export type HyfaaDataSerie = 'all' | 'assimilated' | 'mgbstandard' | 'forecast'

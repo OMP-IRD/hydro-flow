@@ -70,7 +70,8 @@ export class RiverSegmentOverlayComponent implements OnInit {
 
       const hovering = this.map.forEachLayerAtPixel(
         event.pixel,
-        (layer) => layer === this.riverSegmentLayer.getLayer()
+        (layer) => true,
+        { layerFilter: (layer) => layer === this.riverSegmentLayer.getLayer() }
       )
       if (hovering) {
         const hit = this.getHit(event.pixel)
@@ -82,7 +83,6 @@ export class RiverSegmentOverlayComponent implements OnInit {
           this.riverSegmentLayer.getLayer().changed()
         }
       } else {
-        console.log('not hovering')
         if (this.mapManager.getHLSegment()) {
           console.log('reset hovering')
           this.map.getTarget().style.cursor = ''

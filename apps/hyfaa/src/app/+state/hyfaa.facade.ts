@@ -12,6 +12,7 @@ export class HyfaaFacade {
     select(HyfaaSelectors.getHyfaaDate),
     distinctUntilChanged()
   )
+  stationData$ = this.store.pipe(select(HyfaaSelectors.getHyfaaStationData))
 
   constructor(private store: Store) {}
 

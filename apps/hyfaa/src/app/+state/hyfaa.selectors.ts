@@ -12,3 +12,8 @@ export const getHyfaaDate = createSelector(
   getHyfaaState,
   (state: AppState) => state.date
 )
+
+export const getDataSerie = createSelector(
+  getHyfaaState,
+  (state: AppState) => state.dataSerie
+)

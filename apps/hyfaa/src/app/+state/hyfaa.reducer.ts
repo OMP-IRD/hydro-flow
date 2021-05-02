@@ -1,29 +1,27 @@
 import { Action, createReducer, on } from '@ngrx/store'
 
 import * as HyfaaActions from './hyfaa.actions'
+import { HyfaaDataSerie } from './hyfaa.models'
 
 export const HYFAA_FEATURE_KEY = 'hyfaa'
 
 export interface AppState {
   dates?: Date[]
   date?: Date
-  stationId?: number
-  stationData?: any
+  dataSerie: HyfaaDataSerie
 }
 
-export const initialState: AppState = {}
+export const initialState: AppState = {
+  dataSerie: 'mgbstandard',
+}
 
 const hyfaaReducer = createReducer(
   initialState,
   on(HyfaaActions.setDates, (state, { dates }) => ({ ...state, dates })),
   on(HyfaaActions.setCurrentDate, (state, { date }) => ({ ...state, date })),
-  on(HyfaaActions.setStationId, (state, { stationId }) => ({
+  on(HyfaaActions.setDataSerie, (state, { dataSerie }) => ({
     ...state,
-    stationId,
-  })),
-  on(HyfaaActions.setStationData, (state, { stationData }) => ({
-    ...state,
-    stationData,
+    dataSerie,
   }))
 )
 
