@@ -1,0 +1,127 @@
+{
+  "swagger": "2.0",
+  "basePath": "/api/v1",
+  "paths": {
+    "/stations": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "summary": "Retrieve stations list",
+        "operationId": "get_stations",
+        "tags": ["stations"]
+      }
+    },
+    "/stations/as_geojson": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "summary": "Retrieve stations as geojson feature collection",
+        "operationId": "get_stations_as_geojson",
+        "tags": ["stations"]
+      }
+    },
+    "/stations/{id}": {
+      "parameters": [
+        {
+          "in": "path",
+          "description": "The station identifier",
+          "name": "id",
+          "required": true,
+          "type": "integer"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Validation Error"
+          },
+          "404": {
+            "description": "Station not found"
+          }
+        },
+        "summary": "Describe a station",
+        "operationId": "get_station",
+        "tags": ["stations"]
+      }
+    },
+    "/stations/{id}/data/{dataserie}": {
+      "parameters": [
+        {
+          "enum": ["all", "assimilated", "mgbstandard", "forecast"],
+          "in": "path",
+          "description": "The data serie to retrieve",
+          "name": "dataserie",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "in": "path",
+          "description": "The station identifier",
+          "name": "id",
+          "required": true,
+          "type": "integer"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Validation Error"
+          },
+          "404": {
+            "description": "Station not found"
+          }
+        },
+        "summary": "Retrieve MGB/HYFAA data for a station, given its identifier and a dataserie name (or `all` to get all available dataseries",
+        "description": "The returned object provides, for the demanded dataserie:\n* \"date\": the date for which the value has been computed\n* \"flow\": (m³/s) values representing the median for assimilated and forecast dataseries, the mean for mgbstandard serie\n* \"flow_mad\": [assimilated and forecast dataseries only] median absolute deviation\n* \"expected\": [assimilated and forecast dataseries only] (m³/s) the expected value, based on the mean values on this same day over the years",
+        "operationId": "get_station_data",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "Time lapse to retrieve. Should correspond to postgresql's time interval (https://www.postgresql.org/docs/9.1/datatype-datetime.html), e.g. '1 year 30 days'",
+            "name": "duration",
+            "type": "string"
+          }
+        ],
+        "tags": ["stations"]
+      }
+    }
+  },
+  "info": {
+    "title": "HYFAA backend API",
+    "version": "1.0",
+    "description": "Provides access to MGB/HYFAA-related data",
+    "contact": {
+      "name": "Jean Pommier",
+      "email": "jean.pommier@pi-geosolutions.fr",
+      "url": null
+    }
+  },
+  "produces": ["application/json"],
+  "consumes": ["application/json"],
+  "tags": [
+    {
+      "name": "stations",
+      "description": "Stations related operations. Stations are virtual POI connected to minibasin data"
+    }
+  ],
+  "responses": {
+    "ParseError": {
+      "description": "When a mask can't be parsed"
+    },
+    "MaskError": {
+      "description": "When any error occurs on mask"
+    }
+  }
+}

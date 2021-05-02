@@ -5,5 +5,6 @@ import { CommonModule } from '@angular/common'
   imports: [CommonModule],
   declarations: [],
   exports: [],
+  providers: [],
 })
 export class FeatureStationModule {}
