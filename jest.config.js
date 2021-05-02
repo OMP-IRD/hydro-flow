@@ -5,5 +5,6 @@ module.exports = {
     '<rootDir>/libs/ui/time',
     '<rootDir>/libs/feature/map',
     '<rootDir>/libs/data-access/hyfaa',
+    '<rootDir>/libs/feature/hydro',
   ],
 }

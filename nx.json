@@ -17,10 +17,10 @@
   },
   "projects": {
     "hyfaa": { "tags": [] },
-    "hyfaa-e2e": { "tags": [], "implicitDependencies": ["hyfaa"] },
     "ui-map": { "tags": [] },
     "ui-time": { "tags": [] },
     "feature-map": { "tags": [] },
-    "data-access-hyfaa": { "tags": [] }
+    "data-access-hyfaa": { "tags": [] },
+    "feature-hydro": { "tags": [] }
   }
 }

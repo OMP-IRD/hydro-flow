@@ -51,10 +51,16 @@
             "styles": [
               "apps/hyfaa/src/styles.scss",
               "node_modules/ol/ol.css",
-              "node_modules/@fortawesome/fontawesome-free/css/all.css"
+              "node_modules/@fortawesome/fontawesome-free/css/all.css",
+              "vendor/d3.hydroweb.css"
             ],
             "allowedCommonJsDependencies": ["toggle-fullscreen"],
-            "scripts": ["node_modules/bootstrap/dist/js/bootstrap.bundle.js"]
+            "scripts": [
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.js",
+              "vendor/jquery.slim.js",
+              "vendor/d3.js",
+              "vendor/d3.hydroweb.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -119,32 +125,6 @@
           "options": {
             "jestConfig": "apps/hyfaa/jest.config.js",
             "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "hyfaa-e2e": {
-      "root": "apps/hyfaa-e2e",
-      "sourceRoot": "apps/hyfaa-e2e/src",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@nrwl/cypress:cypress",
-          "options": {
-            "cypressConfig": "apps/hyfaa-e2e/cypress.json",
-            "tsConfig": "apps/hyfaa-e2e/tsconfig.e2e.json",
-            "devServerTarget": "hyfaa:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "hyfaa:serve:production"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["apps/hyfaa-e2e/**/*.{js,ts}"]
           }
         }
       }
@@ -244,6 +224,31 @@
           "outputs": ["coverage/libs/data-access/hyfaa"],
           "options": {
             "jestConfig": "libs/data-access/hyfaa/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "feature-hydro": {
+      "projectType": "library",
+      "root": "libs/feature/hydro",
+      "sourceRoot": "libs/feature/hydro/src",
+      "prefix": "hydro",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/feature/hydro/src/**/*.ts",
+              "libs/feature/hydro/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/feature/hydro"],
+          "options": {
+            "jestConfig": "libs/feature/hydro/jest.config.js",
             "passWithNoTests": true
           }
         }
