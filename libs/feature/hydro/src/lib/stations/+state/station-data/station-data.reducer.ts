@@ -29,10 +29,16 @@ const stationDataReducer = createReducer(
   on(StationDataActions.loadStationDataSuccess, (state, { stationData }) => ({
     ...state,
     stationData,
+    loaded: true,
   })),
   on(StationDataActions.loadStationDataFailure, (state, { error }) => ({
     ...state,
     error,
+  })),
+  on(StationDataActions.resetStationData, (state) => ({
+    ...state,
+    stationData: undefined,
+    loaded: false,
   }))
 )
 

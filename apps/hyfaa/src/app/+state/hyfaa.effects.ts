@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core'
-import { loadStationData, selectStation } from '@hydro-flow/feature/hydro'
+import {
+  loadStationData,
+  resetStationData,
+  selectStation,
+} from '@hydro-flow/feature/hydro'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { combineLatest, of } from 'rxjs'
 import { startWith, switchMap } from 'rxjs/operators'
@@ -29,7 +33,7 @@ export class HyfaaEffects {
                 stationId: selectedId,
                 options: { dataSerie },
               })
-            : null
+            : resetStationData()
         )
       })
     )

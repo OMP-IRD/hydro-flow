@@ -14,6 +14,10 @@ export const loadStationDataSuccess = createAction(
   props<{ stationData: StationDataModel }>()
 )
 
+export const resetStationData = createAction(
+  '[StationData/API] Reset StationData'
+)
+
 export const loadStationDataFailure = createAction(
   '[StationData/API] Load StationData Failure',
   props<{ error: any }>()

@@ -1,0 +1,63 @@
+<div
+  class="modal fade"
+  id="chartModal"
+  #chartModal
+  aria-labelledby="staticBackdropLabel"
+>
+  <div class="modal-dialog">
+    <div class="modal-content shadow-sm border-0">
+      <div
+        class="modal-header"
+        *ngIf="stationsFacade.selectedStations$ | async as station"
+      >
+        <h5 class="modal-title" id="staticBackdropLabel">
+          {{ station.get('city') }}
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          aria-label="Close"
+          (click)="close()"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div #chartElt class="chart-container mt-4"></div>
+        <form id="selectDate" class="mt-4 container-fluid">
+          <div class="row pt-4 pb-4">
+            <div class="offset-1 col-3 form-group">
+              <label for="startDate">Starting date</label>
+              <input
+                id="startDate"
+                class="form-control"
+                type="date"
+                name="startDate"
+                min="1992-09-26"
+                max="2021-04-24"
+              />
+            </div>
+            <div class="col-3 form-group">
+              <label for="endDate">End date</label>
+              <input
+                id="endDate"
+                class="form-control"
+                type="date"
+                name="endDate"
+                min="1992-09-26"
+                max="2021-04-24"
+              />
+            </div>
+            <div class="col-4"></div>
+          </div>
+        </form>
+      </div>
+      <!--
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary">Understood</button>
+      </div>
+-->
+    </div>
+  </div>
+</div>
