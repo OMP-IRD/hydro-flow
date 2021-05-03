@@ -63,11 +63,6 @@ export class RiverSegmentOverlayComponent implements OnInit {
     this.map.addOverlay(this._overlay)
 
     this.map.on('pointermove', (event) => {
-      const resolution = this.map.getView().getResolution()
-      if (resolution > SEGMENT_HOVER_MIN_RESOLUTION) {
-        return
-      }
-
       const hovering = this.map.forEachLayerAtPixel(
         event.pixel,
         (layer) => true,
