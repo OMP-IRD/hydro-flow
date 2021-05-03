@@ -23,7 +23,7 @@ export class MapContainerComponent implements OnInit {
     title: 'Stations',
     rules: [
       {
-        label: 'Virtual stations',
+        label: 'Locations of interest',
         color: STATION_COLOR,
       },
     ],
