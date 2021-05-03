@@ -27,6 +27,15 @@ body {
   z-index: 10;
 }
 
+.variance-area {
+  fill: lightgray;
+  stroke: lightgray; /*steelblue;*/
+  opacity: 0.5; /*steelblue;*/
+  stroke-width: 2.0px;
+  clip-path: url(#clip);
+  z-index: 10;
+}
+
 .medianLine {
   stroke: red;
   clip-path: url(#clip);
@@ -131,15 +140,13 @@ circle:hover {
 }
 
 rect {
-  fill: yellow;
+  fill: #d7efc0;
 }
-
 .y.axis line {
   stroke: #777;
   stroke-dasharray: 2, 2;
   stroke-opacity: .250;
 }
-
 text {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -148,4 +155,30 @@ text {
   -ms-user-select: none;
   user-select: none;
   cursor: default;
+}
+
+.overlay {
+  fill: none;
+  pointer-events: all;
+}
+
+.focus-hover {
+  clip-path: url(#clip);
+
+}
+.focus-hover circle {
+  fill: steelblue;
+}
+
+.focus-hover text {
+  font-size: 14px;
+}
+
+.tooltip-hover {
+  fill: white;
+  stroke: #000;
+}
+
+.tooltip-date, .tooltip-likes {
+  font-weight: bold;
 }

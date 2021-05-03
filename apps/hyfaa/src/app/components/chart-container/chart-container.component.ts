@@ -13,6 +13,7 @@ import {
 } from '@hydro-flow/feature/hydro'
 import { Subscription } from 'rxjs'
 import { filter, map } from 'rxjs/operators'
+import { initialState } from '../../+state/hyfaa.reducer'
 
 declare var Chart: any
 declare var bootstrap: any
@@ -59,18 +60,30 @@ export class ChartContainerComponent
       this.dataFacade.stationData$
         .pipe(
           filter((data) => !!data),
-          map((stationData) => this.chartMapper.toChart(stationData))
+          map((stationData) => this.chartMapper.toChart(stationData, initialState.dataSerie))
         )
         .subscribe((chartData) => {
           this.chart = new Chart({
             renderTo: this.chartElt.nativeElement,
             y_title: 'Flow',
             x_title: 'Date',
+            drawCircles: false
           })
             .read(chartData)
             .draw()
             .addControl()
+          if(chartData.variance?.length > 0) {
+            const range = chartData.h.reduce((output, waterHeight, index)=> {
+              const variance = chartData.variance[index]
+              output.top.push(waterHeight + variance)
+              output.bottom.push(waterHeight - variance)
+              return output
+            }, {top: [], bottom:[]})
+            this.chart.addRange(range.top, range.bottom, chartData.dates)
+          }
+          this.chart.addTooltip()
         })
+
     )
   }
 

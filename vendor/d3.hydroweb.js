@@ -1,13 +1,3 @@
-/**
- * HISTORIQUE
- * Version:2.1:FT:293:04/07/2016:Pb saisie date dÃ©but et comportement date de fin
- * FIN-HISTORIQUE
- */
-
-/*
- * Date formatter
- */
-
 var localeFormatter = d3.locale({
   decimal: '.',
   thousands: ',',
@@ -223,6 +213,7 @@ Chart = function (options) {
 
   // Focus chart
   var focus = null
+  var focusHover = null
 
   // Context chart
   var context = null
@@ -320,7 +311,7 @@ Chart = function (options) {
 
   // Chart line
   var line = d3.svg
-    .line()
+    .line().interpolate("monotone")
     .x(function (d) {
       return xScale(d.date)
     })
@@ -454,18 +445,6 @@ Chart = function (options) {
     min2: MAX_DATE,
     max2: MIN_DATE,
   }
-  /*
-   * div for tooltip to display value
-   */
-  var tooltip = d3
-    .select('bn-root')
-    .append('div')
-    .style('position', 'absolute')
-    .style('z-index', '100000')
-    .style('visibility', 'hidden')
-    .style('background', '#e6e6ff')
-    .style('margin', '5px')
-    .style('font-size', '12px')
 
   // draws chart line and error bars
   this.draw = function (redraw) {
@@ -576,96 +555,61 @@ Chart = function (options) {
       .attr('d', line)
       .style('clip-path', 'url(#' + clip_id + ')')
 
-    /*
-     * Draw line chart and error bars
-     */
-    eb = errorBar()
-      .size(4)
-      .oldXScale(xScale)
-      .xScale(xScale)
-      .oldYScale(yScale)
-      .yScale(yScale)
-      .yValue(function (d) {
-        return d.close
-      })
-      .xValue(function (d) {
-        return d.date
-      })
-      .xError(function (d) {
-        return null
-      })
-      .yError(function (d) {
-        return d.yError
-      })
-    // .xMedian(function(d){return null })
-    // .yMedian(function(d){return d.yMedian; });
-
-    focus
-      .append('g')
-      .attr('class', 'errorBars')
-      .style('clip-path', 'url(#' + clip_id + ')')
-      .selectAll('g')
-      .data(data)
-      .enter()
-      .append('g')
-      .attr('transform', function (d) {
-        return 'translate(' + xScale(d.date) + ',' + yScale(d.close) + ')'
-      })
-      .attr('fill', 'blue')
-      .call(eb)
-
-    /*
-     * Draw circles
-     */
-    focus
-      .selectAll('circle')
-      .data(data)
-      .enter()
-      .append('svg:circle')
-      .attr('r', 3.5)
-      .attr('cx', function (d) {
-        return xScale(d.date)
-      })
-      .attr('cy', function (d) {
-        return yScale(d.close)
-      })
-      .text(function (d) {
-        return d.close
-      })
-      .style('clip-path', 'url(#' + clip_id + '_circle)')
-      //          .append("svg:title")
-      //          .text(function(d) { return d.date.yyyymmddhhmmss()+"\n"+d.close+" m\Uncertainty="+d.yError; });
-      .on('mouseover', function (d) {
-        var unit = clip_id.match('3$')
-          ? 'km3'
-          : clip_id.match('2$')
-          ? 'km2'
-          : 'm'
-        var uncert =
-          d.yUncert == 9999.999
-            ? ''
-            : "<br>Uncertainty=<span style='color:green'>" +
-              d.yUncert +
-              '</span>'
-        var str =
-          d.date.yyyymmddhhmmss() +
-          "<br><span style='color:#002080'>" +
-          d.close +
-          ' ' +
-          unit +
-          '</span>'
-        return tooltip.style('visibility', 'visible').html(str)
-      })
-      .on('mousemove', function (d) {
-        return tooltip
-          .style('top', d3.event.pageY - 10 + 'px')
-          .style('left', d3.event.pageX + 20 + 'px')
-      })
-      .on('mouseout', function () {
-        return tooltip.style('visibility', 'hidden')
-      })
-
     return this
+  }
+
+  this.addTooltip = function() {
+    // hover tooltip + circle
+    focusHover = focus
+      .append('g')
+      .attr("class", "focus-hover")
+      .style("display", "none")
+
+    focusHover.append('svg:circle')
+      .attr('r', 6)
+
+    focusHover.append("rect")
+      .attr("class", "tooltip-hover")
+      .attr("width", 100)
+      .attr("height", 50)
+      .attr("x", 10)
+      .attr("y", -22)
+      .attr("rx", 4)
+      .attr("ry", 4);
+
+    focusHover.append("text")
+      .attr("class", "tooltip-date")
+      .attr("x", 18)
+      .attr("y", -2);
+    focusHover.append("text")
+      .attr("class", "tooltip-flow")
+      .attr("x", 18)
+      .attr("y", 16);
+
+    focus.append("rect")
+      .attr("class", "overlay")
+      .attr("width", width)
+      .attr("height", height)
+      .on("mouseover", function() { focusHover.style("display", null); })
+      .on("mouseout", function() { focusHover.style("display", "none"); })
+      .on("mousemove", mousemove);
+
+
+    var bisectDate = d3.bisector(function(d) { return d.date; }).left;
+
+    function mousemove() {
+      var x0 = xScale.invert(d3.mouse(this)[0]),
+        i = bisectDate(data, x0, 1),
+        d0 = data[i - 1],
+        d1 = data[i];
+      if (d0 && d1) {
+        var d = x0 - d0.date > d1.date - x0 ? d1 : d0;
+        focusHover.attr("transform", "translate(" + xScale(d.date) + "," + yScale(d.close) + ")");
+        focus.select(".tooltip-date").text(d.date.toLocaleDateString());
+        focus.select(".tooltip-flow").text('Flow: ' + Math.round(d.close));
+      }
+    }
+
   }
 
   // Add selection control
@@ -1007,7 +951,7 @@ Chart = function (options) {
   function exists(a) {
     return a === undefined ? null : a
   }
-  // Brush function
+
   var brushed = function () {
     /*
      * sets domain to display
@@ -1027,86 +971,19 @@ Chart = function (options) {
     focus
       .select('.line')
       .attr('d', line)
-      .style('clip-path', 'url(#' + clip_id + ')')
 
     focus
       .select('.medianLine')
       .attr('d', medianLine)
-      .style('clip-path', 'url(#' + clip_id + ')')
 
     this.updateSecondLine()
+    this.updateVarianceArea()
+
+
     /*
      * updates X axis to X domain
      */
     focus.select('.x.axis').call(xAxis)
-
-    /*
-     * updates error bars to X domain
-     */
-    focus.select('.errorBars').remove()
-
-    /*
-     * remove circles
-     */
-    focus.selectAll('circle').remove()
-
-    /*
-     * draw error bars
-     */
-    focus
-      .append('g')
-      .attr('class', 'errorBars')
-      .style('clip-path', 'url(#' + clip_id + ')')
-      .selectAll('g')
-      .data(data)
-      .enter()
-      .append('g')
-      .attr('transform', function (d) {
-        return 'translate(' + xScale(d.date) + ',' + yScale(d.close) + ')'
-      })
-      .attr('fill', 'blue')
-      .call(eb)
-
-    /*
-     * draw circles
-     */
-    focus
-      .selectAll('circle')
-      .data(data)
-      .enter()
-      .append('svg:circle')
-      .attr('r', 3.5)
-      .attr('cx', function (d) {
-        return xScale(d.date)
-      })
-      .attr('cy', function (d) {
-        return yScale(d.close)
-      })
-      .style('clip-path', 'url(#' + clip_id + '_circle)')
-      .on('mouseover', function (d) {
-        var unit = clip_id.match('3$')
-          ? 'km3'
-          : clip_id.match('2$')
-          ? 'km2'
-          : 'm'
-        var str =
-          d.date.yyyymmddhhmmss() +
-          "<br><span style='color:#002080'>" +
-          d.close +
-          ' ' +
-          unit +
-          '</span>'
-        // "<br>Moyenne=<span style='color:red'>"+d.yMedian+"</span>";
-        return tooltip.style('visibility', 'visible').html(str)
-      })
-      .on('mousemove', function (d) {
-        return tooltip
-          .style('top', d3.event.pageY - 10 + 'px')
-          .style('left', d3.event.pageX + 20 + 'px')
-      })
-      .on('mouseout', function () {
-        return tooltip.style('visibility', 'hidden')
-      })
 
     // updates inputs date time
     //$("#startDate").val(xScale.domain()[0].yyyymmdd());
@@ -1124,6 +1001,7 @@ Chart = function (options) {
   }
 
   this.update = function (startDate, endDate) {
+    console.log('update')
     if (!isDateValid(startDate)) {
       startDate = brush.empty()
         ? x2Scale.domain()[0].yyyymmdd()
@@ -1234,77 +1112,10 @@ Chart = function (options) {
      */
     focus.select('.x.axis').call(xAxis)
 
-    /*
-     * updates error bars to X domain
-     */
-    focus.select('.errorBars').remove()
-
-    /*
-     * remove circles
-     */
-    focus.selectAll('circle').remove()
-
-    /*
-     * draw error bars
-     */
-    focus
-      .append('g')
-      .attr('class', 'errorBars')
-      .style('clip-path', 'url(#' + clip_id + ')')
-      .selectAll('g')
-      .data(data)
-      .enter()
-      .append('g')
-      .attr('transform', function (d) {
-        return 'translate(' + xScale(d.date) + ',' + yScale(d.close) + ')'
-      })
-      .attr('fill', 'blue')
-      .call(eb)
-
-    /*
-     * draw circles
-     */
-    focus
-      .selectAll('circle')
-      .data(data)
-      .enter()
-      .append('svg:circle')
-      .attr('r', 3.5)
-      .attr('cx', function (d) {
-        return xScale(d.date)
-      })
-      .attr('cy', function (d) {
-        return yScale(d.close)
-      })
-      .style('clip-path', 'url(#' + clip_id + '_circle)')
-      .on('mouseover', function (d) {
-        var unit = clip_id.match('3$')
-          ? 'km3'
-          : clip_id.match('2$')
-          ? 'km2'
-          : 'm'
-        var str =
-          d.date.yyyymmddhhmmss() +
-          "<br><span style='color:#002080'>" +
-          d.close +
-          ' ' +
-          unit +
-          "</span><br>Uncertainty=<span style='color:pink'>" +
-          d.yError +
-          '</span>'
-        return tooltip.style('visibility', 'visible').html(str)
-      })
-      .on('mousemove', function (d) {
-        return tooltip
-          .style('top', d3.event.pageY - 10 + 'px')
-          .style('left', d3.event.pageX + 20 + 'px')
-      })
-      .on('mouseout', function () {
-        return tooltip.style('visibility', 'hidden')
-      })
   }
 
   this.resize = function () {
+    console.log('resize')
     // update width
     width = $('#chart').width()
     width = width - margin.left - margin.right
@@ -1341,66 +1152,6 @@ Chart = function (options) {
     focus.select('.x.axis').call(xAxis)
     context.select('.x.axis').call(xAxis2)
 
-    // updates error bars to X domain
-    focus.select('.errorBars').remove()
-
-    // remove circles
-    focus.selectAll('circle').remove()
-
-    // draw error bars
-    focus
-      .append('g')
-      .attr('class', 'errorBars')
-      .style('clip-path', 'url(#' + clip_id + ')')
-      .selectAll('g')
-      .data(data)
-      .enter()
-      .append('g')
-      .attr('transform', function (d) {
-        return 'translate(' + xScale(d.date) + ',' + yScale(d.close) + ')'
-      })
-      .attr('fill', 'blue')
-      .call(eb)
-
-    // draw circles
-    focus
-      .selectAll('circle')
-      .data(data)
-      .enter()
-      .append('svg:circle')
-      .attr('r', 3.5)
-      .attr('cx', function (d) {
-        return xScale(d.date)
-      })
-      .attr('cy', function (d) {
-        return yScale(d.close)
-      })
-      .style('clip-path', 'url(#' + clip_id + '_circle)')
-      .on('mouseover', function (d) {
-        var unit = clip_id.match('3$')
-          ? 'km3'
-          : clip_id.match('2$')
-          ? 'km2'
-          : 'm'
-        var str =
-          d.date.yyyymmddhhmmss() +
-          "<br><span style='color:#002080'>" +
-          d.close +
-          ' ' +
-          unit +
-          "</span><br>Uncertainty=<span style='color:green'>" +
-          d.yError +
-          '</span>'
-        return tooltip.style('visibility', 'visible').html(str)
-      })
-      .on('mousemove', function (d) {
-        return tooltip
-          .style('top', d3.event.pageY - 10 + 'px')
-          .style('left', d3.event.pageX + 20 + 'px')
-      })
-      .on('mouseout', function () {
-        return tooltip.style('visibility', 'hidden')
-      })
   }
 
   this.getDomain = function () {
@@ -1415,7 +1166,34 @@ Chart = function (options) {
 
   this.destroy = function () {
     $(this.container[0]).empty()
-    tooltip.remove()
+  }
+
+  this.addRange = function(top, bottom, dates) {
+    const data = top.map((_, index) => {
+      return {
+        date: format.parse(dates[index]),
+        top: top[index],
+        bottom: bottom[index],
+      }
+    })
+
+    this.varianceArea = d3.svg.area().interpolate("monotone")
+      .x(function (d) {
+        return xScale(d.date)
+      })
+      .y0(function (d) {
+        return yScale(d.bottom)
+      })
+      .y1(function (d) {
+        return yScale(d.top)
+      })
+
+    focus
+      .append('path')
+      .datum(data)
+      .attr('class', 'variance-area')
+      .attr('d', this.varianceArea)
+      .style('clip-path', 'url(#' + clip_id + ')')
   }
 
   this.addSecondLine = function (slResponse) {
@@ -1533,6 +1311,13 @@ Chart = function (options) {
     focus
       .select('.secondLine')
       .attr('d', this.secondLine)
+      .style('clip-path', 'url(#' + clip_id + ')')
+  }
+
+  this.updateVarianceArea = function () {
+    focus
+      .select('.variance-area')
+      .attr('d', this.varianceArea)
       .style('clip-path', 'url(#' + clip_id + ')')
   }
 }
