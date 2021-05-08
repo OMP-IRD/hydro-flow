@@ -112,41 +112,26 @@ Date.prototype.yyyymmddhhmmss = function () {
   //		+ ':' + (ss[1] ? ss : "0" + ss[0])
 }
 
-/*
- * Adds days to date
- */
 Date.prototype.addDays = function (days) {
   var dat = new Date(this.valueOf())
   dat.setDate(dat.getDate() + days)
   return dat
 }
 
-/*
- * Clones date
- */
 Date.prototype.clone = function () {
   return new Date(this.getTime())
 }
 
-/*
- * Adds hour to date
- */
 Date.prototype.addHours = function (h) {
   this.setHours(this.getHours() + h)
   return this
 }
 
-/*
- * Adds minutes to date
- */
 Date.prototype.addMinutes = function (minutes) {
   this.setMinutes(this.getMinutes() + minutes)
   return this
 }
 
-/*
- * Adds seconds to date
- */
 Date.prototype.addSeconds = function (seconds) {
   this.setSeconds(this.getSeconds() + seconds)
   return this
@@ -164,16 +149,6 @@ d3.selection.prototype.last = function () {
   return d3.select(this[0][last])
 }
 
-/**
- *    Chart
- *    Developper: Driss El.M
- *    Company: Atos
- *    Project: CGTD-Hysope
- *
- *
- *  test: new Chart().read(JSONData).draw();
- *
- */
 Chart = function (options) {
   var margin = { top: 10, right: 20, bottom: 100, left: 80 }
   var margin2 = { top: 430, right: 20, bottom: 20, left: 80 }
@@ -181,17 +156,10 @@ Chart = function (options) {
   var height = 500 - margin.top - margin.bottom
   var height2 = 500 - margin2.top - margin2.bottom
 
-  // chart's container
-  this.container = d3.select('body')
-  this.id = 'body'
-
-  // Error Bar
-  var eb = null
-
-  this.b = null // TODO : to remove : only to test brush
-
   // Chart's data
-  var data = []
+  this.data = []
+
+  var series = []
 
   var self = this
 
@@ -247,7 +215,6 @@ Chart = function (options) {
        */
       if (options.hasOwnProperty('renderTo')) {
         if ($(options.renderTo).length > 0) {
-          this.id = options.renderTo
           this.container = d3.select(options.renderTo)
         }
       }
@@ -285,16 +252,6 @@ Chart = function (options) {
     .orient('bottom')
     .tickFormat(tickFormat)
 
-  /*
-    .tickFormat(function(date) {
-    if (d3.time.year(date) < date) {
-      return d3.time.format('%b')(date);
-    } else {
-      return d3.time.format('%Y')(date);
-    }
-    })
-*/
-
   // Y axis
   var yAxis = d3.svg.axis().scale(yScale).tickSize(width).orient('right')
   var yAxis_ = d3.svg.axis().scale(yScale).tickSize(6, 0).orient('left')
@@ -311,39 +268,13 @@ Chart = function (options) {
 
   // Chart line
   var line = d3.svg
-    .line().interpolate("monotone")
+    .line()
+    .interpolate('monotone')
     .x(function (d) {
       return xScale(d.date)
     })
     .y(function (d) {
       return yScale(d.close)
-    })
-
-  var medianLine = d3.svg
-    .line()
-    .x(function (d) {
-      return xScale(d.date)
-    })
-    .y(function (d) {
-      return yScale(d.yMedian)
-    })
-
-  var decilMax = d3.svg
-    .line()
-    .x(function (d) {
-      return xScale(d.date)
-    })
-    .y(function (d) {
-      return yScale(d.yDecilMax)
-    })
-
-  var decilMin = d3.svg
-    .line()
-    .x(function (d) {
-      return xScale(d.date)
-    })
-    .y(function (d) {
-      return yScale(d.yDecilMin)
     })
 
   var line2 = d3.svg
@@ -357,7 +288,7 @@ Chart = function (options) {
 
   // returns data
   this.getData = function () {
-    return data
+    return this.data
   }
 
   var param = 'h'
@@ -415,11 +346,11 @@ Chart = function (options) {
       })
     }
 
-    data = values
-    yDomainLimimts.min1 = d3.min(data, function (d) {
+    this.data = values
+    yDomainLimimts.min1 = d3.min(this.data, function (d) {
       return d.close - d.yError
     })
-    yDomainLimimts.max1 = d3.max(data, function (d) {
+    yDomainLimimts.max1 = d3.max(this.data, function (d) {
       return d.close + d.yError
     })
     return this
@@ -477,14 +408,6 @@ Chart = function (options) {
       .attr('width', width + 3)
       .attr('height', height)
 
-    defs
-      .append('clipPath')
-      .attr('id', clip_id + '_circle')
-      .append('rect')
-      .attr('x', -3)
-      .attr('width', width + 6)
-      .attr('height', height + 3)
-
     focus = svg
       .append('g')
       .attr('class', 'focus')
@@ -527,30 +450,32 @@ Chart = function (options) {
     /*
      * Draw chart line
      */
+    /*
     focus
       .append('path')
-      .datum(data)
+      .datum(this.data)
       .attr('class', 'medianLine')
       .attr('d', medianLine)
       .style('clip-path', 'url(#' + clip_id + ')')
 
     focus
       .append('path')
-      .datum(data)
+      .datum(this.data)
       .attr('class', 'decilMax')
       .attr('d', decilMax)
       .style('clip-path', 'url(#' + clip_id + ')')
 
     focus
       .append('path')
-      .datum(data)
+      .datum(this.data)
       .attr('class', 'decilMin')
       .attr('d', decilMin)
       .style('clip-path', 'url(#' + clip_id + ')')
+*/
 
     focus
       .append('path')
-      .datum(data)
+      .datum(this.data)
       .attr('class', 'line')
       .attr('d', line)
       .style('clip-path', 'url(#' + clip_id + ')')
@@ -558,58 +483,81 @@ Chart = function (options) {
     return this
   }
 
-  this.addTooltip = function() {
+  this.addTooltip = function (keys) {
     // hover tooltip + circle
     focusHover = focus
       .append('g')
-      .attr("class", "focus-hover")
-      .style("display", "none")
+      .attr('class', 'focus-hover')
+      .style('display', 'none')
 
-    focusHover.append('svg:circle')
-      .attr('r', 6)
+    focusHover.append('svg:circle').attr('r', 6)
 
-    focusHover.append("rect")
-      .attr("class", "tooltip-hover")
-      .attr("width", 100)
-      .attr("height", 50)
-      .attr("x", 10)
-      .attr("y", -22)
-      .attr("rx", 4)
-      .attr("ry", 4);
+    focusHover
+      .append('rect')
+      .attr('class', 'tooltip-hover')
+      .attr('width', 130)
+      .attr('height', 50 + 18 * (keys?.length || 0))
+      .attr('x', 10)
+      .attr('y', -22)
+      .attr('rx', 4)
+      .attr('ry', 4)
 
-    focusHover.append("text")
-      .attr("class", "tooltip-date")
-      .attr("x", 18)
-      .attr("y", -2);
-    focusHover.append("text")
-      .attr("class", "tooltip-flow")
-      .attr("x", 18)
-      .attr("y", 16);
+    focusHover
+      .append('text')
+      .attr('class', 'tooltip-date')
+      .attr('x', 18)
+      .attr('y', -2)
+    focusHover
+      .append('text')
+      .attr('class', 'tooltip-flow')
+      .attr('x', 18)
+      .attr('y', 16)
 
-    focus.append("rect")
-      .attr("class", "overlay")
-      .attr("width", width)
-      .attr("height", height)
-      .on("mouseover", function() { focusHover.style("display", null); })
-      .on("mouseout", function() { focusHover.style("display", "none"); })
-      .on("mousemove", mousemove);
+    keys.forEach((key, index) => {
+      focusHover
+        .append('text')
+        .attr('class', `tooltip-${key}`)
+        .attr('x', 18)
+        .attr('y', 16 + 18 * (index + 1))
+    })
 
+    focus
+      .append('rect')
+      .attr('class', 'overlay')
+      .attr('width', width)
+      .attr('height', height)
+      .on('mouseover', function () {
+        focusHover.style('display', null)
+      })
+      .on('mouseout', function () {
+        focusHover.style('display', 'none')
+      })
+      .on('mousemove', mousemove)
 
-    var bisectDate = d3.bisector(function(d) { return d.date; }).left;
+    var bisectDate = d3.bisector(function (d) {
+      return d.date
+    }).left
+
+    var data = this.data
 
     function mousemove() {
       var x0 = xScale.invert(d3.mouse(this)[0]),
         i = bisectDate(data, x0, 1),
         d0 = data[i - 1],
-        d1 = data[i];
+        d1 = data[i]
       if (d0 && d1) {
-        var d = x0 - d0.date > d1.date - x0 ? d1 : d0;
-        focusHover.attr("transform", "translate(" + xScale(d.date) + "," + yScale(d.close) + ")");
-        focus.select(".tooltip-date").text(d.date.toLocaleDateString());
-        focus.select(".tooltip-flow").text('Flow: ' + Math.round(d.close));
+        var d = x0 - d0.date > d1.date - x0 ? d1 : d0
+        focusHover.attr(
+          'transform',
+          'translate(' + xScale(d.date) + ',' + yScale(d.close) + ')'
+        )
+        focus.select('.tooltip-date').text(d.date.toLocaleDateString())
+        focus.select('.tooltip-flow').text('flow: ' + Math.round(d.close))
+        keys.forEach((key) =>
+          focus.select(`.tooltip-${key}`).text(`${key}: ${Math.round(d[key])}`)
+        )
       }
     }
-
   }
 
   // Add selection control
@@ -641,7 +589,7 @@ Chart = function (options) {
     // draw chart
     context
       .append('path')
-      .datum(data)
+      .datum(this.data)
       .attr('class', 'line2')
       .attr('d', line2)
       .style('clip-path', 'url(#' + clip_id + ')')
@@ -968,17 +916,9 @@ Chart = function (options) {
     /*
      * updates chart to X domain
      */
-    focus
-      .select('.line')
-      .attr('d', line)
+    focus.select('.line').attr('d', line)
 
-    focus
-      .select('.medianLine')
-      .attr('d', medianLine)
-
-    this.updateSecondLine()
-    this.updateVarianceArea()
-
+    this.redrawSeries()
 
     /*
      * updates X axis to X domain
@@ -1001,7 +941,6 @@ Chart = function (options) {
   }
 
   this.update = function (startDate, endDate) {
-    console.log('update')
     if (!isDateValid(startDate)) {
       startDate = brush.empty()
         ? x2Scale.domain()[0].yyyymmdd()
@@ -1102,16 +1041,8 @@ Chart = function (options) {
       .attr('d', line)
       .style('clip-path', 'url(#' + clip_id + ')')
 
-    focus
-      .select('.medianLine')
-      .attr('d', medianLine)
-      .style('clip-path', 'url(#' + clip_id + ')')
-
-    /*
-     * updates X axis to X domain
-     */
+    this.redrawSeries()
     focus.select('.x.axis').call(xAxis)
-
   }
 
   this.resize = function () {
@@ -1136,11 +1067,7 @@ Chart = function (options) {
       .attr('d', line)
       .style('clip-path', 'url(#' + clip_id + ')')
 
-    focus
-      .select('.medianLine')
-      .attr('d', medianLine)
-      .style('clip-path', 'url(#' + clip_id + ')')
-
+    this.redrawSeries()
     context
       .select('.line2')
       .attr('d', line2)
@@ -1151,7 +1078,6 @@ Chart = function (options) {
     // updates X axis to X domain
     focus.select('.x.axis').call(xAxis)
     context.select('.x.axis').call(xAxis2)
-
   }
 
   this.getDomain = function () {
@@ -1168,31 +1094,65 @@ Chart = function (options) {
     $(this.container[0]).empty()
   }
 
-  this.addRange = function(top, bottom, dates) {
-    const data = top.map((_, index) => {
-      return {
-        date: format.parse(dates[index]),
-        top: top[index],
-        bottom: bottom[index],
-      }
-    })
+  this.addSerie = function (serie, dates) {
+    const { type, name, className } = serie
+    let svg, data
+    switch (type) {
+      case 'range':
+        const { top, bottom } = serie
+        data = dates.map((_, index) => {
+          this.data[index][name] = top[index] - this.data[index].close
+          return {
+            date: format.parse(dates[index]),
+            top: top[index],
+            bottom: bottom[index],
+          }
+        })
+        svg = d3.svg
+          .area()
+          .interpolate('monotone')
+          .x(function (d) {
+            return xScale(d.date)
+          })
+          .y0(function (d) {
+            return yScale(d.bottom)
+          })
+          .y1(function (d) {
+            return yScale(d.top)
+          })
+        break
+      case 'line':
+        data = dates.map((value, index) => {
+          const data = serie.data[index]
+          this.data[index][name] = data
+          return {
+            date: format.parse(dates[index]),
+            data,
+          }
+        })
+        svg = d3.svg
+          .line()
+          .x(function (d) {
+            return xScale(d.date)
+          })
+          .y(function (d) {
+            return yScale(d.data)
+          })
+        break
+    }
 
-    this.varianceArea = d3.svg.area().interpolate("monotone")
-      .x(function (d) {
-        return xScale(d.date)
-      })
-      .y0(function (d) {
-        return yScale(d.bottom)
-      })
-      .y1(function (d) {
-        return yScale(d.top)
-      })
-
+    series = {
+      ...series,
+      [name]: {
+        ...serie,
+        svg,
+      },
+    }
     focus
       .append('path')
       .datum(data)
-      .attr('class', 'variance-area')
-      .attr('d', this.varianceArea)
+      .attr('class', className)
+      .attr('d', svg)
       .style('clip-path', 'url(#' + clip_id + ')')
   }
 
@@ -1306,26 +1266,13 @@ Chart = function (options) {
     }
   }
 
-  // Adapt scale of second line
-  this.updateSecondLine = function () {
-    focus
-      .select('.secondLine')
-      .attr('d', this.secondLine)
-      .style('clip-path', 'url(#' + clip_id + ')')
-  }
-
-  this.updateVarianceArea = function () {
-    focus
-      .select('.variance-area')
-      .attr('d', this.varianceArea)
-      .style('clip-path', 'url(#' + clip_id + ')')
+  this.redrawSeries = function () {
+    Object.keys(series).forEach((name) => {
+      const serie = series[name]
+      focus
+        .select(`.${serie.className}`)
+        .attr('d', serie.svg)
+        .style('clip-path', 'url(#' + clip_id + ')')
+    })
   }
 }
-
-/*window.addEventListener("resize", function () {
-    var width = $("#chart").width();
-    charts[0].resize();
-}, false);*/
-
-// test
-//c = new Chart().read(JSONData).draw().addControl();

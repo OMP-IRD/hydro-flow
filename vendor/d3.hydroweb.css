@@ -27,15 +27,6 @@ body {
   z-index: 10;
 }
 
-.variance-area {
-  fill: lightgray;
-  stroke: lightgray; /*steelblue;*/
-  opacity: 0.5; /*steelblue;*/
-  stroke-width: 2.0px;
-  clip-path: url(#clip);
-  z-index: 10;
-}
-
 .medianLine {
   stroke: red;
   clip-path: url(#clip);
@@ -110,7 +101,7 @@ body {
 }
 
 .yaxis_left text {
-  /*display: none;*/
+  font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
 }
 
 .focus .yaxis text {
@@ -164,7 +155,7 @@ text {
 
 .focus-hover {
   clip-path: url(#clip);
-
+  text-transform: capitalize;
 }
 .focus-hover circle {
   fill: steelblue;
@@ -181,4 +172,7 @@ text {
 
 .tooltip-date, .tooltip-likes {
   font-weight: bold;
+}
+.tooltip-flow {
+  fill: #1f77b4;
 }

@@ -60,30 +60,56 @@ export class ChartContainerComponent
       this.dataFacade.stationData$
         .pipe(
           filter((data) => !!data),
-          map((stationData) => this.chartMapper.toChart(stationData, initialState.dataSerie))
+          map((stationData) =>
+            this.chartMapper.toChart(stationData, initialState.dataSerie)
+          )
         )
         .subscribe((chartData) => {
+          const tooltipKeys = []
           this.chart = new Chart({
             renderTo: this.chartElt.nativeElement,
             y_title: 'Flow',
             x_title: 'Date',
-            drawCircles: false
+            drawCircles: false,
           })
             .read(chartData)
             .draw()
             .addControl()
-          if(chartData.variance?.length > 0) {
-            const range = chartData.h.reduce((output, waterHeight, index)=> {
-              const variance = chartData.variance[index]
-              output.top.push(waterHeight + variance)
-              output.bottom.push(waterHeight - variance)
-              return output
-            }, {top: [], bottom:[]})
-            this.chart.addRange(range.top, range.bottom, chartData.dates)
+          if (chartData.variance?.length > 0) {
+            const range = chartData.h.reduce(
+              (output, waterHeight, index) => {
+                const variance = chartData.variance[index]
+                output.top.push(waterHeight + variance)
+                output.bottom.push(waterHeight - variance)
+                return output
+              },
+              { top: [], bottom: [] }
+            )
+            this.chart.addSerie(
+              {
+                ...range,
+                name: 'variance',
+                type: 'range',
+                className: 'variance-area',
+              },
+              chartData.dates
+            )
+            tooltipKeys.push('variance')
           }
-          this.chart.addTooltip()
+          if (chartData.expected?.length > 0) {
+            this.chart.addSerie(
+              {
+                data: chartData.expected,
+                name: 'expected',
+                type: 'line',
+                className: 'expected-line',
+              },
+              chartData.dates
+            )
+            tooltipKeys.push('expected')
+          }
+          this.chart.addTooltip(tooltipKeys)
         })
-
     )
   }
 

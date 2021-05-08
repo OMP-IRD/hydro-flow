@@ -10,10 +10,10 @@ export class ChartMapper {
       (output, input) => {
         output.dates.push(input.date)
         output.h.push(input.flow)
-        if(input.flow_mad) {
+        if (input.flow_mad !== undefined) {
           output.variance.push(input.flow_mad)
         }
-        if(input.expected) {
+        if (input.expected !== undefined) {
           output.expected.push(input.expected)
         }
         return output
