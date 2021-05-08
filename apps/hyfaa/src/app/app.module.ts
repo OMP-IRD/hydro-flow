@@ -17,7 +17,8 @@ import { AppComponent } from './app.component'
 import { ChartContainerComponent } from './components/chart-container/chart-container.component'
 import { LegendContainerComponent } from './components/legend-container/legend-container.component'
 import { MapContainerComponent } from './components/map-container/map-container.component'
-import { RiverSegmentOverlayComponent } from './layers/river-segment-overlay/river-segment-overlay.component'
+import { RiverSegmentOverlayComponent } from './layers/river-segment-overlay/river-segment-overlay.component';
+import { SerieSelectorComponent } from './components/serie-selector/serie-selector.component'
 
 export const API_URL = '/api/v1'
 
@@ -28,6 +29,7 @@ export const API_URL = '/api/v1'
     RiverSegmentOverlayComponent,
     LegendContainerComponent,
     ChartContainerComponent,
+    SerieSelectorComponent,
   ],
   imports: [
     BrowserModule,

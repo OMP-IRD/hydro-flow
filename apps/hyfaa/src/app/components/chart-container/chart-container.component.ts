@@ -8,11 +8,13 @@ import {
 } from '@angular/core'
 import {
   ChartMapper,
+  HyfaaDataSerie,
   StationDataFacade,
   StationsFacade,
 } from '@hydro-flow/feature/hydro'
 import { Subscription } from 'rxjs'
-import { filter, map } from 'rxjs/operators'
+import { filter, map, mergeMap, take } from 'rxjs/operators'
+import { HyfaaFacade } from '../../+state/hyfaa.facade'
 import { initialState } from '../../+state/hyfaa.reducer'
 
 declare var Chart: any
@@ -34,6 +36,7 @@ export class ChartContainerComponent
   constructor(
     public dataFacade: StationDataFacade,
     public stationsFacade: StationsFacade,
+    public hyfaaFacade: HyfaaFacade,
     private chartMapper: ChartMapper
   ) {}
 
@@ -60,12 +63,20 @@ export class ChartContainerComponent
       this.dataFacade.stationData$
         .pipe(
           filter((data) => !!data),
-          map((stationData) =>
-            this.chartMapper.toChart(stationData, initialState.dataSerie)
+          mergeMap((stationData) =>
+            this.hyfaaFacade.dataSerie$.pipe(
+              take(1),
+              map((dataSerie) =>
+                this.chartMapper.toChart(stationData, dataSerie)
+              )
+            )
           )
         )
         .subscribe((chartData) => {
           const tooltipKeys = []
+          if (this.chart) {
+            this.chart.destroy()
+          }
           this.chart = new Chart({
             renderTo: this.chartElt.nativeElement,
             y_title: 'Flow',
@@ -111,6 +122,10 @@ export class ChartContainerComponent
           this.chart.addTooltip(tooltipKeys)
         })
     )
+  }
+
+  onDataSerieChange(serieType: HyfaaDataSerie): void {
+    this.hyfaaFacade.setDataSerie(serieType)
   }
 
   close() {
