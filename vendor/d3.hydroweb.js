@@ -336,11 +336,6 @@ Chart = function (options) {
           values.push({
             date: format.parse(json.dates[index]),
             close: yValue,
-            yError: yError,
-            yUncert: yUncert,
-            yMedian: median,
-            yDecilMax: decilMax,
-            yDecilMin: decilMin,
           })
         }
       })
@@ -446,32 +441,6 @@ Chart = function (options) {
       .attr('transform', 'rotate(-90)')
       .text(y_title)
       .attr('class', 'axis_title')
-
-    /*
-     * Draw chart line
-     */
-    /*
-    focus
-      .append('path')
-      .datum(this.data)
-      .attr('class', 'medianLine')
-      .attr('d', medianLine)
-      .style('clip-path', 'url(#' + clip_id + ')')
-
-    focus
-      .append('path')
-      .datum(this.data)
-      .attr('class', 'decilMax')
-      .attr('d', decilMax)
-      .style('clip-path', 'url(#' + clip_id + ')')
-
-    focus
-      .append('path')
-      .datum(this.data)
-      .attr('class', 'decilMin')
-      .attr('d', decilMin)
-      .style('clip-path', 'url(#' + clip_id + ')')
-*/
 
     focus
       .append('path')
@@ -1046,7 +1015,6 @@ Chart = function (options) {
   }
 
   this.resize = function () {
-    console.log('resize')
     // update width
     width = $('#chart').width()
     width = width - margin.left - margin.right
@@ -1091,6 +1059,8 @@ Chart = function (options) {
   }
 
   this.destroy = function () {
+    $('#startDate').unbind()
+    $('#endDate').unbind()
     $(this.container[0]).empty()
   }
 
@@ -1215,10 +1185,31 @@ Chart = function (options) {
   }
 
   this.scaleYDomain = function () {
-    yDomain = [
-      Math.min(yDomainLimimts.min1, yDomainLimimts.min2),
-      Math.max(yDomainLimimts.max1, yDomainLimimts.max2),
-    ]
+    yDomainLimimts.min1 = d3.min(this.data, function (d) {
+      const { date, close, ...values } = d
+      const min = Object.keys(values).reduce((min, key) => {
+        const value = values[key]
+        return Math.min(
+          min,
+          series[key].type === 'range' ? d.close - value : value
+        )
+      }, d.close)
+      return min
+    })
+    yDomainLimimts.max1 = d3.max(this.data, function (d) {
+      const { date, close, ...values } = d
+      const max = Object.keys(values).reduce((max, key) => {
+        const value = values[key]
+        return Math.max(
+          max,
+          series[key].type === 'range' ? d.close + value : value
+        )
+      }, d.close)
+      return max
+    })
+
+    yDomain = [yDomainLimimts.min1, yDomainLimimts.max1]
+
     if (yDomain[0] == yDomain[1]) {
       yDomain[0] -= 1
       yDomain[1] += 1
@@ -1274,5 +1265,9 @@ Chart = function (options) {
         .attr('d', serie.svg)
         .style('clip-path', 'url(#' + clip_id + ')')
     })
+    focus
+      .select('.line')
+      .attr('d', line)
+      .style('clip-path', 'url(#' + clip_id + ')')
   }
 }

@@ -85,7 +85,6 @@ export class ChartContainerComponent
           })
             .read(chartData)
             .draw()
-            .addControl()
           if (chartData.variance?.length > 0) {
             const range = chartData.h.reduce(
               (output, waterHeight, index) => {
@@ -119,6 +118,10 @@ export class ChartContainerComponent
             )
             tooltipKeys.push('expected')
           }
+          this.chart.scaleYDomain()
+          this.chart.scaleXDomain()
+          this.chart.addControl()
+          this.chart.redrawSeries()
           this.chart.addTooltip(tooltipKeys)
         })
     )

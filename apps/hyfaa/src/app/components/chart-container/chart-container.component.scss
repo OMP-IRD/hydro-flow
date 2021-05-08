@@ -8,6 +8,9 @@ $variance-color:  lightgray;
 .modal-content {
   border-radius: 0;
 }
+.form-group {
+  width: 30%;
+}
 
 ::ng-deep {
   .expected-line {
