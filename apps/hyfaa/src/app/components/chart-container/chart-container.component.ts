@@ -15,7 +15,6 @@ import {
 import { Subscription } from 'rxjs'
 import { filter, map, mergeMap, take } from 'rxjs/operators'
 import { HyfaaFacade } from '../../+state/hyfaa.facade'
-import { initialState } from '../../+state/hyfaa.reducer'
 
 declare var Chart: any
 declare var bootstrap: any
@@ -31,6 +30,10 @@ export class ChartContainerComponent
   @ViewChild('chartModal') chartModal: ElementRef
   bsModal: any
   chart: any
+  chartHeight = 500
+  get chartHeightStyle(): string {
+    return `${this.chartHeight}px`
+  }
   subscription = new Subscription()
 
   constructor(
@@ -54,6 +57,16 @@ export class ChartContainerComponent
     })
 
     this.subscription.add(
+      this.dataFacade.loaded$
+        .pipe(filter((loaded) => !loaded))
+        .subscribe((loaded) => {
+          if (this.chart) {
+            this.chart.destroy()
+          }
+        })
+    )
+
+    this.subscription.add(
       this.stationsFacade.selectedStations$.subscribe((station) =>
         station ? this.bsModal.show() : this.bsModal.hide()
       )
@@ -74,9 +87,6 @@ export class ChartContainerComponent
         )
         .subscribe((chartData) => {
           const tooltipKeys = []
-          if (this.chart) {
-            this.chart.destroy()
-          }
           this.chart = new Chart({
             renderTo: this.chartElt.nativeElement,
             y_title: 'Flow',

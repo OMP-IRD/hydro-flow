@@ -12,7 +12,7 @@ export interface AppState {
 }
 
 export const initialState: AppState = {
-  dataSerie: 'assimilated',
+  dataSerie: 'mgbstandard',
 }
 
 const hyfaaReducer = createReducer(

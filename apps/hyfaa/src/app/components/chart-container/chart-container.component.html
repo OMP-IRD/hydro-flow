@@ -1,5 +1,5 @@
 <div
-  class="modal fade"
+  class="modal"
   id="chartModal"
   #chartModal
   aria-labelledby="staticBackdropLabel"
@@ -27,7 +27,16 @@
         ></button>
       </div>
       <div class="modal-body">
-        <div #chartElt class="chart-container mt-4"></div>
+        <div
+          class="chart-container mt-4 text-center align-middle"
+          [style.height]="chartHeightStyle"
+        >
+          <div #chartElt></div>
+          <span
+            class="fa fa-circle-notch fa-spin fa-4x"
+            *ngIf="!(dataFacade.loaded$ | async)"
+          ></span>
+        </div>
         <form id="selectDate" class="mt-4 container-fluid">
           <div class="d-flex row pt-4 pb-4 justify-content-evenly">
             <div class="form-group">
