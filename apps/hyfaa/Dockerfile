@@ -4,7 +4,7 @@ COPY package.json package-lock.json /app/
 WORKDIR /app
 RUN npm ci
 COPY . /app
-RUN npm run build
+RUN npm run build -- --prod
 
 FROM nginx:1.14.2-alpine
 
