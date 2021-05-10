@@ -1,3 +1,4 @@
+import { HyfaaSegmentFocus } from '@hydro-flow/feature/hydro'
 import { Style as GSStyle } from 'geostyler-style'
 
 export const RIVER_SEGMENT_STYLE_GS_WIDTH: GSStyle = {
@@ -386,4 +387,159 @@ export const RIVER_SEGMENT_STYLE_GS_JET: GSStyle = {
   ],
 }
 
-export const RIVER_SEGMENT_STYLE_GS_COLOR: GSStyle = RIVER_SEGMENT_STYLE_GS_JET
+export const RIVER_SEGMENT_STYLE_GS_JET_ANOMALY: GSStyle = {
+  name: 'QGIS Style',
+  rules: [
+    {
+      name: '-1000 - -100',
+      filter: ['&&', ['>=', 'anomaly', -1000], ['<=', 'anomaly', -100]],
+      symbolizers: [
+        {
+          kind: 'Line',
+          opacity: 1,
+          color: '#440154',
+          cap: 'square',
+          join: 'bevel',
+          dasharray: [5, 2],
+          perpendicularOffset: 0,
+          width: 2.46,
+        },
+      ],
+    },
+    {
+      name: '-100 - -50',
+      filter: ['&&', ['>=', 'anomaly', -100], ['<=', 'anomaly', -50]],
+      symbolizers: [
+        {
+          kind: 'Line',
+          opacity: 1,
+          color: '#462C7B',
+          cap: 'square',
+          join: 'bevel',
+          dasharray: [5, 2],
+          perpendicularOffset: 0,
+          width: 2.46,
+        },
+      ],
+    },
+    {
+      name: '-50 - -25',
+      filter: ['&&', ['>=', 'anomaly', -50], ['<=', 'anomaly', -25]],
+      symbolizers: [
+        {
+          kind: 'Line',
+          opacity: 1,
+          color: '#3A528B',
+          cap: 'square',
+          join: 'bevel',
+          dasharray: [5, 2],
+          perpendicularOffset: 0,
+          width: 2.46,
+        },
+      ],
+    },
+    {
+      name: '-25 - -10',
+      filter: ['&&', ['>=', 'anomaly', -25], ['<=', 'anomaly', -10]],
+      symbolizers: [
+        {
+          kind: 'Line',
+          opacity: 1,
+          color: '#2B728E',
+          cap: 'square',
+          join: 'bevel',
+          dasharray: [5, 2],
+          perpendicularOffset: 0,
+          width: 2.46,
+        },
+      ],
+    },
+    {
+      name: '-10 - 10',
+      filter: ['&&', ['>=', 'anomaly', -10], ['<=', 'anomaly', 10]],
+      symbolizers: [
+        {
+          kind: 'Line',
+          opacity: 1,
+          color: '#20908D',
+          cap: 'square',
+          join: 'bevel',
+          dasharray: [5, 2],
+          perpendicularOffset: 0,
+          width: 2.46,
+        },
+      ],
+    },
+    {
+      name: '10 - 25',
+      filter: ['&&', ['>=', 'anomaly', 10], ['<=', 'anomaly', 25]],
+      symbolizers: [
+        {
+          kind: 'Line',
+          opacity: 1,
+          color: '#27AE80',
+          cap: 'square',
+          join: 'bevel',
+          dasharray: [5, 2],
+          perpendicularOffset: 0,
+          width: 2.46,
+        },
+      ],
+    },
+    {
+      name: '25 - 50',
+      filter: ['&&', ['>=', 'anomaly', 25], ['<=', 'anomaly', 50]],
+      symbolizers: [
+        {
+          kind: 'Line',
+          opacity: 1,
+          color: '#5DC962',
+          cap: 'square',
+          join: 'bevel',
+          dasharray: [5, 2],
+          perpendicularOffset: 0,
+          width: 2.46,
+        },
+      ],
+    },
+    {
+      name: '50 - 100',
+      filter: ['&&', ['>=', 'anomaly', 50], ['<=', 'anomaly', 100]],
+      symbolizers: [
+        {
+          kind: 'Line',
+          opacity: 1,
+          color: '#ABDC32',
+          cap: 'square',
+          join: 'bevel',
+          dasharray: [5, 2],
+          perpendicularOffset: 0,
+          width: 2.46,
+        },
+      ],
+    },
+    {
+      name: '100 - 1000',
+      filter: ['&&', ['>=', 'anomaly', 100], ['<=', 'anomaly', 1000]],
+      symbolizers: [
+        {
+          kind: 'Line',
+          opacity: 1,
+          color: '#FDE725',
+          cap: 'square',
+          join: 'bevel',
+          dasharray: [5, 2],
+          perpendicularOffset: 0,
+          width: 2.46,
+        },
+      ],
+    },
+  ],
+}
+
+export const RIVER_SEGMENT_STYLE_GS_COLOR: {
+  [key in HyfaaSegmentFocus]: GSStyle
+} = {
+  flow: RIVER_SEGMENT_STYLE_GS_JET,
+  flow_anomaly: RIVER_SEGMENT_STYLE_GS_JET_ANOMALY,
+}

@@ -1,1 +1,11 @@
-<p>legend-container works!</p>
+<ui-legend
+  [spec]="stationLegend"
+  (changeVisibility)="onStationVisibilityToggle($event)"
+  [visible]="stationVisibility"
+></ui-legend>
+<hyfaa-segment-legend
+  (changeVisibility)="onSegmentVisibilityToggle($event)"
+  [focus]="facade.segmentFocus$ | async"
+  [visible]="segmentVisibility"
+  (changeFocus)="onFocusChange($event)"
+></hyfaa-segment-legend>

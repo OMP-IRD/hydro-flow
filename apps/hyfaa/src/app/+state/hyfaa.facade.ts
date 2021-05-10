@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { HyfaaDataSerie } from '@hydro-flow/feature/hydro'
+import { HyfaaDataSerie, HyfaaSegmentFocus } from '@hydro-flow/feature/hydro'
 
 import { select, Store } from '@ngrx/store'
 import { distinctUntilChanged } from 'rxjs/operators'
@@ -10,6 +10,7 @@ import * as HyfaaSelectors from './hyfaa.selectors'
 export class HyfaaFacade {
   dates$ = this.store.pipe(select(HyfaaSelectors.getHyfaaDates))
   dataSerie$ = this.store.pipe(select(HyfaaSelectors.getDataSerie))
+  segmentFocus$ = this.store.pipe(select(HyfaaSelectors.getSegmentFocus))
   currentDate$ = this.store.pipe(
     select(HyfaaSelectors.getHyfaaDate),
     distinctUntilChanged()
@@ -27,5 +28,8 @@ export class HyfaaFacade {
 
   setDataSerie(dataSerie: HyfaaDataSerie): void {
     this.store.dispatch(HyfaaActions.setDataSerie({ dataSerie }))
+  }
+  setSegmentFocus(segmentFocus: HyfaaSegmentFocus): void {
+    this.store.dispatch(HyfaaActions.setSegmentFocus({ segmentFocus }))
   }
 }

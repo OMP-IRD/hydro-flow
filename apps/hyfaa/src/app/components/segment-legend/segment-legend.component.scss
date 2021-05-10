@@ -1,0 +1,23 @@
+.legend {
+  font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+}
+.legend div span {
+  border-radius: 50%;
+  display: inline-block;
+  height: 10px;
+  margin-right: 5px;
+  width: 10px;
+}
+
+.label {
+  font-size: 1rem;
+}
+.title {
+  &:hover {
+    cursor: pointer;
+    color: #3c3d3e;
+  }
+}
+.form-check {
+  min-height: 1rem;
+}

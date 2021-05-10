@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
+import { HyfaaSegmentFocus } from '@hydro-flow/feature/hydro'
 import { matchFilter } from '@hydro-flow/feature/map'
 import OpenlayersParser from 'geostyler-openlayers-parser'
 import QGISParser from 'geostyler-qgis-parser'
@@ -42,6 +43,7 @@ export class RiverSegmentLayer {
   colorStyleFn: (feature, resolution) => undefined
   widthStyleFn: (feature, resolution) => undefined
   currentDate: string
+  segmentFocus: HyfaaSegmentFocus
 
   constructor(
     private http: HttpClient,
@@ -83,6 +85,7 @@ export class RiverSegmentLayer {
           feature.set('values', JSON.parse(feature.get('values')))
         )
     })
+    this.parseQgisStyle('style_anomalie_viridis')
 
     /*
 // Load styles function from Geostyler QML
@@ -103,6 +106,11 @@ export class RiverSegmentLayer {
         this.currentDate = date
         this.layer.changed()
       })
+
+    this.facade.segmentFocus$.pipe().subscribe((focus) => {
+      this.segmentFocus = focus
+      this.layer.changed()
+    })
 
     // this.parseQgisStyle('style_debit_jetcustom')
   }
@@ -134,14 +142,14 @@ export class RiverSegmentLayer {
       }
     }
 
-    rules = RIVER_SEGMENT_STYLE_GS_COLOR.rules
-    const flow = feature
+    rules = RIVER_SEGMENT_STYLE_GS_COLOR[this.segmentFocus].rules
+    const focus = feature
       .get('values')
-      .find((value) => value.date === this.currentDate).flow
+      .find((value) => value.date === this.currentDate)[this.segmentFocus]
     for (let i = 0; i < rules.length; i++) {
       const rule = rules[i]
       const { filter } = rule
-      if (matchFilter(flow, filter)) {
+      if (matchFilter(focus, filter)) {
         styleColor = (rule.symbolizers[0] as LineSymbolizer).color
         break
       }

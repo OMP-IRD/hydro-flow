@@ -14,28 +14,6 @@ import { MapManagerService } from '../../map/map-manager.service'
   styleUrls: ['./map-container.component.scss'],
 })
 export class MapContainerComponent implements OnInit {
-  segmentLegend: LegendSpec = {
-    title: 'Segments',
-    description: 'by daily flow',
-    rules: geostylerToLegend(RIVER_SEGMENT_STYLE_GS_JET),
-  }
-  stationLegend: LegendSpec = {
-    title: 'Stations',
-    rules: [
-      {
-        label: 'Locations of interest',
-        color: STATION_COLOR,
-      },
-    ],
-  }
-
-  get segmentVisibility(): boolean {
-    return this.riverLayer.getLayer().getVisible()
-  }
-  get stationVisibility(): boolean {
-    return this.stationLayer.getLayer().getVisible()
-  }
-
   constructor(
     public mapManager: MapManagerService,
     private riverLayer: RiverSegmentLayer,
@@ -55,13 +33,5 @@ export class MapContainerComponent implements OnInit {
     this.facade.dates$
       .pipe(take(1))
       .subscribe((dates) => this.facade.setCurrentDate(dates[index]))
-  }
-
-  onStationVisibilityToggle(visible: boolean): void {
-    this.stationLayer.getLayer().setVisible(visible)
-  }
-
-  onSegmentVisibilityToggle(visible: boolean): void {
-    this.riverLayer.getLayer().setVisible(visible)
   }
 }

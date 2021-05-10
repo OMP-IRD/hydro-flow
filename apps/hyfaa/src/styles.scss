@@ -11,3 +11,7 @@ html, body {
 .dropdown-item.active, .dropdown-item:active {
   background-color: var(--bs-gray-dark);
 }
+.form-check-input:checked {
+  background-color: var(--bs-gray-dark);
+  border-color: var(--bs-gray-dark);
+}

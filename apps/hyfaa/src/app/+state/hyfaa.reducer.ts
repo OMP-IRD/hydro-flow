@@ -1,4 +1,4 @@
-import { HyfaaDataSerie } from '@hydro-flow/feature/hydro'
+import { HyfaaDataSerie, HyfaaSegmentFocus } from '@hydro-flow/feature/hydro'
 import { Action, createReducer, on } from '@ngrx/store'
 
 import * as HyfaaActions from './hyfaa.actions'
@@ -9,10 +9,12 @@ export interface AppState {
   dates?: Date[]
   date?: Date
   dataSerie: HyfaaDataSerie
+  segmentFocus: HyfaaSegmentFocus
 }
 
 export const initialState: AppState = {
   dataSerie: 'mgbstandard',
+  segmentFocus: 'flow',
 }
 
 const hyfaaReducer = createReducer(
@@ -22,6 +24,10 @@ const hyfaaReducer = createReducer(
   on(HyfaaActions.setDataSerie, (state, { dataSerie }) => ({
     ...state,
     dataSerie,
+  })),
+  on(HyfaaActions.setSegmentFocus, (state, { segmentFocus }) => ({
+    ...state,
+    segmentFocus,
   }))
 )
 

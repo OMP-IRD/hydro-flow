@@ -25,16 +25,7 @@
   </ng-container>
 </div>
 <div class="position-absolute legend-container bg-white px-2 small shadow-sm">
-  <ui-legend
-    [spec]="stationLegend"
-    (changeVisibility)="onStationVisibilityToggle($event)"
-    [visible]="stationVisibility"
-  ></ui-legend>
-  <ui-legend
-    [spec]="segmentLegend"
-    (changeVisibility)="onSegmentVisibilityToggle($event)"
-    [visible]="segmentVisibility"
-  ></ui-legend>
+  <hyfaa-legend-container></hyfaa-legend-container>
 </div>
 <div class="">
   <hyfaa-chart-container></hyfaa-chart-container>

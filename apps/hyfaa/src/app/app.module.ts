@@ -18,7 +18,8 @@ import { ChartContainerComponent } from './components/chart-container/chart-cont
 import { LegendContainerComponent } from './components/legend-container/legend-container.component'
 import { MapContainerComponent } from './components/map-container/map-container.component'
 import { RiverSegmentOverlayComponent } from './layers/river-segment-overlay/river-segment-overlay.component';
-import { SerieSelectorComponent } from './components/serie-selector/serie-selector.component'
+import { SerieSelectorComponent } from './components/serie-selector/serie-selector.component';
+import { SegmentLegendComponent } from './components/segment-legend/segment-legend.component'
 
 export const API_URL = '/api/v1'
 
@@ -30,6 +31,7 @@ export const API_URL = '/api/v1'
     LegendContainerComponent,
     ChartContainerComponent,
     SerieSelectorComponent,
+    SegmentLegendComponent,
   ],
   imports: [
     BrowserModule,

@@ -17,3 +17,8 @@ export const getDataSerie = createSelector(
   getHyfaaState,
   (state: AppState) => state.dataSerie
 )
+
+export const getSegmentFocus = createSelector(
+  getHyfaaState,
+  (state: AppState) => state.segmentFocus
+)
