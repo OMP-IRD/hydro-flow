@@ -36,7 +36,7 @@ $variance-color:  lightgray;
   .forecast-line {
     fill: none;
     stroke: white;
-    stroke-width: 4px;
+    stroke-width: 5px;
     stroke-dasharray: 10 10;
     clip-path: url(#clip);
     z-index: 10;

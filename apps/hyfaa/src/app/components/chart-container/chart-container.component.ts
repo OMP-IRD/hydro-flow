@@ -99,6 +99,17 @@ export class ChartContainerComponent
           })
             .read(chartData)
             .draw()
+          if(chartData.dataSerie === 'forecast') {
+            const todayIndex = chartData.dates.filter(date => new Date(date) < new Date()).length - 1
+            this.chart.addSerie({
+                data: chartData.h.slice(todayIndex),
+                name: 'forecast',
+                type: 'line',
+                className: 'forecast-line',
+              },
+              chartData.dates.slice(todayIndex)
+            )
+          }
           if (chartData.variance?.length > 0) {
             const range = chartData.h.reduce(
               (output, waterHeight, index) => {
@@ -131,18 +142,6 @@ export class ChartContainerComponent
               chartData.dates
             )
             tooltipKeys.push({key:'expected', title: 'History'})
-          }
-          if(chartData.dataSerie === 'forecast') {
-            const todayIndex = chartData.dates.filter(date => new Date(date) < new Date()).length - 1
-            this.chart.addSerie({
-                data: chartData.h.slice(todayIndex),
-                name: 'forecast',
-                type: 'line',
-                className: 'forecast-line',
-              },
-              chartData.dates.slice(todayIndex)
-          )
-
           }
           this.chart.scaleYDomain()
           this.chart.scaleXDomain()

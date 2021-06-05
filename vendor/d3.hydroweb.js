@@ -150,7 +150,7 @@ d3.selection.prototype.last = function () {
 }
 
 Chart = function (options) {
-  var margin = { top: 20, right: 20, bottom: 100, left: 80 }
+  var margin = { top: 10, right: 20, bottom: 100, left: 80 }
   var margin2 = { top: 430, right: 20, bottom: 20, left: 80 }
   var width = 900 - margin.left - margin.right
   var height = 500 - margin.top - margin.bottom
@@ -239,7 +239,7 @@ Chart = function (options) {
 
   // X scale
   var xScale = d3.time.scale().range([0, width]),
-    yScale = d3.scale.linear().range([height, 0 /*height * 0.05*/]),
+    yScale = d3.scale.linear().range([height, height * 0.05 /*height * 0.05*/]),
     x2Scale = d3.time.scale().range([0, width]),
     y2Scale = d3.scale.linear().range([height2, 0])
 
