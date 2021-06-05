@@ -11,6 +11,7 @@ const formatOptions = {
   year: 'numeric',
   month: 'long',
   day: 'numeric',
+  timezone: 'UTC'
 }
 
 @Component({

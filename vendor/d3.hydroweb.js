@@ -520,7 +520,7 @@ Chart = function (options) {
           'transform',
           'translate(' + xScale(d.date) + ',' + yScale(d.close) + ')'
         )
-        focus.select('.tooltip-date').text(d.date.toLocaleDateString())
+        focus.select('.tooltip-date').text(d.date.toLocaleDateString(undefined, {timezone: 'UTC'}))
         focus.select('.tooltip-flow').text('flow: ' + Math.round(d.close))
         tooltipConfig.forEach(({key, title}) =>
           focus.select(`.tooltip-${key}`).text(`${title || key}: ${Math.round(d[key])}`)
