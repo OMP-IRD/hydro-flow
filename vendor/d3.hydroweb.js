@@ -422,25 +422,6 @@ Chart = function (options) {
       .attr('class', 'axis_title')
 
     // draw Y axis
-    focus
-      .append('g')
-      .attr('class', 'y axis')
-      .attr('transform', 'translate(0, 0)')
-      .call(yAxis)
-      .call(customAxis)
-
-    focus
-      .append('g')
-      .attr('class', 'yaxis_left')
-      .attr('transform', 'translate(0, 0)')
-      .call(yAxis_)
-      .append('svg:text')
-      .attr('x', -200)
-      .attr('y', -60)
-      .attr('dy', '.1em')
-      .attr('transform', 'rotate(-90)')
-      .text(y_title)
-      .attr('class', 'axis_title')
 
     focus
       .append('path')
@@ -1216,8 +1197,16 @@ Chart = function (options) {
     }
 
     // Y axis domain (taking into account standard deviation)
+
+
     yScale.domain(yDomain)
     yScale.nice()
+
+    if( focus) {
+      d3.select('g.yaxis_left').remove()
+      this.drawYaxis()
+    }
+
   }
 
   this.scaleXDomain = function () {
@@ -1270,4 +1259,28 @@ Chart = function (options) {
       .attr('d', line)
       .style('clip-path', 'url(#' + clip_id + ')')
   }
+
+  this.drawYaxis = function() {
+    focus
+      .append('g')
+      .attr('class', 'y axis')
+      .attr('transform', 'translate(0, 0)')
+      .call(yAxis)
+      .call(customAxis)
+
+    focus
+      .append('g')
+      .attr('class', 'yaxis_left')
+      .attr('transform', 'translate(0, 0)')
+      .call(yAxis_)
+      .append('svg:text')
+      .attr('x', -200)
+      .attr('y', -60)
+      .attr('dy', '.1em')
+      .attr('transform', 'rotate(-90)')
+      .text(y_title)
+      .attr('class', 'axis_title')
+
+  }
 }
+
