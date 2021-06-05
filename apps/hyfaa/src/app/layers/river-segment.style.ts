@@ -391,8 +391,8 @@ export const RIVER_SEGMENT_STYLE_GS_JET_ANOMALY: GSStyle = {
   name: 'QGIS Style',
   rules: [
     {
-      name: '-1000 - -100',
-      filter: ['&&', ['>=', 'anomaly', -1000], ['<=', 'anomaly', -100]],
+      name: '< -100',
+      filter: ['<=', 'anomaly', -100],
       symbolizers: [
         {
           kind: 'Line',

@@ -89,7 +89,7 @@ export class ChartContainerComponent
           const tooltipKeys = []
           this.chart = new Chart({
             renderTo: this.chartElt.nativeElement,
-            y_title: 'Flow',
+            y_title: 'Flow (m³/sec)',
             x_title: 'Date',
             drawCircles: false,
           })

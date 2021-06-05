@@ -143,9 +143,13 @@ export class RiverSegmentLayer {
     }
 
     rules = RIVER_SEGMENT_STYLE_GS_COLOR[this.segmentFocus].rules
-    const focus = feature
+    let focus = feature
       .get('values')
       .find((value) => value.date === this.currentDate)[this.segmentFocus]
+
+    if(focus === null && this.segmentFocus==='flow_anomaly') {
+      focus = -Infinity
+    }
     for (let i = 0; i < rules.length; i++) {
       const rule = rules[i]
       const { filter } = rule
