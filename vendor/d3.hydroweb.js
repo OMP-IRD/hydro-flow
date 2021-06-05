@@ -452,7 +452,7 @@ Chart = function (options) {
     return this
   }
 
-  this.addTooltip = function (keys) {
+  this.addTooltip = function (tooltipConfig) {
     // hover tooltip + circle
     focusHover = focus
       .append('g')
@@ -465,7 +465,7 @@ Chart = function (options) {
       .append('rect')
       .attr('class', 'tooltip-hover')
       .attr('width', 130)
-      .attr('height', 50 + 18 * (keys?.length || 0))
+      .attr('height', 50 + 18 * (tooltipConfig?.length || 0))
       .attr('x', 10)
       .attr('y', -22)
       .attr('rx', 4)
@@ -482,10 +482,10 @@ Chart = function (options) {
       .attr('x', 18)
       .attr('y', 16)
 
-    keys.forEach((key, index) => {
+    tooltipConfig.forEach((conf, index) => {
       focusHover
         .append('text')
-        .attr('class', `tooltip-${key}`)
+        .attr('class', `tooltip-${conf.key}`)
         .attr('x', 18)
         .attr('y', 16 + 18 * (index + 1))
     })
@@ -522,8 +522,8 @@ Chart = function (options) {
         )
         focus.select('.tooltip-date').text(d.date.toLocaleDateString())
         focus.select('.tooltip-flow').text('flow: ' + Math.round(d.close))
-        keys.forEach((key) =>
-          focus.select(`.tooltip-${key}`).text(`${key}: ${Math.round(d[key])}`)
+        tooltipConfig.forEach(({key, title}) =>
+          focus.select(`.tooltip-${key}`).text(`${title || key}: ${Math.round(d[key])}`)
         )
       }
     }

@@ -114,7 +114,7 @@ export class ChartContainerComponent
               },
               chartData.dates
             )
-            tooltipKeys.push('variance')
+            tooltipKeys.push({key:'variance'})
           }
           if (chartData.expected?.length > 0) {
             this.chart.addSerie(
@@ -126,7 +126,7 @@ export class ChartContainerComponent
               },
               chartData.dates
             )
-            tooltipKeys.push('expected')
+            tooltipKeys.push({key:'expected', title: 'History'})
           }
           this.chart.scaleYDomain()
           this.chart.scaleXDomain()
