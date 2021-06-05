@@ -10,6 +10,7 @@ export enum LayerSpecType {
 export interface LayerSpec {
   type: 'xyz' | 'wms'
   url: string
+  id: string
 }
 
 @Injectable({

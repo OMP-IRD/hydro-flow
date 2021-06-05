@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core'
-import { geostylerToLegend } from '@hydro-flow/feature/map'
-import { LegendSpec } from '@hydro-flow/ui/map'
 import { take } from 'rxjs/operators'
 import { HyfaaFacade } from '../../+state/hyfaa.facade'
 import { RiverSegmentLayer } from '../../layers/river-segment.layer'
-import { RIVER_SEGMENT_STYLE_GS_JET } from '../../layers/river-segment.style'
-import { STATION_COLOR, StationLayer } from '../../layers/station.layer'
+import { StationLayer } from '../../layers/station.layer'
 import { MapManagerService } from '../../map/map-manager.service'
+import SETTINGS from '../../../settings'
 
 @Component({
   selector: 'hyfaa-map-container',
@@ -14,6 +12,8 @@ import { MapManagerService } from '../../map/map-manager.service'
   styleUrls: ['./map-container.component.scss'],
 })
 export class MapContainerComponent implements OnInit {
+  bgLayerConfig = SETTINGS.backgroundLayers
+
   constructor(
     public mapManager: MapManagerService,
     private riverLayer: RiverSegmentLayer,

@@ -30,6 +30,8 @@
 <div class="">
   <hyfaa-chart-container></hyfaa-chart-container>
 </div>
-
+<div class="bg-toggler position-absolute bg-white small shadow-sm">
+  <map-bg-toggler [map]="mapManager.map" [config]="bgLayerConfig"></map-bg-toggler>
+</div>
 <ui-map [map]="mapManager.map"></ui-map>
 <hyfaa-river-segment-overlay></hyfaa-river-segment-overlay>

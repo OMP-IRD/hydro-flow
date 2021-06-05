@@ -20,6 +20,7 @@ import { MapContainerComponent } from './components/map-container/map-container.
 import { RiverSegmentOverlayComponent } from './layers/river-segment-overlay/river-segment-overlay.component';
 import { SerieSelectorComponent } from './components/serie-selector/serie-selector.component';
 import { SegmentLegendComponent } from './components/segment-legend/segment-legend.component'
+import { FeatureMapModule } from '@hydro-flow/feature/map'
 
 export const API_URL = '/api/v1'
 
@@ -39,6 +40,7 @@ export const API_URL = '/api/v1'
     UiTimeModule,
     HttpClientModule,
     FeatureStationsModule,
+    FeatureMapModule,
     StoreModule.forRoot(
       {},
       {
