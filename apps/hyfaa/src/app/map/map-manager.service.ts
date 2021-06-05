@@ -29,6 +29,7 @@ export class MapManagerService {
         constrainResolution: true,
         zoom: 6,
       }),
+      pixelRatio: 1
     })
   }
 
