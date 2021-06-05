@@ -476,9 +476,6 @@ Chart = function (options) {
       .attr('class', 'overlay')
       .attr('width', width)
       .attr('height', height)
-      .on('mouseover', function () {
-        focusHover.style('display', null)
-      })
       .on('mouseout', function () {
         focusHover.style('display', 'none')
       })
@@ -496,6 +493,7 @@ Chart = function (options) {
         d0 = data[i - 1],
         d1 = data[i]
       if (d0 && d1) {
+        focusHover.style('display', null)
         var d = x0 - d0.date > d1.date - x0 ? d1 : d0
         focusHover.attr(
           'transform',
