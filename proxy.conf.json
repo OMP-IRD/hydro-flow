@@ -1,6 +1,12 @@
 {
-  "/": {
-    "target": "http://localhost:80",
-    "secure": false
+  "/api": {
+    "target": "https://mgb-hyfaa.pigeo.fr/",
+    "changeOrigin": true,
+    "secure": true
+  },
+  "/tiles": {
+    "target": "https://mgb-hyfaa.pigeo.fr/",
+    "changeOrigin": true,
+    "secure": true
   }
 }
