@@ -79,8 +79,12 @@ export class ChartContainerComponent
           mergeMap((stationData) =>
             this.hyfaaFacade.dataSerie$.pipe(
               take(1),
-              map((dataSerie) =>
-                this.chartMapper.toChart(stationData, dataSerie)
+              map((dataSerie) => {
+                 return {
+                   ...this.chartMapper.toChart(stationData, dataSerie),
+                   dataSerie
+                 }
+                }
               )
             )
           )
@@ -128,11 +132,24 @@ export class ChartContainerComponent
             )
             tooltipKeys.push({key:'expected', title: 'History'})
           }
+          if(chartData.dataSerie === 'forecast') {
+            const todayIndex = chartData.dates.filter(date => new Date(date) < new Date()).length - 1
+            this.chart.addSerie({
+                data: chartData.h.slice(todayIndex),
+                name: 'forecast',
+                type: 'line',
+                className: 'forecast-line',
+              },
+              chartData.dates.slice(todayIndex)
+          )
+
+          }
           this.chart.scaleYDomain()
           this.chart.scaleXDomain()
           this.chart.addControl()
           this.chart.redrawSeries()
           this.chart.addTooltip(tooltipKeys)
+
         })
     )
   }

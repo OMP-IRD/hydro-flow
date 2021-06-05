@@ -33,6 +33,15 @@ $variance-color:  lightgray;
     z-index: 10;
   }
 
+  .forecast-line {
+    fill: none;
+    stroke: white;
+    stroke-width: 4px;
+    stroke-dasharray: 10 10;
+    clip-path: url(#clip);
+    z-index: 10;
+  }
+
   .tooltip-expected {
     fill : $expected-color;
   }
