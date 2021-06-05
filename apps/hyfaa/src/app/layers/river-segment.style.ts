@@ -519,8 +519,8 @@ export const RIVER_SEGMENT_STYLE_GS_JET_ANOMALY: GSStyle = {
       ],
     },
     {
-      name: '100 - 1000',
-      filter: ['&&', ['>=', 'anomaly', 100], ['<=', 'anomaly', 1000]],
+      name: '> 100',
+      filter: ['>=', 'anomaly', 100],
       symbolizers: [
         {
           kind: 'Line',
