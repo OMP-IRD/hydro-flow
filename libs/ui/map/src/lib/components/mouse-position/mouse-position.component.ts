@@ -45,6 +45,7 @@ export class MousePositionComponent implements OnInit, OnChanges {
       undefinedHTML: undefined,
     })
     this.map.addControl(this.control)
+    this.control.setProjection(getProj(this.projection))
   }
 
   ngOnChanges(changes: SimpleChanges) {
