@@ -29,7 +29,7 @@ export class MapManagerService {
         constrainResolution: true,
         zoom: 6,
       }),
-      pixelRatio: 1
+      pixelRatio: 1,
     })
   }
 
@@ -45,7 +45,11 @@ export class MapManagerService {
     const values = JSON.parse(segment.get('values'))
     return values
       .reduce((dates, value) => {
-        return [...dates, new Date(value.date)]
+        const date = new Date(value.date)
+        return [
+          ...dates,
+          new Date(date.getTime() + Math.abs(date.getTimezoneOffset() * 60000)),
+        ]
       }, [])
       .reverse()
   }
