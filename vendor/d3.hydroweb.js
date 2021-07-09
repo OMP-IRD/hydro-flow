@@ -492,17 +492,35 @@ Chart = function (options) {
         i = bisectDate(data, x0, 1),
         d0 = data[i - 1],
         d1 = data[i]
+
+      const tooltipWidth = 150
       if (d0 && d1) {
         focusHover.style('display', null)
         var d = x0 - d0.date > d1.date - x0 ? d1 : d0
+        const offset =
+          xScale(d.date) + tooltipWidth < xScale.range()[1] ? 0 : tooltipWidth
+
+        // move tooltipbox
+        const keys = tooltipConfig.map((conf) => `tooltip-${conf.key}`)
+        ;[...keys, 'tooltip-hover', 'tooltip-date', 'tooltip-flow'].forEach(
+          (d3Id) => {
+            focus
+              .select(`.${d3Id}`)
+              .attr('transform', 'translate(' + -offset + ',0)')
+          }
+        )
         focusHover.attr(
           'transform',
           'translate(' + xScale(d.date) + ',' + yScale(d.close) + ')'
         )
-        focus.select('.tooltip-date').text(d.date.toLocaleDateString(undefined, {timezone: 'UTC'}))
+        focus
+          .select('.tooltip-date')
+          .text(d.date.toLocaleDateString(undefined, { timezone: 'UTC' }))
         focus.select('.tooltip-flow').text('flow: ' + Math.round(d.close))
-        tooltipConfig.forEach(({key, title}) =>
-          focus.select(`.tooltip-${key}`).text(`${title || key}: ${Math.round(d[key])}`)
+        tooltipConfig.forEach(({ key, title }) =>
+          focus
+            .select(`.tooltip-${key}`)
+            .text(`${title || key}: ${Math.round(d[key])}`)
         )
       }
     }
@@ -1196,15 +1214,13 @@ Chart = function (options) {
 
     // Y axis domain (taking into account standard deviation)
 
-
     yScale.domain(yDomain)
     yScale.nice()
 
-    if( focus) {
+    if (focus) {
       d3.select('g.yaxis_left').remove()
       this.drawYaxis()
     }
-
   }
 
   this.scaleXDomain = function () {
@@ -1278,7 +1294,5 @@ Chart = function (options) {
       .attr('transform', 'rotate(-90)')
       .text(y_title)
       .attr('class', 'axis_title')
-
   }
 }
-
