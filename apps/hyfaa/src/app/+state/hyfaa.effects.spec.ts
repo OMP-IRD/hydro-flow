@@ -6,10 +6,10 @@ import { provideMockActions } from '@ngrx/effects/testing'
 import { provideMockStore } from '@ngrx/store/testing'
 
 import { NxModule, DataPersistence } from '@nrwl/angular'
-import { hot } from '@nrwl/angular/testing'
 
 import { HyfaaEffects } from './hyfaa.effects'
 import * as HyfaaActions from './hyfaa.actions'
+import { hot } from 'jasmine-marbles'
 
 describe('HyfaaEffects', () => {
   let actions: Observable<any>

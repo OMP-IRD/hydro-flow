@@ -1,37 +1,87 @@
 {
   "version": 1,
-  "cli": {
-    "defaultCollection": "@nrwl/angular"
-  },
-  "defaultProject": "hyfaa",
-  "schematics": {
-    "@nrwl/angular": {
-      "application": {
-        "linter": "eslint"
-      },
-      "library": {
-        "linter": "eslint"
-      },
-      "storybook-configuration": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/angular:application": {
-      "style": "scss",
-      "linter": "eslint",
-      "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress"
-    },
-    "@nrwl/angular:library": {
-      "style": "scss",
-      "linter": "eslint",
-      "unitTestRunner": "jest"
-    },
-    "@nrwl/angular:component": {
-      "style": "scss"
-    }
-  },
   "projects": {
+    "data-access-hyfaa": {
+      "projectType": "library",
+      "root": "libs/data-access/hyfaa",
+      "sourceRoot": "libs/data-access/hyfaa/src",
+      "prefix": "hydro-flow",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/data-access/hyfaa/src/**/*.ts",
+              "libs/data-access/hyfaa/src/**/*.html"
+            ]
+          },
+          "outputs": ["{options.outputFile}"]
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/data-access/hyfaa"],
+          "options": {
+            "jestConfig": "libs/data-access/hyfaa/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
+    "feature-hydro": {
+      "projectType": "library",
+      "root": "libs/feature/hydro",
+      "sourceRoot": "libs/feature/hydro/src",
+      "prefix": "hydro",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/feature/hydro/src/**/*.ts",
+              "libs/feature/hydro/src/**/*.html"
+            ]
+          },
+          "outputs": ["{options.outputFile}"]
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/feature/hydro"],
+          "options": {
+            "jestConfig": "libs/feature/hydro/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
+    "feature-map": {
+      "projectType": "library",
+      "root": "libs/feature/map",
+      "sourceRoot": "libs/feature/map/src",
+      "prefix": "hydro-flow",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/feature/map/src/**/*.ts",
+              "libs/feature/map/src/**/*.html"
+            ]
+          },
+          "outputs": ["{options.outputFile}"]
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/feature/map"],
+          "options": {
+            "jestConfig": "libs/feature/map/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
     "hyfaa": {
       "projectType": "application",
       "root": "apps/hyfaa",
@@ -117,7 +167,8 @@
               "apps/hyfaa/src/**/*.ts",
               "apps/hyfaa/src/**/*.html"
             ]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         },
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -127,7 +178,8 @@
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": []
     },
     "ui-map": {
       "projectType": "library",
@@ -142,7 +194,8 @@
               "libs/ui/map/src/**/*.ts",
               "libs/ui/map/src/**/*.html"
             ]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         },
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -152,7 +205,8 @@
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": []
     },
     "ui-time": {
       "projectType": "library",
@@ -167,7 +221,8 @@
               "libs/ui/time/src/**/*.ts",
               "libs/ui/time/src/**/*.html"
             ]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         },
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -177,82 +232,8 @@
             "passWithNoTests": true
           }
         }
-      }
-    },
-    "feature-map": {
-      "projectType": "library",
-      "root": "libs/feature/map",
-      "sourceRoot": "libs/feature/map/src",
-      "prefix": "hydro-flow",
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/feature/map/src/**/*.ts",
-              "libs/feature/map/src/**/*.html"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/feature/map"],
-          "options": {
-            "jestConfig": "libs/feature/map/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "data-access-hyfaa": {
-      "projectType": "library",
-      "root": "libs/data-access/hyfaa",
-      "sourceRoot": "libs/data-access/hyfaa/src",
-      "prefix": "hydro-flow",
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/data-access/hyfaa/src/**/*.ts",
-              "libs/data-access/hyfaa/src/**/*.html"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/data-access/hyfaa"],
-          "options": {
-            "jestConfig": "libs/data-access/hyfaa/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "feature-hydro": {
-      "projectType": "library",
-      "root": "libs/feature/hydro",
-      "sourceRoot": "libs/feature/hydro/src",
-      "prefix": "hydro",
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/feature/hydro/src/**/*.ts",
-              "libs/feature/hydro/src/**/*.html"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/feature/hydro"],
-          "options": {
-            "jestConfig": "libs/feature/hydro/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
+      },
+      "tags": []
     }
   }
 }

@@ -6,7 +6,6 @@ import {
 } from './station-data.reducer'
 
 export const getStationDataState = createFeatureSelector<
-  StationDataPartialState,
   State
 >(STATIONDATA_FEATURE_KEY)
 

@@ -1,10 +1,3 @@
-module.exports = {
-  projects: [
-    '<rootDir>/apps/hyfaa',
-    '<rootDir>/libs/ui/map',
-    '<rootDir>/libs/ui/time',
-    '<rootDir>/libs/feature/map',
-    '<rootDir>/libs/data-access/hyfaa',
-    '<rootDir>/libs/feature/hydro',
-  ],
-}
+const { getJestProjects } = require('@nrwl/jest')
+
+module.exports = { projects: getJestProjects() }

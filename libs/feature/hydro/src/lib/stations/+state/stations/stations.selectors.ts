@@ -8,7 +8,6 @@ import {
 
 // Lookup the 'Stations' feature state managed by NgRx
 export const getStationsState = createFeatureSelector<
-  StationsPartialState,
   State
 >(STATIONS_FEATURE_KEY)
 
