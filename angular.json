@@ -90,6 +90,7 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/hyfaa",
             "index": "apps/hyfaa/src/index.html",
@@ -139,20 +140,30 @@
                   "maximumError": "10kb"
                 }
               ]
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "hyfaa:build",
-            "proxyConfig": "proxy.conf.json"
-          },
           "configurations": {
+            "development": {
+              "browserTarget": "hyfaa:build:development",
+              "proxyConfig": "proxy.conf.json"
+            },
             "production": {
               "browserTarget": "hyfaa:build:production"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
