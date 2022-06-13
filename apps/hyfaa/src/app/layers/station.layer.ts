@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core'
 import { StationsFacade } from '@hydro-flow/feature/hydro'
 import { Extent } from 'ol/extent'
 import Feature from 'ol/Feature'
+import { Point } from 'ol/geom'
 import VectorLayer from 'ol/layer/Vector'
 import Map from 'ol/Map'
 import VectorSource from 'ol/source/Vector'
@@ -18,7 +19,7 @@ export const STATION_COLOR = 'rgb(222, 43, 178)'
 })
 export class StationLayer {
   map: Map
-  private layer: VectorLayer
+  private layer: VectorLayer<VectorSource>
   private source: VectorSource
 
   constructor(
@@ -29,7 +30,6 @@ export class StationLayer {
     this.map = this.mapManager.map
 
     this.source = new VectorSource({
-      maxZoom: 14,
       wrapX: false,
     })
 
@@ -48,11 +48,12 @@ export class StationLayer {
 
   private initInteractions_(): void {
     this.map.on('pointermove', (event) => {
+      const target = this.map.getTarget() as HTMLElement
       const hovering = this.getHit(event.pixel)
       if (hovering) {
-        this.map.getTarget().style.cursor = 'pointer'
+        target.style.cursor = 'pointer'
       } else {
-        this.map.getTarget().style.cursor = ''
+        target.style.cursor = ''
       }
     })
     this.map.on('click', (event) => {
@@ -64,12 +65,12 @@ export class StationLayer {
         { layerFilter: (layer) => layer === this.getLayer() }
       )
       if (hit) {
-        this.stationFacade.selectStation(hit.getId())
+        this.stationFacade.selectStation(hit.getId() as number)
       }
     })
   }
 
-  public getLayer(): VectorLayer {
+  public getLayer(): VectorLayer<VectorSource> {
     return this.layer
   }
 

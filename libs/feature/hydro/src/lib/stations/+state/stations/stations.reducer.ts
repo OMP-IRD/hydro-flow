@@ -1,5 +1,5 @@
-import { createReducer, on, Action } from '@ngrx/store'
-import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity'
+import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity'
+import { Action, createReducer, on } from '@ngrx/store'
 import Feature from 'ol/Feature'
 import * as StationsActions from './stations.actions'
 
@@ -16,12 +16,11 @@ export interface StationsPartialState {
 }
 
 function selectId(station: Feature): string {
-  return station.getId()
+  return station.getId() as string
 }
 
-export const stationsAdapter: EntityAdapter<Feature> = createEntityAdapter<Feature>(
-  { selectId }
-)
+export const stationsAdapter: EntityAdapter<Feature> =
+  createEntityAdapter<Feature>({ selectId })
 
 export const initialState: State = stationsAdapter.getInitialState({
   loaded: false,

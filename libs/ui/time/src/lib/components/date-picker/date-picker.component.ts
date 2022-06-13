@@ -11,7 +11,7 @@ const formatOptions = {
   year: 'numeric',
   month: 'long',
   day: 'numeric',
-  timezone: 'UTC'
+  timezone: 'UTC',
 }
 
 @Component({
@@ -28,7 +28,7 @@ export class DatePickerComponent implements OnInit {
   constructor() {}
 
   format(date: Date) {
-    return date.toLocaleDateString(undefined, formatOptions)
+    return date.toLocaleDateString(undefined, formatOptions as any)
   }
 
   setDate(date: Date): void {

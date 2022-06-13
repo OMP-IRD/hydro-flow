@@ -1,7 +1,15 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core'
-import Layer from 'ol/layer/Layer'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core'
+import Layer from 'ol/layer/Base'
 import Map from 'ol/Map'
-import { LayerFactoryService, LayerSpec } from '../../services/layer-factory.service'
+import {
+  LayerFactoryService,
+  LayerSpec,
+} from '../../services/layer-factory.service'
 
 @Component({
   selector: 'map-bg-toggler',
@@ -24,7 +32,7 @@ export class BGTogglerComponent implements OnInit {
   }
 
   toggle() {
-    this.layerIndex = Math.abs(this.layerIndex-1)
+    this.layerIndex = Math.abs(this.layerIndex - 1)
     this.setLayer()
   }
 
@@ -33,11 +41,13 @@ export class BGTogglerComponent implements OnInit {
   }
 
   initLayers(): void {
-    this.layers = this.config.map(layerSpec => this.layerFactory.create(layerSpec))
+    this.layers = this.config.map((layerSpec) =>
+      this.layerFactory.create(layerSpec)
+    )
   }
 
-  getImageSrc(): string{
-    const otherIndex = Math.abs(this.layerIndex-1)
+  getImageSrc(): string {
+    const otherIndex = Math.abs(this.layerIndex - 1)
     return `assets/bg-toggler/${this.config[otherIndex].id}.png`
   }
 }

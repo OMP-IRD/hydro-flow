@@ -5,7 +5,7 @@ import {
   ElementRef,
   OnInit,
 } from '@angular/core'
-import { Feature } from 'ol/Feature'
+import Feature from 'ol/Feature'
 import Map from 'ol/Map'
 import Overlay from 'ol/Overlay'
 import { filter, map } from 'rxjs/operators'
@@ -27,7 +27,7 @@ export class RiverSegmentOverlayComponent implements OnInit {
   private _overlay: Overlay
   currentDate: string
 
-  get properties(): object[] {
+  get properties(): object {
     return this.mapManager.getHLSegment()?.getProperties()
   }
 
@@ -63,15 +63,15 @@ export class RiverSegmentOverlayComponent implements OnInit {
     this.map.addOverlay(this._overlay)
 
     this.map.on('pointermove', (event) => {
-      const hovering = this.map.forEachLayerAtPixel(
-        event.pixel,
-        () => true,
-        { layerFilter: (layer) => layer === this.riverSegmentLayer.getLayer() }
-      )
+      const hovering = this.map.forEachLayerAtPixel(event.pixel, () => true, {
+        layerFilter: (layer) => layer === this.riverSegmentLayer.getLayer(),
+      })
+      const target = this.map.getTarget() as HTMLElement
       if (hovering) {
         const hit = this.getHit(event.pixel)
+        const target = this.map.getTarget() as HTMLElement
         if (hit) {
-          this.map.getTarget().style.cursor = 'pointer'
+          target.style.cursor = 'pointer'
           this._overlay.setPosition(event.coordinate)
           this.mapManager.setHLSegment(hit)
           this._changeDetectionRef.detectChanges()
@@ -79,7 +79,7 @@ export class RiverSegmentOverlayComponent implements OnInit {
         }
       } else {
         if (this.mapManager.getHLSegment()) {
-          this.map.getTarget().style.cursor = ''
+          target.style.cursor = ''
           this._overlay.setPosition(undefined)
           this.mapManager.setHLSegment(null)
           this._changeDetectionRef.detectChanges()

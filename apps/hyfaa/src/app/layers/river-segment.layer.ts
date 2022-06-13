@@ -5,6 +5,7 @@ import { matchFilter } from '@hydro-flow/feature/map'
 import OpenlayersParser from 'geostyler-openlayers-parser'
 import QGISParser from 'geostyler-qgis-parser'
 import { Style as GSStyle, LineSymbolizer } from 'geostyler-style'
+import { VectorTile } from 'ol'
 import { Extent } from 'ol/extent'
 import Feature from 'ol/Feature'
 import MVT from 'ol/format/MVT'
@@ -67,8 +68,8 @@ export class RiverSegmentLayer {
 
     // store dates from MVT in state.dates
     const subKey = this.source.on('tileloadend', (event) => {
-      const tile = event.tile
-      const feature = tile.getFeatures()[0]
+      const tile = event.tile as VectorTile
+      const feature = tile.getFeatures()[0] as Feature
       if (feature) {
         const dates = this.mapManager.getDatesFromSegment(feature)
         facade.setDates(dates)
@@ -78,10 +79,10 @@ export class RiverSegmentLayer {
     })
 
     this.source.on('tileloadend', (event) => {
-      const tile = event.tile
+      const tile = event.tile as VectorTile
       tile
         .getFeatures()
-        .forEach((feature) =>
+        .forEach((feature: Feature) =>
           feature.set('values', JSON.parse(feature.get('values')))
         )
     })
@@ -127,7 +128,7 @@ export class RiverSegmentLayer {
     this.source.clear()
   }
 
-  private styleFn(feature: Feature, resolution: number): Style {
+  private styleFn(feature: Feature, resolution: number): Style | Style[] {
     let styleWidth = 1
     let styleColor = '#013CFF'
 
@@ -147,7 +148,7 @@ export class RiverSegmentLayer {
       .get('values')
       .find((value) => value.date === this.currentDate)[this.segmentFocus]
 
-    if(focus === null && this.segmentFocus==='flow_anomaly') {
+    if (focus === null && this.segmentFocus === 'flow_anomaly') {
       focus = -Infinity
     }
     for (let i = 0; i < rules.length; i++) {
@@ -186,7 +187,7 @@ export class RiverSegmentLayer {
       .get(`assets/${filename}.qml`, options)
       .pipe(mergeMap((response) => fromPromise(qgisParser.readStyle(response))))
 
-      .subscribe((style) => console.log(this.fixQgisStyle(style)))
+      .subscribe((style: GSStyle) => console.log(this.fixQgisStyle(style)))
   }
 
   private fixQgisStyle(style: GSStyle): GSStyle {
