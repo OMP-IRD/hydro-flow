@@ -1,15 +1,15 @@
-import { TestBed, async } from '@angular/core/testing'
-
-import { Observable } from 'rxjs'
+import { TestBed } from '@angular/core/testing'
 
 import { provideMockActions } from '@ngrx/effects/testing'
 import { provideMockStore } from '@ngrx/store/testing'
 
-import { NxModule, DataPersistence } from '@nrwl/angular'
+import { DataPersistence, NxModule } from '@nrwl/angular'
+import { hot } from 'jasmine-marbles'
+
+import { Observable } from 'rxjs'
+import * as HyfaaActions from './hyfaa.actions'
 
 import { HyfaaEffects } from './hyfaa.effects'
-import * as HyfaaActions from './hyfaa.actions'
-import { hot } from 'jasmine-marbles'
 
 describe('HyfaaEffects', () => {
   let actions: Observable<any>

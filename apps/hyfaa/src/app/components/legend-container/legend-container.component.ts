@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { HyfaaSegmentFocus } from '@hydro-flow/feature/hydro'
 import { LegendSpec } from '@hydro-flow/ui/map'
 import { HyfaaFacade } from '../../+state/hyfaa.facade'
@@ -11,7 +11,7 @@ import { STATION_COLOR, StationLayer } from '../../layers/station.layer'
   styleUrls: ['./legend-container.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LegendContainerComponent implements OnInit {
+export class LegendContainerComponent {
   stationLegend: LegendSpec = {
     title: 'Stations',
     rules: [
@@ -34,8 +34,6 @@ export class LegendContainerComponent implements OnInit {
     private stationLayer: StationLayer,
     public facade: HyfaaFacade
   ) {}
-
-  ngOnInit(): void {}
 
   onStationVisibilityToggle(visible: boolean): void {
     this.stationLayer.getLayer().setVisible(visible)

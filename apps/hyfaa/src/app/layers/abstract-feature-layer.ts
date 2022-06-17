@@ -5,7 +5,7 @@ import { createDefaultStyle, StyleFunction } from 'ol/style/Style'
 
 export class AbstractFeatureLayer {
   readonly source: VectorSource
-  readonly layer: VectorLayer
+  readonly layer: VectorLayer<VectorSource>
   readonly defaultStyle: StyleFunction = createDefaultStyle
 
   constructor() {
@@ -18,9 +18,7 @@ export class AbstractFeatureLayer {
     })
   }
 
-  protected initSource() {}
-
-  public getLayer(): VectorLayer {
+  public getLayer(): VectorLayer<VectorSource> {
     return this.layer
   }
 

@@ -1,13 +1,13 @@
 import {
-  Component,
-  OnInit,
   ChangeDetectionStrategy,
-  Input,
-  Output,
+  Component,
   EventEmitter,
+  Input,
+  OnInit,
+  Output,
 } from '@angular/core'
 import { interval } from 'rxjs'
-import { filter, tap } from 'rxjs/operators'
+import { filter } from 'rxjs/operators'
 
 @Component({
   selector: 'ui-animator',
@@ -22,8 +22,6 @@ export class AnimatorComponent implements OnInit {
 
   active = false
   animation$
-
-  constructor() {}
 
   ngOnInit(): void {
     this.animation$ = interval(1000)

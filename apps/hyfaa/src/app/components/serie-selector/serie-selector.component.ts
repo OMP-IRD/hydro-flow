@@ -28,8 +28,6 @@ export class SerieSelectorComponent implements OnInit {
   ]
   current: SerieType
 
-  constructor() {}
-
   setCurrent(serie: SerieType): void {
     this.current = serie
     this.serieChange.emit(this.current.value)

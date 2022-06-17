@@ -16,16 +16,15 @@ import { Subscription } from 'rxjs'
 import { filter, map, mergeMap, take } from 'rxjs/operators'
 import { HyfaaFacade } from '../../+state/hyfaa.facade'
 
-declare var Chart: any
-declare var bootstrap: any
+declare let Chart: any
+declare let bootstrap: any
 
 @Component({
   selector: 'hyfaa-chart-container',
   templateUrl: './chart-container.component.html',
   styleUrls: ['./chart-container.component.scss'],
 })
-export class ChartContainerComponent
-  implements OnInit, OnDestroy, AfterViewInit {
+export class ChartContainerComponent implements OnDestroy, AfterViewInit {
   @ViewChild('chartElt') chartElt: ElementRef
   @ViewChild('chartModal') chartModal: ElementRef
   bsModal: any
@@ -42,8 +41,6 @@ export class ChartContainerComponent
     public hyfaaFacade: HyfaaFacade,
     private chartMapper: ChartMapper
   ) {}
-
-  ngOnInit(): void {}
 
   ngOnDestroy() {
     this.chart.destroy()

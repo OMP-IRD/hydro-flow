@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { FORMAT_BY_PROJECTION } from '@hydro-flow/ui/map'
 import { MapManagerService } from './map/map-manager.service'
 
@@ -8,10 +8,9 @@ import { MapManagerService } from './map/map-manager.service'
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   mousePositionProj = 'EPSG:4326'
   formatByProjection = FORMAT_BY_PROJECTION
 
   constructor(public mapManager: MapManagerService) {}
-  ngOnInit(): void {}
 }

@@ -1,10 +1,9 @@
 import {
-  Component,
-  OnInit,
   ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
   Input,
   Output,
-  EventEmitter,
 } from '@angular/core'
 
 const formatOptions = {
@@ -20,12 +19,10 @@ const formatOptions = {
   styleUrls: ['./date-picker.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DatePickerComponent implements OnInit {
+export class DatePickerComponent {
   @Input() dates!: Date[]
   @Input() currentDate: Date
   @Output() currentDateChange = new EventEmitter<Date>()
-
-  constructor() {}
 
   format(date: Date) {
     return date.toLocaleDateString(undefined, formatOptions as any)
@@ -35,5 +32,4 @@ export class DatePickerComponent implements OnInit {
     // this.currentDate = date
     this.currentDateChange.emit(date)
   }
-  ngOnInit(): void {}
 }

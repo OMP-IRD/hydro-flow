@@ -22,19 +22,18 @@ export const matchFilter = (value: any, filter: Filter): boolean => {
     '!': true,
   }
 
-  let matchesFilter: boolean = true
+  let matchesFilter = true
   const operator: Operator = filter[0]
-  let isNestedFilter: boolean = false
+  let isNestedFilter = false
   if (operatorMapping[operator]) {
     isNestedFilter = true
   }
   try {
     if (isNestedFilter) {
+      let intermediate = true
       switch (filter[0]) {
         case '&&':
-          let intermediate = true
-          let restFilter = filter.slice(1)
-          restFilter.forEach((f: Filter) => {
+          filter.slice(1).forEach((f: Filter) => {
             if (!matchFilter(value, f)) {
               intermediate = false
             }
@@ -42,9 +41,7 @@ export const matchFilter = (value: any, filter: Filter): boolean => {
           matchesFilter = intermediate
           break
         case '||':
-          intermediate = false
-          restFilter = filter.slice(1)
-          restFilter.forEach((f: Filter) => {
+          filter.slice(1).forEach((f: Filter) => {
             if (matchFilter(value, f)) {
               intermediate = true
             }

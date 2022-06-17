@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { HyfaaDataSerie } from '@hydro-flow/feature/hydro'
+import { HyfaaDataSerie } from '../stations/+state'
 
 @Injectable({
   providedIn: 'root',

@@ -3,7 +3,6 @@ import {
   ElementRef,
   Input,
   OnChanges,
-  OnInit,
   SimpleChanges,
   ViewChild,
 } from '@angular/core'
@@ -13,18 +12,14 @@ import {
   templateUrl: './chart-modal.component.html',
   styleUrls: ['./chart-modal.component.scss'],
 })
-export class ChartModalComponent implements OnInit, OnChanges {
+export class ChartModalComponent implements OnChanges {
   @Input() data: any
   @ViewChild('graph') graph: ElementRef
   chart: any
-
-  constructor() {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.data) {
       console.log('data changes')
     }
   }
-
-  ngOnInit(): void {}
 }

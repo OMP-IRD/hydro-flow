@@ -9,8 +9,6 @@ describe('Stations Reducer', () => {
       name: name || `name-${id}`,
     } as StationsEntity)
 
-  beforeEach(() => {})
-
   describe('valid Stations actions', () => {
     it('loadStationsSuccess should return set the list of known Stations', () => {
       const stations = [

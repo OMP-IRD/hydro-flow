@@ -13,26 +13,24 @@ describe('MousePositionComponent', () => {
   )
 
   const mapMock = {
-    addControl: function () {},
+    addControl: jest.fn,
   }
 
   const formatByProjectionMock = new Map([
     ['EPSG:4326', 'dmsCoordinates:5:{x} - {y}'],
   ])
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [MousePositionComponent],
-        providers: [
-          {
-            provide: CoordinateFormatterService,
-            useValue: coordinateFormatterServiceMock,
-          },
-        ],
-      }).compileComponents()
-    })
-  )
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [MousePositionComponent],
+      providers: [
+        {
+          provide: CoordinateFormatterService,
+          useValue: coordinateFormatterServiceMock,
+        },
+      ],
+    }).compileComponents()
+  }))
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MousePositionComponent)

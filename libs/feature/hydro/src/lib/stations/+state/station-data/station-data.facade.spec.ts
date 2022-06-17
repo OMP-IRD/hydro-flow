@@ -1,24 +1,17 @@
 import { NgModule } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
-import { readFirst } from '@nrwl/angular/testing'
 
 import { EffectsModule } from '@ngrx/effects'
-import { StoreModule, Store } from '@ngrx/store'
+import { Store, StoreModule } from '@ngrx/store'
 
 import { NxModule } from '@nrwl/angular'
-
-import { StationDataEntity } from './station-data.models'
+import { readFirst } from '@nrwl/angular/testing'
+import * as StationDataActions from './station-data.actions'
 import { StationDataEffects } from './station-data.effects'
 import { StationDataFacade } from './station-data.facade'
 
-import * as StationDataSelectors from './station-data.selectors'
-import * as StationDataActions from './station-data.actions'
-import {
-  STATIONDATA_FEATURE_KEY,
-  State,
-  initialState,
-  reducer,
-} from './station-data.reducer'
+import { StationDataEntity } from './station-data.models'
+import { reducer, State, STATIONDATA_FEATURE_KEY } from './station-data.reducer'
 
 interface TestSchema {
   stationData: State
@@ -32,8 +25,6 @@ describe('StationDataFacade', () => {
       id,
       name: name || `name-${id}`,
     } as StationDataEntity)
-
-  beforeEach(() => {})
 
   describe('used in NgModule', () => {
     beforeEach(() => {

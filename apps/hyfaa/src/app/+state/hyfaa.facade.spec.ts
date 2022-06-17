@@ -1,28 +1,21 @@
 import { NgModule } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
-import { readFirst } from '@nrwl/angular/testing'
 
 import { EffectsModule } from '@ngrx/effects'
-import { StoreModule, Store } from '@ngrx/store'
+import { Store, StoreModule } from '@ngrx/store'
 
 import { NxModule } from '@nrwl/angular'
-
-import { HyfaaEntity } from './hyfaa.models'
+import { readFirst } from '@nrwl/angular/testing'
 import { HyfaaEffects } from './hyfaa.effects'
 import { HyfaaFacade } from './hyfaa.facade'
 
-import * as HyfaaSelectors from './hyfaa.selectors'
-import * as HyfaaActions from './hyfaa.actions'
-import {
-  HYFAA_FEATURE_KEY,
-  State,
-  initialState,
-  reducer,
-} from './hyfaa.reducer'
+import { AppState, HYFAA_FEATURE_KEY, reducer } from './hyfaa.reducer'
 
 interface TestSchema {
-  hyfaa: State
+  hyfaa: AppState
 }
+
+class HyfaaEntity {}
 
 describe('HyfaaFacade', () => {
   let facade: HyfaaFacade
@@ -32,8 +25,6 @@ describe('HyfaaFacade', () => {
       id,
       name: name || `name-${id}`,
     } as HyfaaEntity)
-
-  beforeEach(() => {})
 
   describe('used in NgModule', () => {
     beforeEach(() => {
@@ -61,53 +52,17 @@ describe('HyfaaFacade', () => {
       facade = TestBed.inject(HyfaaFacade)
     })
 
-    /**
-     * The initially generated facade::loadAll() returns empty array
-     */
     it('loadAll() should return empty list with loaded == true', async (done) => {
       try {
-        let list = await readFirst(facade.allHyfaa$)
-        let isLoaded = await readFirst(facade.loaded$)
+        let currentDate = await readFirst(facade.currentDate$)
 
-        expect(list.length).toBe(0)
-        expect(isLoaded).toBe(false)
+        expect(currentDate).toBe(0)
 
-        facade.init()
+        facade.setCurrentDate(new Date('01-01-2020'))
 
-        list = await readFirst(facade.allHyfaa$)
-        isLoaded = await readFirst(facade.loaded$)
+        currentDate = await readFirst(facade.currentDate$)
 
-        expect(list.length).toBe(0)
-        expect(isLoaded).toBe(true)
-
-        done()
-      } catch (err) {
-        done.fail(err)
-      }
-    })
-
-    /**
-     * Use `loadHyfaaSuccess` to manually update list
-     */
-    it('allHyfaa$ should return the loaded list; and loaded flag == true', async (done) => {
-      try {
-        let list = await readFirst(facade.allHyfaa$)
-        let isLoaded = await readFirst(facade.loaded$)
-
-        expect(list.length).toBe(0)
-        expect(isLoaded).toBe(false)
-
-        store.dispatch(
-          HyfaaActions.loadHyfaaSuccess({
-            hyfaa: [createHyfaaEntity('AAA'), createHyfaaEntity('BBB')],
-          })
-        )
-
-        list = await readFirst(facade.allHyfaa$)
-        isLoaded = await readFirst(facade.loaded$)
-
-        expect(list.length).toBe(2)
-        expect(isLoaded).toBe(true)
+        expect(currentDate).toBe(0)
 
         done()
       } catch (err) {

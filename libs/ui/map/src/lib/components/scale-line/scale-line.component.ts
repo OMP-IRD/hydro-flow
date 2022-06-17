@@ -19,7 +19,7 @@ import { ViewUtilsService } from '../../services/view-utils.service'
 })
 export class ScaleLineComponent implements OnInit, OnDestroy {
   @Input() map: Map
-  @Input() showScale: boolean = false
+  @Input() showScale = false
   control: ControlScaleLine
   scaleDenominator: string
 
@@ -50,9 +50,8 @@ export class ScaleLineComponent implements OnInit, OnDestroy {
   }
 
   getFormattedDenominator(resolution: number) {
-    const rawScaleDenominator = this._viewUtils.getScaleDenominatorFromResolution(
-      resolution
-    )
+    const rawScaleDenominator =
+      this._viewUtils.getScaleDenominatorFromResolution(resolution)
     const roundedScaleDenominator =
       Math.round(rawScaleDenominator / 5000) * 5000
     const formattedScaleDenominator = roundedScaleDenominator.toLocaleString()

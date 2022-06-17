@@ -17,8 +17,6 @@ export interface LayerSpec {
   providedIn: 'root',
 })
 export class LayerFactoryService {
-  constructor() {}
-
   create(spec: LayerSpec): Layer {
     const { type, url } = spec
     switch (type) {

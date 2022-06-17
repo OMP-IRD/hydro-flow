@@ -6,27 +6,8 @@
       "root": "libs/data-access/hyfaa",
       "sourceRoot": "libs/data-access/hyfaa/src",
       "prefix": "hydro-flow",
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/data-access/hyfaa/src/**/*.ts",
-              "libs/data-access/hyfaa/src/**/*.html"
-            ]
-          },
-          "outputs": ["{options.outputFile}"]
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/data-access/hyfaa"],
-          "options": {
-            "jestConfig": "libs/data-access/hyfaa/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
-      "tags": []
+      "architect": {},
+      "tags": ["type:data-access"]
     },
     "feature-hydro": {
       "projectType": "library",

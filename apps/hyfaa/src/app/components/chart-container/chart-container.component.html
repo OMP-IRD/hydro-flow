@@ -34,7 +34,7 @@
           <div #chartElt></div>
           <span
             class="fa fa-circle-notch fa-spin fa-4x"
-            *ngIf="!(dataFacade.loaded$ | async)"
+            *ngIf="(dataFacade.loaded$ | async) === false"
           ></span>
         </div>
         <form id="selectDate" class="mt-4 container-fluid">

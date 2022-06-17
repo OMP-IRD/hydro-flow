@@ -4,7 +4,7 @@ import { HyfaaSegmentFocus } from '@hydro-flow/feature/hydro'
 import { matchFilter } from '@hydro-flow/feature/map'
 import OpenlayersParser from 'geostyler-openlayers-parser'
 import QGISParser from 'geostyler-qgis-parser'
-import { Style as GSStyle, LineSymbolizer } from 'geostyler-style'
+import { LineSymbolizer, Style as GSStyle } from 'geostyler-style'
 import { VectorTile } from 'ol'
 import { Extent } from 'ol/extent'
 import Feature from 'ol/Feature'
@@ -12,7 +12,7 @@ import MVT from 'ol/format/MVT'
 import VectorTileLayer from 'ol/layer/VectorTile'
 import { unByKey } from 'ol/Observable'
 import VectorTileSource from 'ol/source/VectorTile'
-import { Style, Stroke } from 'ol/style'
+import { Stroke, Style } from 'ol/style'
 import { fromPromise } from 'rxjs/internal-compatibility'
 import { filter, map, mergeMap } from 'rxjs/operators'
 import { HyfaaFacade } from '../+state/hyfaa.facade'
@@ -21,7 +21,6 @@ import { MapManagerService } from '../map/map-manager.service'
 import { formatDate } from '../utils'
 import {
   RIVER_SEGMENT_STYLE_GS_COLOR,
-  RIVER_SEGMENT_STYLE_GS_JET,
   RIVER_SEGMENT_STYLE_GS_WIDTH,
 } from './river-segment.style'
 
@@ -181,7 +180,7 @@ export class RiverSegmentLayer {
 
   private parseQgisStyle(filename: string) {
     const options = {
-      responseType: 'text' as 'text',
+      responseType: 'text' as const,
     }
     this.http
       .get(`assets/${filename}.qml`, options)

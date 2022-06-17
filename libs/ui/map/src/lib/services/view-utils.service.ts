@@ -26,8 +26,6 @@ const INCH_PER_METER = 39.3701
   providedIn: 'root',
 })
 export class ViewUtilsService {
-  constructor() {}
-
   getResolutionFromScaleDenominator(scale: number) {
     return scale / DEFAULT_DPI / INCH_PER_METER
   }

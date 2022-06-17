@@ -1,4 +1,4 @@
-import { StationDataEntity } from './station-data.models'
+import { StationDataModel } from './station-data.models'
 import * as StationDataActions from './station-data.actions'
 import { State, initialState, reducer } from './station-data.reducer'
 
@@ -7,9 +7,7 @@ describe('StationData Reducer', () => {
     ({
       id,
       name: name || `name-${id}`,
-    } as StationDataEntity)
-
-  beforeEach(() => {})
+    } as StationDataModel)
 
   describe('valid StationData actions', () => {
     it('loadStationDataSuccess should return set the list of known StationData', () => {

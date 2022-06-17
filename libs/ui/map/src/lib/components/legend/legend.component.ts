@@ -1,12 +1,11 @@
 import {
-  Component,
-  OnInit,
   ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
   Input,
   Output,
-  EventEmitter,
 } from '@angular/core'
-import { LegendSpec } from '@hydro-flow/ui/map'
+import { LegendSpec } from '../../model/legend.model'
 
 @Component({
   selector: 'ui-legend',
@@ -14,14 +13,10 @@ import { LegendSpec } from '@hydro-flow/ui/map'
   styleUrls: ['./legend.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LegendComponent implements OnInit {
+export class LegendComponent {
   @Input() spec: LegendSpec
   @Input() visible: boolean
   @Output() changeVisibility = new EventEmitter<boolean>()
-
-  constructor() {}
-
-  ngOnInit(): void {}
 
   onCheckboxClick(): void {
     this.changeVisibility.emit(!this.visible)
