@@ -9,6 +9,32 @@
       "architect": {},
       "tags": ["type:data-access"]
     },
+    "data-access-raincell": {
+      "projectType": "library",
+      "root": "libs/data-access/raincell",
+      "sourceRoot": "libs/data-access/raincell/src",
+      "prefix": "hydro-flow",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/data-access/raincell"],
+          "options": {
+            "jestConfig": "libs/data-access/raincell/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/data-access/raincell/src/**/*.ts",
+              "libs/data-access/raincell/src/**/*.html"
+            ]
+          }
+        }
+      },
+      "tags": []
+    },
     "feature-hydro": {
       "projectType": "library",
       "root": "libs/feature/hydro",

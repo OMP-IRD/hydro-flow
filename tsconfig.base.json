@@ -16,6 +16,9 @@
     "baseUrl": ".",
     "paths": {
       "@hydro-flow/data-access/hyfaa": ["libs/data-access/hyfaa/src/index.ts"],
+      "@hydro-flow/data-access/raincell": [
+        "libs/data-access/raincell/src/index.ts"
+      ],
       "@hydro-flow/feature/hydro": ["libs/feature/hydro/src/index.ts"],
       "@hydro-flow/feature/map": ["libs/feature/map/src/index.ts"],
       "@hydro-flow/ui/map": ["libs/ui/map/src/index.ts"],
