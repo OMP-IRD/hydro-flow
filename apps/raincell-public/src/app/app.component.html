@@ -1,1 +1,24 @@
-<hydro-flow-nx-welcome></hydro-flow-nx-welcome>
+<div class="d-flex flex-column vh-100">
+  <header>
+    <raincell-header></raincell-header>
+  </header>
+  <main class="flex-grow-1 position-relative">
+    <raincell-map-container></raincell-map-container>
+  </main>
+  <nav class="navbar navbar-light mx-4">
+    <ul class="navbar-nav">
+      <li class="nav-item mr-4 small">
+        <ui-scale-line [map]="mapManager.map"></ui-scale-line>
+      </li>
+    </ul>
+    <div class="navbar-nav d-none d-md-block">
+      <ui-mouse-position
+        [map]="mapManager.map"
+        [projection]="mousePositionProj"
+        [formatByProjection]="formatByProjection"
+        class="ml-2 small"
+      >
+      </ui-mouse-position>
+    </div>
+  </nav>
+</div>

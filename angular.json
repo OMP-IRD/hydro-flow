@@ -189,7 +189,7 @@
       "projectType": "application",
       "root": "apps/raincell-public",
       "sourceRoot": "apps/raincell-public/src",
-      "prefix": "hydro-flow",
+      "prefix": "raincell",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -205,7 +205,12 @@
               "apps/raincell-public/src/favicon.ico",
               "apps/raincell-public/src/assets"
             ],
-            "styles": ["apps/raincell-public/src/styles.scss"],
+            "styles": [
+              "apps/raincell-public/src/styles.scss",
+              "node_modules/ol/ol.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.css",
+              "vendor/d3.hydroweb.css"
+            ],
             "scripts": []
           },
           "configurations": {
