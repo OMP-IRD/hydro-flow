@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 
 api=$1
+format=$2
 
-rm -rf libs/data-access/"$api"/src/lib/openapi
+#rm -rf libs/data-access/"$api"/src/lib/openapi
 
 ./node_modules/.bin/openapi-generator-cli generate \
-  -i libs/data-access/"$api"/src/lib/openapi.json \
+  -i libs/data-access/"$api"/src/lib/openapi."$format" \
   -g typescript-angular \
   -o libs/data-access/"$api"/src/lib/openapi \
   -c openapi-codegen-config.json \
