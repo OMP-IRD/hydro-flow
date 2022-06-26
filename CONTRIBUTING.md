@@ -44,6 +44,17 @@ Run `nx affected:e2e` to execute the end-to-end tests affected by a change.
 
 Run `nx dep-graph` to see a diagram of the dependencies of your projects.
 
+## Openapi
+
+Run `npm run generate-api` to (re)generate the API client from an openapi specification file.
+
+The script takes 2 arguments:
+
+1. the api name (eg. raincell)
+2. the api spec format (`yml` or `json`)
+
+eg `npm run generate-api -- raincell yaml`
+
 ## Further help
 
 Visit the [Nx Documentation](https://nx.dev/angular) to learn more.
