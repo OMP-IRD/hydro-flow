@@ -13,6 +13,7 @@ Run `npm install` to install the depencencies.
 Run `npm start` to run the default application (Hyfaa) in dev mode.
 
 Run `ng serve hyfaa` to run hyfaa application in dev mode.
+Run `ng serve raincell-public` to run raincell-public application in dev mode.
 
 > You can open the application in http://localhost:4200
 > 
