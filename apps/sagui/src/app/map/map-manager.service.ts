@@ -5,7 +5,6 @@ import View from 'ol/View'
 import TileLayer from 'ol/layer/Tile'
 import OSM from 'ol/source/OSM'
 import Feature from 'ol/Feature'
-import SETTINGS from '../../settings'
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +16,6 @@ export class MapManagerService {
   constructor(private layerFactory: LayerFactoryService) {
     this.map = new Map({
       controls: [],
-      // layers: [this.layerFactory.create(SETTINGS.backgroundLayers[0])],
       layers: [
         new TileLayer({
           source: new OSM(),

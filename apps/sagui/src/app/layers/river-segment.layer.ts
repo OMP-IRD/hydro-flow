@@ -4,7 +4,7 @@ import { HyfaaSegmentFocus } from '@hydro-flow/feature/hydro'
 import { matchFilter } from '@hydro-flow/feature/map'
 import OpenlayersParser from 'geostyler-openlayers-parser'
 import QGISParser from 'geostyler-qgis-parser'
-import { LineSymbolizer, Style as GSStyle } from 'geostyler-style'
+import { LineSymbolizer } from 'geostyler-style'
 import { VectorTile } from 'ol'
 import { Extent } from 'ol/extent'
 import Feature from 'ol/Feature'
@@ -13,8 +13,7 @@ import VectorTileLayer from 'ol/layer/VectorTile'
 import { unByKey } from 'ol/Observable'
 import VectorTileSource from 'ol/source/VectorTile'
 import { Stroke, Style } from 'ol/style'
-import { fromPromise } from 'rxjs/internal-compatibility'
-import { filter, map, mergeMap } from 'rxjs/operators'
+import { filter, map } from 'rxjs/operators'
 import { HyfaaFacade } from '../+state/hyfaa.facade'
 import SETTINGS from '../../settings'
 import { MapManagerService } from '../map/map-manager.service'
@@ -23,9 +22,6 @@ import {
   RIVER_SEGMENT_STYLE_GS_COLOR,
   RIVER_SEGMENT_STYLE_GS_WIDTH,
 } from './river-segment.style'
-
-const olParser = new OpenlayersParser()
-const qgisParser = new QGISParser()
 
 export const HL_STYLE = new Style({
   stroke: new Stroke({
@@ -85,17 +81,6 @@ export class RiverSegmentLayer {
           feature.set('values', JSON.parse(feature.get('values')))
         )
     })
-    this.parseQgisStyle('style_anomalie_viridis')
-
-    /*
-// Load styles function from Geostyler QML
-    fromPromise(olParser.writeStyle(RIVER_SEGMENT_STYLE_GS_COLOR)).subscribe(
-      (style) => (this.colorStyleFn = style)
-    )
-    fromPromise(olParser.writeStyle(RIVER_SEGMENT_STYLE_GS_WIDTH)).subscribe(
-      (style) => (this.widthStyleFn = style)
-    )
-*/
 
     this.facade.currentDate$
       .pipe(
@@ -111,8 +96,6 @@ export class RiverSegmentLayer {
       this.segmentFocus = focus
       this.layer.changed()
     })
-
-    // this.parseQgisStyle('style_debit_jetcustom')
   }
 
   public getLayer(): VectorTileLayer {
@@ -175,29 +158,6 @@ export class RiverSegmentLayer {
         return [HL_STYLE, style]
       }
     }
-    return style
-  }
-
-  private parseQgisStyle(filename: string) {
-    const options = {
-      responseType: 'text' as const,
-    }
-    this.http
-      .get(`assets/${filename}.qml`, options)
-      .pipe(mergeMap((response) => fromPromise(qgisParser.readStyle(response))))
-
-      .subscribe((style: GSStyle) => console.log(this.fixQgisStyle(style)))
-  }
-
-  private fixQgisStyle(style: GSStyle): GSStyle {
-    style.rules.forEach((rule) =>
-      rule.filter.forEach((filter, index) => {
-        if (index > 0) {
-          filter[1] = filter[1].toLowerCase()
-          filter[2] = parseFloat(filter[2])
-        }
-      })
-    )
     return style
   }
 }
