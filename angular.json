@@ -281,6 +281,19 @@
             "jestConfig": "apps/raincell-public/jest.config.js",
             "passWithNoTests": true
           }
+        },
+        "docker-build": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "nx build raincell-public --base-href='/raincell-public/'",
+                "forwardAllArgs": false
+              },
+              "docker build --build-arg APP_NAME=raincell-public -f ./tools/docker/Dockerfile.apps . -t {args.tag}"
+            ],
+            "parallel": false
+          }
         }
       },
       "tags": []
