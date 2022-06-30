@@ -2,8 +2,7 @@ import 'whatwg-fetch'
 
 class Settings {
   apiUrl = ''
-  riverMVTUrl = ''
-  stationMVTUrl = ''
+  camerounMVTUrl = ''
   backgroundLayers = []
   mapContext = {}
 

@@ -1,7 +1,6 @@
 {
   "apiUrl": "",
-  "riverMVTUrl": "/tiles/hyfaa.data_aggregated_geo/{z}/{x}/{y}.pbf",
-  "stationMVTUrl": "/tiles/geospatial.stations_geo/{z}/{x}/{y}.pbf",
+  "camerounMVTUrl": "/tiles/cameroun.mvt_rain_cells_for_time/{z}/{x}/{y}.pbf",
   "backgroundLayers": [
     {
       "id": "street",
