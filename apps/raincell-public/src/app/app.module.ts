@@ -9,7 +9,7 @@ import { AppComponent } from './app.component'
 import { HeaderComponent } from './components/header/header.component'
 import { MapContainerComponent } from './components/map-container/map-container.component'
 
-export const API_URL = '/api/v1'
+export const API_URL = '/api/'
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, MapContainerComponent],
