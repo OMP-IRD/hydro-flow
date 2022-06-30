@@ -296,7 +296,7 @@
           }
         }
       },
-      "tags": []
+      "tags": ["app"]
     },
     "raincell-public-e2e": {
       "root": "apps/raincell-public-e2e",
@@ -429,9 +429,22 @@
             "jestConfig": "apps/sagui/jest.config.js",
             "passWithNoTests": true
           }
+        },
+        "docker-build": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "nx build sagui --base-href='/sagui/'",
+                "forwardAllArgs": false
+              },
+              "docker build --build-arg APP_NAME=sagui -f ./tools/docker/Dockerfile.apps . -t {args.tag}"
+            ],
+            "parallel": false
+          }
         }
       },
-      "tags": []
+      "tags": ["app"]
     },
     "sagui-e2e": {
       "root": "apps/sagui-e2e",
