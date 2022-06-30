@@ -150,7 +150,7 @@
           "configurations": {
             "development": {
               "browserTarget": "hyfaa:build:development",
-              "proxyConfig": "proxy.conf.json"
+              "proxyConfig": "apps/hyfaa/proxy.conf.json"
             },
             "production": {
               "browserTarget": "hyfaa:build:production"
@@ -218,8 +218,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "1500kb",
+                  "maximumError": "3mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -253,7 +253,8 @@
               "browserTarget": "raincell-public:build:production"
             },
             "development": {
-              "browserTarget": "raincell-public:build:development"
+              "browserTarget": "raincell-public:build:development",
+              "proxyConfig": "apps/raincell-public/proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
