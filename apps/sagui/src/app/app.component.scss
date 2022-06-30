@@ -1,0 +1,11 @@
+::ng-deep {
+  body:fullscreen {
+    header,
+    footer {
+      display: none;
+    }
+  }
+}
+
+header {
+}

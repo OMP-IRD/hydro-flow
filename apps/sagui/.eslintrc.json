@@ -21,7 +21,7 @@
           "error",
           {
             "type": "element",
-            "prefix": "hydro-flow",
+            "prefix": "sagui",
             "style": "kebab-case"
           }
         ]

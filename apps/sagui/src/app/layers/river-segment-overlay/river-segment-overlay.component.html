@@ -1,0 +1,13 @@
+<div *ngIf="properties" class="overlay m-0 text-white p-2">
+  <div class="fw-bold mb-1">Flow History</div>
+  <div>{{ currentFlow }}</div>
+  <div
+    *ngFor="let value of properties.values"
+    [class.bg-white]="value.date === currentDate"
+    [class.text-dark]="value.date === currentDate"
+    class="small px-1"
+  >
+    <span>{{ value.date }}</span>
+    <span class="mx-4">{{ value.flow }}</span>
+  </div>
+</div>
