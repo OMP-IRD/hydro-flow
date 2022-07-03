@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core'
 import { LayerFactoryService } from '@hydro-flow/feature/map'
+import Feature from 'ol/Feature'
 import TileLayer from 'ol/layer/Tile'
 import Map from 'ol/Map'
 import OSM from 'ol/source/OSM'
@@ -14,7 +15,6 @@ export class MapManagerService {
   constructor(private layerFactory: LayerFactoryService) {
     this.map = new Map({
       controls: [],
-      // layers: [this.layerFactory.create(SETTINGS.backgroundLayers[0])],
       layers: [
         new TileLayer({
           source: new OSM(),
@@ -28,5 +28,30 @@ export class MapManagerService {
       }),
       pixelRatio: 1,
     })
+  }
+
+  getDatesFromMVT(segment: Feature): Date[] {
+    const rcData = JSON.parse(segment.get('rc_data'))
+    return rcData
+      .reduce((dates, day) => {
+        const dayDates = day.v.map(
+          (dayValue) =>
+            new Date(
+              +day.d.substring(0, 4),
+              +day.d.substring(4, 6) - 1,
+              +day.d.substring(6, 8),
+              +dayValue.t.substring(0, 2),
+              +dayValue.t.substring(2, 4)
+            )
+        )
+        const datesTZ = dayDates.map(
+          (date) =>
+            new Date(
+              date.getTime() + Math.abs(date.getTimezoneOffset() * 60000)
+            )
+        )
+        return [...dates, ...datesTZ]
+      }, [])
+      .reverse()
   }
 }
