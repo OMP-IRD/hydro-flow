@@ -71,6 +71,32 @@
       },
       "tags": []
     },
+    "feature-time": {
+      "projectType": "library",
+      "root": "libs/feature/time",
+      "sourceRoot": "libs/feature/time/src",
+      "prefix": "hydro-flow",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/feature/time"],
+          "options": {
+            "jestConfig": "libs/feature/time/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/feature/time/src/**/*.ts",
+              "libs/feature/time/src/**/*.html"
+            ]
+          }
+        }
+      },
+      "tags": []
+    },
     "hyfaa": {
       "projectType": "application",
       "root": "apps/hyfaa",
