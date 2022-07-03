@@ -7,12 +7,13 @@ import { UiMapModule } from '@hydro-flow/ui/map'
 
 import { AppComponent } from './app.component'
 import { HeaderComponent } from './components/header/header.component'
-import { MapContainerComponent } from './components/map-container/map-container.component'
+import { MapContainerComponent } from './components/map-container/map-container.component';
+import { CellLegendComponent } from './components/cell-legend/cell-legend.component'
 
 export const API_URL = '/api/'
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, MapContainerComponent],
+  declarations: [AppComponent, HeaderComponent, MapContainerComponent, CellLegendComponent],
   imports: [BrowserModule, UiMapModule, HttpClientModule, FeatureMapModule],
   providers: [
     {

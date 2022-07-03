@@ -1,8 +1,6 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { HyfaaSegmentFocus } from '@hydro-flow/feature/hydro'
-import OpenlayersParser from 'geostyler-openlayers-parser'
-import QGISParser from 'geostyler-qgis-parser'
 import { Extent } from 'ol/extent'
 import Feature from 'ol/Feature'
 import MVT from 'ol/format/MVT'
@@ -11,9 +9,6 @@ import VectorTileSource from 'ol/source/VectorTile'
 import { Stroke, Style } from 'ol/style'
 import { MapManagerService } from '../map/map-manager.service'
 import SETTINGS from '../settings'
-
-const olParser = new OpenlayersParser()
-const qgisParser = new QGISParser()
 
 export const HL_STYLE = new Style({
   stroke: new Stroke({
