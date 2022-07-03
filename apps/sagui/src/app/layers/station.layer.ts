@@ -2,16 +2,12 @@ import { Injectable } from '@angular/core'
 import { StationsFacade } from '@hydro-flow/feature/hydro'
 import { Extent } from 'ol/extent'
 import Feature from 'ol/Feature'
-import { Point } from 'ol/geom'
 import VectorLayer from 'ol/layer/Vector'
 import Map from 'ol/Map'
 import VectorSource from 'ol/source/Vector'
-
-import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style'
 import { skip } from 'rxjs/operators'
-import { HyfaaFacade } from '../+state/hyfaa.facade'
 import { MapManagerService } from '../map/map-manager.service'
-import { setRgbOpacity } from '../utils'
+import { stationStyleFn } from './station.style'
 
 export const STATION_COLOR = 'rgb(222, 43, 178)'
 @Injectable({
@@ -24,8 +20,7 @@ export class StationLayer {
 
   constructor(
     private mapManager: MapManagerService,
-    private stationFacade: StationsFacade,
-    private facade: HyfaaFacade
+    private stationFacade: StationsFacade
   ) {
     this.map = this.mapManager.map
 
@@ -36,7 +31,7 @@ export class StationLayer {
     this.layer = new VectorLayer({
       source: this.source,
       className: 'station-layer',
-      style: this.styleFn.bind(this),
+      style: stationStyleFn,
     })
 
     this.stationFacade.init()
@@ -80,22 +75,6 @@ export class StationLayer {
 
   public clear(): void {
     this.source.clear()
-  }
-
-  private styleFn(feature: Feature, resolution: number): Style {
-    const color = STATION_COLOR
-    const radius = 8
-    const width = radius - 2
-    return new Style({
-      image: new CircleStyle({
-        radius,
-        fill: new Fill({ color }),
-        stroke: new Stroke({
-          width,
-          color: setRgbOpacity(color, 0.5),
-        }),
-      }),
-    })
   }
 
   private getHit(pixel: number[]) {
