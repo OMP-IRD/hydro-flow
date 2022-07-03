@@ -9,6 +9,10 @@ import { UiTimeModule } from '@hydro-flow/ui/time'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
+import {
+  DATEPICKER_CONFIG,
+  DATEPICKER_FORMAT_OPTIONS,
+} from '../../../../libs/ui/time/src/lib/components/date-picker/date-picker.component'
 import { environment } from '../../../hyfaa/src/environments/environment'
 
 import { AppComponent } from './app.component'
@@ -51,6 +55,14 @@ export const API_URL = '/api/'
     {
       provide: BASE_PATH,
       useFactory: () => API_URL,
+    },
+    {
+      provide: DATEPICKER_CONFIG,
+      useValue: {
+        ...DATEPICKER_FORMAT_OPTIONS,
+        hour: 'numeric',
+        minute: 'numeric',
+      },
     },
   ],
   bootstrap: [AppComponent],

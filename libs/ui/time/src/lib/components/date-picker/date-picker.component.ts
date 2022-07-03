@@ -2,16 +2,21 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
+  Inject,
+  InjectionToken,
   Input,
   Output,
 } from '@angular/core'
 
-const formatOptions = {
+export const DATEPICKER_FORMAT_OPTIONS: Intl.DateTimeFormatOptions = {
   year: 'numeric',
   month: 'long',
   day: 'numeric',
-  timezone: 'UTC',
+  timeZone: 'UTC',
 }
+export const DATEPICKER_CONFIG = new InjectionToken<Intl.DateTimeFormatOptions>(
+  'datepicker.config'
+)
 
 @Component({
   selector: 'ui-date-picker',
@@ -24,8 +29,12 @@ export class DatePickerComponent {
   @Input() currentDate: Date
   @Output() currentDateChange = new EventEmitter<Date>()
 
+  constructor(
+    @Inject(DATEPICKER_CONFIG)
+    private dateFormatOptions: Intl.DateTimeFormatOptions
+  ) {}
   format(date: Date) {
-    return date.toLocaleDateString(undefined, formatOptions as any)
+    return date.toLocaleDateString(undefined, this.dateFormatOptions)
   }
 
   setDate(date: Date): void {
