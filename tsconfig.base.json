@@ -21,6 +21,7 @@
       ],
       "@hydro-flow/feature/hydro": ["libs/feature/hydro/src/index.ts"],
       "@hydro-flow/feature/map": ["libs/feature/map/src/index.ts"],
+      "@hydro-flow/feature/time": ["libs/feature/time/src/index.ts"],
       "@hydro-flow/ui/map": ["libs/ui/map/src/index.ts"],
       "@hydro-flow/ui/time": ["libs/ui/time/src/index.ts"]
     }
