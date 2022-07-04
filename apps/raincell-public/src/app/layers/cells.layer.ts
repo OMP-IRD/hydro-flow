@@ -8,11 +8,12 @@ import MVT from 'ol/format/MVT'
 import VectorTileLayer from 'ol/layer/VectorTile'
 import { unByKey } from 'ol/Observable'
 import VectorTileSource from 'ol/source/VectorTile'
-import { Stroke, Style } from 'ol/style'
+import { Fill, Stroke, Style } from 'ol/style'
 import { filter } from 'rxjs/operators'
+import { setRgbOpacity } from '../../../../hyfaa/src/app/utils'
 import { MapManagerService } from '../map/map-manager.service'
 import SETTINGS from '../settings'
-import { CellDate, cellsStyleFn } from './cells.style'
+import { CellDate } from './cells.style'
 
 export const HL_STYLE = new Style({
   stroke: new Stroke({
@@ -27,10 +28,8 @@ export const HL_STYLE = new Style({
 export class CellsLayer {
   private layer: VectorTileLayer
   private source: VectorTileSource
-  colorStyleFn: (feature, resolution) => undefined
-  widthStyleFn: (feature, resolution) => undefined
-  currentDate: string
   cellDate: CellDate = { time: undefined, date: undefined }
+  cellHL: Feature
 
   constructor(
     private http: HttpClient,
@@ -49,7 +48,7 @@ export class CellsLayer {
     this.layer = new VectorTileLayer({
       source: this.source,
       className: 'cells-layer',
-      style: cellsStyleFn(this.cellDate),
+      style: this.styleFn.bind(this),
     })
 
     const subKey = this.source.on('tileloadend', (event) => {
@@ -70,6 +69,29 @@ export class CellsLayer {
         this.cellDate.time = dateToHHmm(date)
         this.layer.changed()
       })
+
+    const map = this.mapManager.map
+    map.on('pointermove', (event) => {
+      const target = map.getTarget() as HTMLElement
+      const hovering = this.getHit(event.pixel)
+      if (hovering) {
+        target.style.cursor = 'pointer'
+        this.cellHL = hovering
+        this.layer.changed()
+      } else {
+        target.style.cursor = ''
+        this.cellHL = null
+        this.layer.changed()
+      }
+    })
+    map.on('click', (event) => {
+      const hit = this.getHit(event.pixel)
+      if (hit) {
+        // const id = hit.getId()
+        const id = hit.get('cell_id')
+        console.log(id)
+      }
+    })
   }
 
   public getLayer(): VectorTileLayer {
@@ -82,5 +104,37 @@ export class CellsLayer {
 
   public clear(): void {
     this.source.clear()
+  }
+
+  private getHit(pixel: number[]) {
+    return this.mapManager.map.forEachFeatureAtPixel(
+      pixel,
+      (feature: Feature) => {
+        return feature
+      },
+      { layerFilter: (layer) => layer === this.getLayer() }
+    )
+  }
+
+  private styleFn(feature: Feature, resolution: number): Style | Style[] {
+    const value = JSON.parse(feature.get('rc_data'))
+      .find((days) => days.d === this.cellDate.date)
+      .v.find((hours) => hours.t === this.cellDate.time).v
+
+    const color = value < 2 ? 'rgb(255,0,0)' : 'rgb(0,0,255)'
+    const style = new Style({
+      stroke: new Stroke({
+        color,
+        width: 1,
+      }),
+      fill: new Fill({
+        color: setRgbOpacity(color, 0.2),
+      }),
+    })
+    if (feature === this.cellHL) {
+      style.getStroke().setWidth(3)
+    }
+
+    return style
   }
 }
