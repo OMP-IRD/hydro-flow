@@ -50,7 +50,7 @@ export class MapManagerService {
               date.getTime() + Math.abs(date.getTimezoneOffset() * 60000)
             )
         )
-        return [...dates, ...datesTZ]
+        return [...dates, ...dayDates]
       }, [])
       .reverse()
   }

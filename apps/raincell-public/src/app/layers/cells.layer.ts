@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
-import { HyfaaSegmentFocus } from '@hydro-flow/feature/hydro'
-import { DateFacade } from '@hydro-flow/feature/time'
+import { DateFacade, dateToHHmm, dateToyyyMMdd } from '@hydro-flow/feature/time'
 import { VectorTile } from 'ol'
 import { Extent } from 'ol/extent'
 import Feature from 'ol/Feature'
@@ -10,8 +9,10 @@ import VectorTileLayer from 'ol/layer/VectorTile'
 import { unByKey } from 'ol/Observable'
 import VectorTileSource from 'ol/source/VectorTile'
 import { Stroke, Style } from 'ol/style'
+import { filter } from 'rxjs/operators'
 import { MapManagerService } from '../map/map-manager.service'
 import SETTINGS from '../settings'
+import { CellDate, cellsStyleFn } from './cells.style'
 
 export const HL_STYLE = new Style({
   stroke: new Stroke({
@@ -29,7 +30,7 @@ export class CellsLayer {
   colorStyleFn: (feature, resolution) => undefined
   widthStyleFn: (feature, resolution) => undefined
   currentDate: string
-  segmentFocus: HyfaaSegmentFocus
+  cellDate: CellDate = { time: undefined, date: undefined }
 
   constructor(
     private http: HttpClient,
@@ -48,6 +49,7 @@ export class CellsLayer {
     this.layer = new VectorTileLayer({
       source: this.source,
       className: 'cells-layer',
+      style: cellsStyleFn(this.cellDate),
     })
 
     const subKey = this.source.on('tileloadend', (event) => {
@@ -56,10 +58,18 @@ export class CellsLayer {
       if (feature) {
         const dates = this.mapManager.getDatesFromMVT(feature)
         dateFacade.setDates(dates)
-        dateFacade.setCurrentDate(dates[dates.length - 1])
+        dateFacade.setCurrentDate(dates[0])
         unByKey(subKey)
       }
     })
+
+    this.dateFacade.currentDate$
+      .pipe(filter((date) => !!date))
+      .subscribe((date) => {
+        this.cellDate.date = dateToyyyMMdd(date)
+        this.cellDate.time = dateToHHmm(date)
+        this.layer.changed()
+      })
   }
 
   public getLayer(): VectorTileLayer {
