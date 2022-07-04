@@ -1,5 +1,5 @@
 {
-  "/api": {
+  "/features": {
     "target": "https://raincell.pigeo.fr/",
     "changeOrigin": true,
     "secure": true

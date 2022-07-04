@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
+import { CellsFacade } from '@hydro-flow/feature/hydro'
 import { DateFacade, dateToHHmm, dateToyyyMMdd } from '@hydro-flow/feature/time'
 import { VectorTile } from 'ol'
 import { Extent } from 'ol/extent'
@@ -10,6 +11,7 @@ import { unByKey } from 'ol/Observable'
 import VectorTileSource from 'ol/source/VectorTile'
 import { Fill, Stroke, Style } from 'ol/style'
 import { filter } from 'rxjs/operators'
+import { RaincellFacade } from '../+state/raincell.facade'
 import { setRgbOpacity } from '../../../../hyfaa/src/app/utils'
 import { MapManagerService } from '../map/map-manager.service'
 import SETTINGS from '../settings'
@@ -34,7 +36,8 @@ export class CellsLayer {
   constructor(
     private http: HttpClient,
     private mapManager: MapManagerService,
-    private dateFacade: DateFacade
+    private dateFacade: DateFacade,
+    private cellsFacade: CellsFacade
   ) {
     this.source = new VectorTileSource({
       format: new MVT({
@@ -89,7 +92,7 @@ export class CellsLayer {
       if (hit) {
         // const id = hit.getId()
         const id = hit.get('cell_id')
-        console.log(id)
+        this.cellsFacade.selectCell(id)
       }
     })
   }
