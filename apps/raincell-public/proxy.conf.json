@@ -1,11 +1,11 @@
 {
   "/api": {
-    "target": "http://localhost:8000/",
+    "target": "https://raincell.pigeo.fr/",
     "changeOrigin": true,
     "secure": true
   },
   "/tiles": {
-    "target": "http://localhost:7800/",
+    "target": "https://raincell.pigeo.fr/",
     "changeOrigin": true,
     "secure": true
   }
