@@ -7,7 +7,9 @@ export interface AppState {
   date?: Date
 }
 
-export const initialState: AppState = {}
+export const initialState: AppState = {
+  date: new Date(),
+}
 
 const raincellReducer = createReducer(
   initialState,

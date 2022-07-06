@@ -7,7 +7,7 @@ import { take } from 'rxjs/operators'
   templateUrl: './time-player.component.html',
   styleUrls: ['./time-player.component.scss'],
 })
-export class TimePlayerComponent implements OnInit {
+export class TimePlayerComponent {
   constructor(public facade: DateFacade) {}
 
   onDateChange(date: Date): void {

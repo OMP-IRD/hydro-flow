@@ -1,0 +1,16 @@
+.date {
+  left: 1em;
+  top: 1em;
+}
+
+::ng-deep {
+  .mat-form-field-wrapper {
+    padding-bottom: 0;
+  }
+    .mat-form-field-appearance-outline .mat-form-field-wrapper {
+      margin: 0 !important;
+    }
+  .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: white;
+  }
+}
