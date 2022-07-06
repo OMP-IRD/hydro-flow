@@ -1,7 +1,16 @@
 import { HttpClientModule } from '@angular/common/http'
 import { NgModule } from '@angular/core'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { MAT_DATE_FORMATS, MatNativeDateModule } from '@angular/material/core'
+import {
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+  MomentDateAdapter,
+} from '@angular/material-moment-adapter'
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
+  MatNativeDateModule,
+} from '@angular/material/core'
 import { MatDatepickerModule } from '@angular/material/datepicker'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
@@ -70,7 +79,6 @@ const MAT_DATEPICKER_FORMAT = {
     MatInputModule,
     MatFormFieldModule,
     MatDatepickerModule,
-    MatNativeDateModule,
     ReactiveFormsModule,
     StoreModule.forRoot(
       {},
@@ -96,6 +104,11 @@ const MAT_DATEPICKER_FORMAT = {
     {
       provide: DATEPICKER_CONFIG,
       useValue: TIMEPLAYER_FORMAT,
+    },
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
     },
     { provide: MAT_DATE_FORMATS, useValue: MAT_DATEPICKER_FORMAT },
   ],

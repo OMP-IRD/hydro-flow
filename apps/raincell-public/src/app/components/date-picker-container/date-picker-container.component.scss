@@ -13,4 +13,24 @@
   .mat-form-field-appearance-outline .mat-form-field-outline {
     color: white;
   }
+  .mat-icon-button {
+    color: black !important;
+  }
+  .mat-input-element:disabled {
+    color: inherit;
+  }
+
+  .mat-form-field-infix {
+    border: none;
+  }
+
+  .mat-form-field-flex {
+    line-height: 21px;
+    margin-top: 0;
+  }
+  .btn-lg {
+    padding: inherit;
+    font-size: 16px;
+    border-radius: inherit;
+  }
 }
