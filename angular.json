@@ -2,6 +2,7 @@
   "version": 1,
   "projects": {
     "data-access-hyfaa": {
+      "$schema": "../../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "libs/data-access/hyfaa",
       "sourceRoot": "libs/data-access/hyfaa/src",
@@ -10,6 +11,7 @@
       "tags": ["type:data-access"]
     },
     "data-access-raincell": {
+      "$schema": "../../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "libs/data-access/raincell",
       "sourceRoot": "libs/data-access/raincell/src",
@@ -18,6 +20,7 @@
       "tags": ["type:data-access"]
     },
     "feature-hydro": {
+      "$schema": "../../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "libs/feature/hydro",
       "sourceRoot": "libs/feature/hydro/src",
@@ -37,7 +40,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/feature/hydro"],
           "options": {
-            "jestConfig": "libs/feature/hydro/jest.config.js",
+            "jestConfig": "libs/feature/hydro/jest.config.ts",
             "passWithNoTests": true
           }
         }
@@ -45,6 +48,7 @@
       "tags": []
     },
     "feature-map": {
+      "$schema": "../../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "libs/feature/map",
       "sourceRoot": "libs/feature/map/src",
@@ -64,7 +68,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/feature/map"],
           "options": {
-            "jestConfig": "libs/feature/map/jest.config.js",
+            "jestConfig": "libs/feature/map/jest.config.ts",
             "passWithNoTests": true
           }
         }
@@ -72,6 +76,7 @@
       "tags": []
     },
     "feature-time": {
+      "$schema": "../../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "libs/feature/time",
       "sourceRoot": "libs/feature/time/src",
@@ -81,7 +86,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/feature/time"],
           "options": {
-            "jestConfig": "libs/feature/time/jest.config.js",
+            "jestConfig": "libs/feature/time/jest.config.ts",
             "passWithNoTests": true
           }
         },
@@ -98,6 +103,7 @@
       "tags": []
     },
     "hyfaa": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "projectType": "application",
       "root": "apps/hyfaa",
       "sourceRoot": "apps/hyfaa/src",
@@ -204,7 +210,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/apps/hyfaa"],
           "options": {
-            "jestConfig": "apps/hyfaa/jest.config.js",
+            "jestConfig": "apps/hyfaa/jest.config.ts",
             "passWithNoTests": true
           }
         }
@@ -212,6 +218,7 @@
       "tags": []
     },
     "raincell-public": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "projectType": "application",
       "root": "apps/raincell-public",
       "sourceRoot": "apps/raincell-public/src",
@@ -309,7 +316,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/apps/raincell-public"],
           "options": {
-            "jestConfig": "apps/raincell-public/jest.config.js",
+            "jestConfig": "apps/raincell-public/jest.config.ts",
             "passWithNoTests": true
           }
         },
@@ -330,6 +337,7 @@
       "tags": ["app"]
     },
     "raincell-public-e2e": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "apps/raincell-public-e2e",
       "sourceRoot": "apps/raincell-public-e2e/src",
       "projectType": "application",
@@ -358,6 +366,7 @@
       "implicitDependencies": ["raincell-public"]
     },
     "sagui": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "projectType": "application",
       "root": "apps/sagui",
       "sourceRoot": "apps/sagui/src",
@@ -457,7 +466,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/apps/sagui"],
           "options": {
-            "jestConfig": "apps/sagui/jest.config.js",
+            "jestConfig": "apps/sagui/jest.config.ts",
             "passWithNoTests": true
           }
         },
@@ -478,6 +487,7 @@
       "tags": ["app"]
     },
     "sagui-e2e": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "apps/sagui-e2e",
       "sourceRoot": "apps/sagui-e2e/src",
       "projectType": "application",
@@ -506,6 +516,7 @@
       "implicitDependencies": ["sagui"]
     },
     "ui-map": {
+      "$schema": "../../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "libs/ui/map",
       "sourceRoot": "libs/ui/map/src",
@@ -525,7 +536,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/ui/map"],
           "options": {
-            "jestConfig": "libs/ui/map/jest.config.js",
+            "jestConfig": "libs/ui/map/jest.config.ts",
             "passWithNoTests": true
           }
         }
@@ -533,6 +544,7 @@
       "tags": []
     },
     "ui-time": {
+      "$schema": "../../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "libs/ui/time",
       "sourceRoot": "libs/ui/time/src",
@@ -552,7 +564,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/ui/time"],
           "options": {
-            "jestConfig": "libs/ui/time/jest.config.js",
+            "jestConfig": "libs/ui/time/jest.config.ts",
             "passWithNoTests": true
           }
         }

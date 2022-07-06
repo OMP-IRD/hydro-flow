@@ -1,6 +1,7 @@
-module.exports = {
-  displayName: 'sagui',
-  preset: '../../jest.preset.js',
+/* eslint-disable */
+export default {
+  displayName: 'feature-time',
+  preset: '../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
     'ts-jest': {
@@ -8,7 +9,7 @@ module.exports = {
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
-  coverageDirectory: '../../coverage/apps/sagui',
+  coverageDirectory: '../../../coverage/libs/feature/time',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': 'jest-preset-angular',
   },

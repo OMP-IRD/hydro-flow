@@ -1,6 +1,7 @@
-module.exports = {
-  displayName: 'feature-hydro',
-  preset: '../../../jest.preset.js',
+/* eslint-disable */
+export default {
+  displayName: 'hyfaa',
+  preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
     'ts-jest': {
@@ -9,7 +10,7 @@ module.exports = {
       tsconfig: '<rootDir>/tsconfig.spec.json',
     },
   },
-  coverageDirectory: '../../../coverage/libs/feature/hydro',
+  coverageDirectory: '../../coverage/apps/hyfaa',
   snapshotSerializers: [
     'jest-preset-angular/build/serializers/no-ng-attributes',
     'jest-preset-angular/build/serializers/ng-snapshot',
