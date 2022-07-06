@@ -8,11 +8,11 @@ import * as RaincellSelectors from './raincell.selectors'
   providedIn: 'root',
 })
 export class RaincellFacade {
-  active$ = this.store.pipe(select(RaincellSelectors.getRaincellActive))
+  date$ = this.store.pipe(select(RaincellSelectors.getRaincellDate))
 
   constructor(private store: Store) {}
 
-  setActive(active: string): void {
-    this.store.dispatch(RaincellActions.setActive({ active }))
+  setDate(date: Date): void {
+    this.store.dispatch(RaincellActions.setDate({ date }))
   }
 }

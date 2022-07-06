@@ -1,21 +1,19 @@
 import { Action, createReducer, on } from '@ngrx/store'
-import { setActive } from './raincell.actions'
+import { setDate } from './raincell.actions'
 
 export const RAINCELL_FEATURE_KEY = 'raincell'
 
 export interface AppState {
-  active: string
+  date?: Date
 }
 
-export const initialState: AppState = {
-  active: undefined,
-}
+export const initialState: AppState = {}
 
 const raincellReducer = createReducer(
   initialState,
-  on(setActive, (state, { active }) => ({
+  on(setDate, (state, { date }) => ({
     ...state,
-    active,
+    date,
   }))
 )
 

@@ -4,7 +4,7 @@ import { AppState, RAINCELL_FEATURE_KEY } from './raincell.reducer'
 export const getRaincellState =
   createFeatureSelector<AppState>(RAINCELL_FEATURE_KEY)
 
-export const getRaincellActive = createSelector(
+export const getRaincellDate = createSelector(
   getRaincellState,
-  (state: AppState) => state.active
+  (state: AppState) => state.date
 )
