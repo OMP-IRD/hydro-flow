@@ -37,7 +37,8 @@ export class CellsLayer {
     private http: HttpClient,
     private mapManager: MapManagerService,
     private dateFacade: DateFacade,
-    private cellsFacade: CellsFacade
+    private cellsFacade: CellsFacade,
+    private raincellFacade: RaincellFacade
   ) {
     this.source = new VectorTileSource({
       format: new MVT({
@@ -54,15 +55,22 @@ export class CellsLayer {
       style: this.styleFn.bind(this),
     })
 
-    const subKey = this.source.on('tileloadend', (event) => {
-      const tile = event.tile as VectorTile
-      const feature = tile.getFeatures()[0] as Feature
-      if (feature) {
-        const dates = this.mapManager.getDatesFromMVT(feature)
-        dateFacade.setDates(dates)
-        dateFacade.setCurrentDate(dates[0])
-        unByKey(subKey)
-      }
+    this.raincellFacade.date$.subscribe((date) => {
+      console.log(date)
+      this.source.setUrl(
+        `${SETTINGS.camerounMVTUrl}?ref_date=${date.toISOString()}`
+      )
+      const subKey = this.source.on('tileloadend', (event) => {
+        const tile = event.tile as VectorTile
+        const feature = tile.getFeatures()[0] as Feature
+        if (feature) {
+          const dates = this.mapManager.getDatesFromMVT(feature)
+          dateFacade.setDates(dates)
+          dateFacade.setCurrentDate(dates[0])
+          unByKey(subKey)
+        }
+      })
+      this.source.refresh()
     })
 
     this.dateFacade.currentDate$
