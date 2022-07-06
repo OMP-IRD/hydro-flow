@@ -15,3 +15,5 @@ export const selectCell = createAction(
   '[Cells] Select a cell',
   props<{ selectedId: string }>()
 )
+
+export const setDate = createAction('[Cells] Set date', props<{ date: Date }>())

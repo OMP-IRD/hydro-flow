@@ -1,11 +1,13 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity'
 import { Action, createReducer, on } from '@ngrx/store'
 import Feature from 'ol/Feature'
+import { setDate } from '../../../../../../../../apps/raincell-public/src/app/+state/raincell.actions'
 import * as CellsActions from './cells.actions'
 
 export const CELLS_FEATURE_KEY = 'cells'
 
 export interface State extends EntityState<Feature> {
+  date?: Date
   selectedId?: string
   loaded: boolean
   error?: string | null
@@ -24,6 +26,7 @@ export const cellsAdapter: EntityAdapter<Feature> =
 
 export const initialState: State = cellsAdapter.getInitialState({
   loaded: false,
+  date: new Date(),
 })
 
 const cellsReducer = createReducer(
@@ -38,6 +41,10 @@ const cellsReducer = createReducer(
   on(CellsActions.selectCell, (state, { selectedId }) => ({
     ...state,
     selectedId,
+  })),
+  on(setDate, (state, { date }) => ({
+    ...state,
+    date,
   }))
 )
 

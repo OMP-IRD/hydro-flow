@@ -15,6 +15,11 @@ export const getCellsError = createSelector(
   (state: State) => state.error
 )
 
+export const getCellsDate = createSelector(
+  getCellsState,
+  (state: State) => state.date
+)
+
 export const getAllCells = createSelector(getCellsState, (state: State) =>
   selectAll(state)
 )

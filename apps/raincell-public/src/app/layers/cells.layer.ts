@@ -11,7 +11,6 @@ import { unByKey } from 'ol/Observable'
 import VectorTileSource from 'ol/source/VectorTile'
 import { Fill, Stroke, Style } from 'ol/style'
 import { filter } from 'rxjs/operators'
-import { RaincellFacade } from '../+state/raincell.facade'
 import { setRgbOpacity } from '../../../../hyfaa/src/app/utils'
 import { MapManagerService } from '../map/map-manager.service'
 import SETTINGS from '../settings'
@@ -37,8 +36,7 @@ export class CellsLayer {
     private http: HttpClient,
     private mapManager: MapManagerService,
     private dateFacade: DateFacade,
-    private cellsFacade: CellsFacade,
-    private raincellFacade: RaincellFacade
+    private cellsFacade: CellsFacade
   ) {
     this.source = new VectorTileSource({
       format: new MVT({
@@ -55,8 +53,7 @@ export class CellsLayer {
       style: this.styleFn.bind(this),
     })
 
-    this.raincellFacade.date$.subscribe((date) => {
-      console.log(date)
+    this.cellsFacade.date$.subscribe((date) => {
       this.source.setUrl(
         `${SETTINGS.camerounMVTUrl}?ref_date=${date.toISOString()}`
       )
@@ -98,7 +95,6 @@ export class CellsLayer {
     map.on('click', (event) => {
       const hit = this.getHit(event.pixel)
       if (hit) {
-        // const id = hit.getId()
         const id = hit.get('cell_id')
         this.cellsFacade.selectCell(id)
       }
