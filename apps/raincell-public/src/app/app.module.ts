@@ -20,7 +20,8 @@ import { AppComponent } from './app.component'
 import { CellLegendComponent } from './components/cell-legend/cell-legend.component'
 import { DatePickerContainerComponent } from './components/date-picker-container/date-picker-container.component'
 import { HeaderComponent } from './components/header/header.component'
-import { MapContainerComponent } from './components/map-container/map-container.component'
+import { MapContainerComponent } from './components/map-container/map-container.component';
+import { TimePlayerComponent } from './components/time-player/time-player.component'
 
 export const API_URL = '/api/'
 
@@ -31,6 +32,7 @@ export const API_URL = '/api/'
     MapContainerComponent,
     CellLegendComponent,
     DatePickerContainerComponent,
+    TimePlayerComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core'
-import { DateFacade } from '@hydro-flow/feature/time'
-import { take } from 'rxjs/operators'
+import { RaincellFacade } from '../../+state/raincell.facade'
 
 @Component({
   selector: 'raincell-date-picker-container',
@@ -8,14 +7,5 @@ import { take } from 'rxjs/operators'
   styleUrls: ['./date-picker-container.component.scss'],
 })
 export class DatePickerContainerComponent {
-  constructor(public facade: DateFacade) {}
-
-  onDateChange(date: Date): void {
-    this.facade.setCurrentDate(date)
-  }
-  onAnimatorIndexChange(index: number): void {
-    this.facade.dates$
-      .pipe(take(1))
-      .subscribe((dates) => this.facade.setCurrentDate(dates[index]))
-  }
+  constructor(public facade: RaincellFacade) {}
 }

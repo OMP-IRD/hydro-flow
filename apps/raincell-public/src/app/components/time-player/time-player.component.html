@@ -1,0 +1,18 @@
+<div
+  class="position-absolute date bg-white p-2 shadow-sm"
+  *ngIf="facade.currentDate$ | async as date"
+>
+  <ng-container *ngIf="facade.dates$ | async as dates">
+    <ui-date-picker
+      [dates]="dates"
+      [currentDate]="date"
+      (currentDateChange)="onDateChange($event)"
+    ></ui-date-picker>
+    <ui-animator
+      class="mx-3"
+      [size]="dates.length"
+      [index]="dates.indexOf(date)"
+      (indexChange)="onAnimatorIndexChange($event)"
+    ></ui-animator>
+  </ng-container>
+</div>
