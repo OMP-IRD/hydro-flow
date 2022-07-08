@@ -189,6 +189,10 @@ Chart = function (options) {
 
   // Context chart
   var context = null
+  var format = d3.time.format('%Y-%m-%d')
+  var outputFormat = d3.time.format('%Y-%m-%d')
+  var dataLabelFn = (v) => v
+  var roundValues = true
 
   // Options arguments
   if (options != undefined) {
@@ -234,12 +238,23 @@ Chart = function (options) {
       if (options.hasOwnProperty('y_title')) {
         y_title = options.y_title
       }
+      if (options.hasOwnProperty('inputFormat')) {
+        format = d3.time.format(options.inputFormat)
+      }
+      if (options.hasOwnProperty('outputFormat')) {
+        outputFormat = d3.time.format(options.outputFormat)
+      }
+      if (options.hasOwnProperty('dataLabelFn')) {
+        dataLabelFn = options.dataLabelFn
+      }
+      if (options.hasOwnProperty('roundValues')) {
+        roundValues = options.roundValues
+      }
     }
   }
 
   var clip_id
   // Format dates
-  var format = d3.time.format('%Y-%m-%d')
 
   // X scale
   var xScale = d3.time.scale().range([0, width]),
@@ -517,15 +532,20 @@ Chart = function (options) {
           'transform',
           'translate(' + xScale(d.date) + ',' + yScale(d.close) + ')'
         )
+        var dataValue = roundValues
+          ? Math.round(d.close)
+          : toFixedIfNecessary(d.close, 3)
         focus
           .select('.tooltip-date')
-          .text(d.date.toLocaleDateString(undefined, { timezone: 'UTC' }))
-        focus.select('.tooltip-flow').text('flow: ' + Math.round(d.close))
-        tooltipConfig.forEach(({ key, title }) =>
+          // .text(d.date.toLocaleDateString(undefined, { timezone: 'UTC' }))
+          .text(outputFormat(d.date))
+        focus.select('.tooltip-flow').text(dataLabelFn(dataValue))
+        tooltipConfig.forEach(({ key, title }) => {
+          var value = roundValues ? Math.round(d[key]) : d[key]
           focus
             .select(`.tooltip-${key}`)
-            .text(`${title || key}: ${Math.round(d[key])}`)
-        )
+            .text(`${title || key}: ${toFixedIfNecessary(value, 3)}`)
+        })
       }
     }
   }
@@ -1278,7 +1298,7 @@ Chart = function (options) {
       .style('clip-path', 'url(#' + clip_id + ')')
   }
 
-  this.drawYaxis = function() {
+  this.drawYaxis = function () {
     focus
       .append('g')
       .attr('class', 'y axis')
@@ -1299,4 +1319,8 @@ Chart = function (options) {
       .text(y_title)
       .attr('class', 'axis_title')
   }
+}
+
+function toFixedIfNecessary(value, dp) {
+  return +parseFloat(value).toFixed(dp)
 }

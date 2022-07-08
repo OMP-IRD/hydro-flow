@@ -14,4 +14,7 @@ export class CellsFacade {
   load(id: string) {
     this.store.dispatch(CellsActions.load({ id }))
   }
+  reset() {
+    this.store.dispatch(CellsActions.reset())
+  }
 }

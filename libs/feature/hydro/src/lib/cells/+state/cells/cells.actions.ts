@@ -11,7 +11,6 @@ export const loadCellsFailure = createAction(
   props<{ error: any }>()
 )
 
-export const load = createAction(
-  '[Cells] Select a cell',
-  props<{ id: string }>()
-)
+export const load = createAction('[Cells] Load a Cell', props<{ id: string }>())
+
+export const reset = createAction('[Cells] Reset')

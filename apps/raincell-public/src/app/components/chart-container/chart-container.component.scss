@@ -49,4 +49,8 @@ $variance-color:  lightgray;
     fill : darken($variance-color, 20);
   }
 
+  .tooltip-hover {
+    width: 200px;
+  }
+
 }

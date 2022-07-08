@@ -44,7 +44,6 @@ export class ChartContainerComponent implements OnDestroy, AfterViewInit {
       keyboard: false,
     })
 
-    /*
     this.subscription.add(
       this.cellsFacade.loaded$
         .pipe(filter((loaded) => !loaded))
@@ -54,7 +53,6 @@ export class ChartContainerComponent implements OnDestroy, AfterViewInit {
           }
         })
     )
-*/
 
     this.subscription.add(
       this.cellsFacade.feature$.subscribe((cell) =>
@@ -69,63 +67,32 @@ export class ChartContainerComponent implements OnDestroy, AfterViewInit {
           map((cell) => this.chartMapper.toChart(cell))
         )
         .subscribe((chartData) => {
-          console.log(chartData)
           const tooltipKeys = []
           this.chart = new Chart({
             renderTo: this.chartElt.nativeElement,
-            y_title: 'Flow (m³/sec)',
+            y_title: 'Rain (mm)',
             x_title: 'Date',
+            dataLabelFn: (value) => `rain: ${value} mm`,
             drawCircles: false,
+            inputFormat: '%Y-%m-%dT%H:%M',
+            outputFormat: '%Y-%m-%d %I:%M:%p',
+            roundValues: false,
           })
             .read(chartData)
             .draw()
-          if (chartData.dataSerie === 'forecast') {
-            const todayIndex =
-              chartData.dates.filter((date) => new Date(date) < new Date())
-                .length - 1
-            this.chart.addSerie(
-              {
-                data: chartData.h.slice(todayIndex),
-                name: 'forecast',
-                type: 'line',
-                className: 'forecast-line',
-              },
-              chartData.dates.slice(todayIndex)
-            )
-          }
-          if (chartData.variance?.length > 0) {
-            const range = chartData.h.reduce(
-              (output, waterHeight, index) => {
-                const variance = chartData.variance[index]
-                output.top.push(waterHeight + variance)
-                output.bottom.push(waterHeight - variance)
-                return output
-              },
-              { top: [], bottom: [] }
-            )
-            this.chart.addSerie(
-              {
-                ...range,
-                name: 'variance',
-                type: 'range',
-                className: 'variance-area',
-              },
-              chartData.dates
-            )
-            tooltipKeys.push({ key: 'variance' })
-          }
-          if (chartData.expected?.length > 0) {
-            this.chart.addSerie(
-              {
-                data: chartData.expected,
-                name: 'expected',
-                type: 'line',
-                className: 'expected-line',
-              },
-              chartData.dates
-            )
-            tooltipKeys.push({ key: 'expected', title: 'History' })
-          }
+
+          this.chart.addSerie(
+            {
+              bottom: chartData.q25,
+              top: chartData.q75,
+              name: 'variance',
+              type: 'range',
+              className: 'variance-area',
+            },
+            chartData.dates
+          )
+          tooltipKeys.push({ key: 'variance' })
+
           this.chart.scaleYDomain()
           this.chart.scaleXDomain()
           this.chart.addControl()
@@ -135,10 +102,8 @@ export class ChartContainerComponent implements OnDestroy, AfterViewInit {
     )
   }
 
-  onDataSerieChange(serieType): void {}
-
   close() {
     this.chart.destroy()
-    // this.stationsFacade.selectStation(undefined)
+    this.cellsFacade.reset()
   }
 }

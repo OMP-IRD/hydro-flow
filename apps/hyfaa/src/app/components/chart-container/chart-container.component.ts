@@ -91,6 +91,7 @@ export class ChartContainerComponent implements OnDestroy, AfterViewInit {
             renderTo: this.chartElt.nativeElement,
             y_title: 'Flow (m³/sec)',
             x_title: 'Date',
+            dataLabelFn: (value) => `flow: ${value} m3/s`,
             drawCircles: false,
           })
             .read(chartData)

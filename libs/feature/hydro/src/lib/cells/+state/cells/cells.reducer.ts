@@ -33,6 +33,12 @@ const cellsReducer = createReducer(
     ...state,
     loaded: false,
     error: null,
+  })),
+  on(CellsActions.reset, (state) => ({
+    ...state,
+    loaded: false,
+    error: null,
+    feature: null,
   }))
 )
 
