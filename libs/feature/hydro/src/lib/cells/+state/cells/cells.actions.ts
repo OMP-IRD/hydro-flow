@@ -3,7 +3,7 @@ import Feature from 'ol/Feature'
 
 export const loadCellsSuccess = createAction(
   '[Cells/API] Load Cells Success',
-  props<{ cells: Feature[] }>()
+  props<{ feature: Feature }>()
 )
 
 export const loadCellsFailure = createAction(
@@ -11,9 +11,7 @@ export const loadCellsFailure = createAction(
   props<{ error: any }>()
 )
 
-export const selectCell = createAction(
+export const load = createAction(
   '[Cells] Select a cell',
-  props<{ selectedId: string }>()
+  props<{ id: string }>()
 )
-
-export const setDate = createAction('[Cells] Set date', props<{ date: Date }>())

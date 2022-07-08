@@ -30,8 +30,8 @@ export class MapManagerService {
     })
   }
 
-  getDatesFromMVT(segment: Feature): Date[] {
-    const rcData = JSON.parse(segment.get('rc_data'))
+  getDatesFromMVT(cells: Feature): Date[] {
+    const rcData = JSON.parse(cells.get('rc_data'))
     return rcData
       .reduce((dates, day) => {
         const dayDates = day.v.map(

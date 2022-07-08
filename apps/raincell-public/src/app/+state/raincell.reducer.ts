@@ -8,7 +8,7 @@ export interface AppState {
 }
 
 export const initialState: AppState = {
-  date: new Date(),
+  date: new Date('2022-06-14'),
 }
 
 const raincellReducer = createReducer(

@@ -35,6 +35,7 @@ import { RAINCELL_FEATURE_KEY, reducer } from './+state/raincell.reducer'
 
 import { AppComponent } from './app.component'
 import { CellLegendComponent } from './components/cell-legend/cell-legend.component'
+import { ChartContainerComponent } from './components/chart-container/chart-container.component'
 import { DatePickerContainerComponent } from './components/date-picker-container/date-picker-container.component'
 import { HeaderComponent } from './components/header/header.component'
 import { MapContainerComponent } from './components/map-container/map-container.component'
@@ -66,6 +67,7 @@ const MAT_DATEPICKER_FORMAT = {
     CellLegendComponent,
     DatePickerContainerComponent,
     TimePlayerComponent,
+    ChartContainerComponent,
   ],
   imports: [
     BrowserModule,

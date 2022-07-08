@@ -1,0 +1,52 @@
+$expected-color:  #446624;
+$variance-color:  lightgray;
+
+.modal-dialog {
+  max-width: 60rem;
+}
+
+.modal-content {
+  border-radius: 0;
+}
+.form-group {
+  width: 30%;
+}
+
+.fa-spin {
+  margin-top:20%;
+}
+::ng-deep {
+  .expected-line {
+    fill: none;
+    stroke: $expected-color;
+    stroke-width: 1px;
+    clip-path: url(#clip);
+    z-index: 10;
+  }
+
+  .variance-area {
+    fill: $variance-color;
+    stroke: $variance-color;
+    opacity: 0.5;
+    stroke-width: 2.0px;
+    clip-path: url(#clip);
+    z-index: 10;
+  }
+
+  .forecast-line {
+    fill: none;
+    stroke: white;
+    stroke-width: 5px;
+    stroke-dasharray: 10 10;
+    clip-path: url(#clip);
+    z-index: 10;
+  }
+
+  .tooltip-expected {
+    fill : $expected-color;
+  }
+  .tooltip-variance {
+    fill : darken($variance-color, 20);
+  }
+
+}

@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core'
 import { StationsApiService } from '@hydro-flow/data-access/hyfaa'
 import { readFeatureCollection } from '@hydro-flow/feature/map'
-import { createEffect, Actions, ofType } from '@ngrx/effects'
+import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { fetch } from '@nrwl/angular'
 import { map } from 'rxjs/operators'
-
-import * as StationsFeature from './stations.reducer'
 import * as StationsActions from './stations.actions'
 
 @Injectable()
