@@ -10,7 +10,12 @@
         <h5 class="modal-title fw-bold" id="staticBackdropLabel">
           {{ cell.getId() }}
         </h5>
-        <div class="flex-grow-1 text-center"></div>
+        <div class="flex-grow-1 text-center">
+          <hydro-frequence-selector
+            [frequenceType]="cellsFacade.frequence$ | async"
+            (frequenceChange)="onFrequenceChange($event)"
+          ></hydro-frequence-selector>
+        </div>
         <button
           type="button"
           class="btn-close"

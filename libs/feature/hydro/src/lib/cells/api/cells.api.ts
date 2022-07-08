@@ -21,4 +21,14 @@ export class CellsApi {
       }
     )
   }
+  getRainDailyAtTimeAndCell(
+    params: RainAtTimeAndCellRequestModel
+  ): Observable<FeatureCollection> {
+    return this.http.get<FeatureCollection>(
+      `${BASE_PATH}/postgisftw.rain_daily_at_date_and_cell/items.json`,
+      {
+        params,
+      }
+    )
+  }
 }

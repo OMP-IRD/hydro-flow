@@ -3,3 +3,5 @@ export type RainAtTimeAndCellRequestModel = {
   ref_time?: string
   duration?: string
 }
+
+export type RaincellFrequence = 'day' | 'min'

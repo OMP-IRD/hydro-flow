@@ -1,0 +1,25 @@
+<div class="btn-group">
+  <button
+    class="btn btn-lg dropdown-toggle"
+    type="button"
+    data-bs-toggle="dropdown"
+    aria-expanded="false"
+  >
+    <span class="text-capitalize">{{ getLabel(current) }}</span>
+  </button>
+  <ul class="dropdown-menu small w-100">
+    <li
+      *ngFor="let freq of frequences"
+      (click)="setCurrent(freq)"
+      class="small"
+    >
+      <button
+        class="dropdown-item"
+        [class.active]="current === freq"
+        type="button"
+      >
+        <span class="text-capitalize">{{ getLabel(freq) }}</span>
+      </button>
+    </li>
+  </ul>
+</div>

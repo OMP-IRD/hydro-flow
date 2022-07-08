@@ -102,6 +102,10 @@ export class ChartContainerComponent implements OnDestroy, AfterViewInit {
     )
   }
 
+  onFrequenceChange($event: any) {
+    this.cellsFacade.setFrequence($event)
+  }
+
   close() {
     this.chart.destroy()
     this.cellsFacade.reset()

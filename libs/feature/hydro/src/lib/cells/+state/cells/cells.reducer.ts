@@ -1,5 +1,7 @@
 import { Action, createReducer, on } from '@ngrx/store'
 import Feature from 'ol/Feature'
+import { RaincellFrequence } from '../../api/cells.model'
+import { setFrequence } from './cells.actions'
 import * as CellsActions from './cells.actions'
 
 export const CELLS_FEATURE_KEY = 'cells'
@@ -8,6 +10,7 @@ export interface State {
   feature?: Feature
   loaded: boolean
   error?: string | null
+  frequence: RaincellFrequence
 }
 
 export interface CellsPartialState {
@@ -16,6 +19,7 @@ export interface CellsPartialState {
 
 export const initialState: State = {
   loaded: false,
+  frequence: 'min',
 }
 
 const cellsReducer = createReducer(
@@ -29,7 +33,12 @@ const cellsReducer = createReducer(
     ...state,
     error,
   })),
-  on(CellsActions.load, (state, { id }) => ({
+  on(CellsActions.setFrequence, (state, { frequence }) => ({
+    ...state,
+    loaded: false,
+    frequence,
+  })),
+  on(CellsActions.load, (state) => ({
     ...state,
     loaded: false,
     error: null,

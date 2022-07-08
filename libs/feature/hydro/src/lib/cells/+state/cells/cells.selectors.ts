@@ -17,3 +17,8 @@ export const getCellsFeature = createSelector(
   getCellsState,
   (state: State) => state.feature
 )
+
+export const getCellsFrequence = createSelector(
+  getCellsState,
+  (state: State) => state.frequence
+)
