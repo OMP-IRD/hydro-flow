@@ -75,6 +75,32 @@
       },
       "tags": []
     },
+    "feature-shared": {
+      "projectType": "library",
+      "root": "libs/feature/shared",
+      "sourceRoot": "libs/feature/shared/src",
+      "prefix": "hydro-flow",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/feature/shared"],
+          "options": {
+            "jestConfig": "libs/feature/shared/jest.config.ts",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/feature/shared/**/*.ts",
+              "libs/feature/shared/**/*.html"
+            ]
+          }
+        }
+      },
+      "tags": []
+    },
     "feature-time": {
       "$schema": "../../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
@@ -250,7 +276,8 @@
               "geostyler-openlayers-parser",
               "pbf",
               "rbush",
-              "geostyler-qgis-parser"
+              "geostyler-qgis-parser",
+              "chroma-js"
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.bundle.js",
