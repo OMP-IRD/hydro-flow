@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { CellsFacade } from '@hydro-flow/feature/hydro'
 import { matchFilter } from '@hydro-flow/feature/map'
+import { addOpacity } from '@hydro-flow/feature/shared'
 import { DateFacade, dateToHHmm, dateToyyyMMdd } from '@hydro-flow/feature/time'
-import { LineSymbolizer } from 'geostyler-style'
 import { VectorTile } from 'ol'
 import { Extent } from 'ol/extent'
 import Feature from 'ol/Feature'
@@ -14,8 +14,6 @@ import VectorTileSource from 'ol/source/VectorTile'
 import { Fill, Stroke, Style } from 'ol/style'
 import { filter } from 'rxjs/operators'
 import { RaincellFacade } from '../+state/raincell.facade'
-import { RIVER_SEGMENT_STYLE_GS_WIDTH } from '../../../../hyfaa/src/app/layers/river-segment.style'
-import { setRgbOpacity } from '../../../../hyfaa/src/app/utils'
 import { MapManagerService } from '../map/map-manager.service'
 import SETTINGS from '../settings'
 import { CELLS_RULES } from './cells.rules'
@@ -149,7 +147,7 @@ export class CellsLayer {
         width: 1,
       }),
       fill: new Fill({
-        color: setRgbOpacity(color, 0.2),
+        color: addOpacity(color, 0.2),
       }),
     })
     if (feature === this.cellHL) {
