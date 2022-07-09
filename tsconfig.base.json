@@ -7,6 +7,7 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "esModuleInterop": true,
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
@@ -21,6 +22,7 @@
       ],
       "@hydro-flow/feature/hydro": ["libs/feature/hydro/src/index.ts"],
       "@hydro-flow/feature/map": ["libs/feature/map/src/index.ts"],
+      "@hydro-flow/feature/shared": ["libs/feature/shared/src/index.ts"],
       "@hydro-flow/feature/time": ["libs/feature/time/src/index.ts"],
       "@hydro-flow/ui/map": ["libs/ui/map/src/index.ts"],
       "@hydro-flow/ui/time": ["libs/ui/time/src/index.ts"]
