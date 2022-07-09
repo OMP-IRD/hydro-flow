@@ -1,5 +1,6 @@
 import { Component } from '@angular/core'
 import { CellsLayer } from '../../layers/cells.layer'
+import { CELLS_RULES } from '../../layers/cells.rules'
 
 @Component({
   selector: 'raincell-cell-legend',
@@ -8,45 +9,8 @@ import { CellsLayer } from '../../layers/cells.layer'
 })
 export class CellLegendComponent {
   legendSpec = {
-    title: 'Cells',
-    rules: [
-      {
-        label: '0 - 50',
-        color: '#0149FF',
-      },
-      {
-        label: '50 - 100',
-        color: '#019B90',
-      },
-      {
-        label: '100 - 250',
-        color: '#02EE20',
-      },
-      {
-        label: '250 - 500',
-        color: '#76FD08',
-      },
-      {
-        label: '500 - 1000',
-        color: '#FFFF00',
-      },
-      {
-        label: '1000 - 2500',
-        color: '#FEBD00',
-      },
-      {
-        label: '2500 - 5000',
-        color: '#FD7A00',
-      },
-      {
-        label: '5000 - 10000',
-        color: '#FE3D02',
-      },
-      {
-        label: '10000 - 22260',
-        color: '#FF0105',
-      },
-    ],
+    title: 'Rain in mm',
+    rules: CELLS_RULES,
   }
   constructor(private cellsLayer: CellsLayer) {}
 

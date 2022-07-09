@@ -7,7 +7,7 @@ import {
 } from '@angular/core'
 import { CellsChartMapper, CellsFacade } from '@hydro-flow/feature/hydro'
 import { Subscription } from 'rxjs'
-import { filter, map } from 'rxjs/operators'
+import { filter, map, withLatestFrom } from 'rxjs/operators'
 
 declare let Chart: any
 declare let bootstrap: any
@@ -64,17 +64,20 @@ export class ChartContainerComponent implements OnDestroy, AfterViewInit {
       this.cellsFacade.feature$
         .pipe(
           filter((cell) => !!cell),
-          map((cell) => this.chartMapper.toChart(cell))
+          map((cell) => this.chartMapper.toChart(cell)),
+          withLatestFrom(this.cellsFacade.frequence$)
         )
-        .subscribe((chartData) => {
+        .subscribe(([chartData, freq]) => {
           const tooltipKeys = []
+          const inputFormat =
+            freq === 'min' ? { inputFormat: '%Y-%m-%dT%H:%M' } : {}
           this.chart = new Chart({
             renderTo: this.chartElt.nativeElement,
             y_title: 'Rain (mm)',
             x_title: 'Date',
             dataLabelFn: (value) => `rain: ${value} mm`,
             drawCircles: false,
-            inputFormat: '%Y-%m-%dT%H:%M',
+            ...inputFormat,
             outputFormat: '%Y-%m-%d %I:%M:%p',
             roundValues: false,
           })

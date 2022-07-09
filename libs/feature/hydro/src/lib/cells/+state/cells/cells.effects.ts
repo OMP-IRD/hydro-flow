@@ -44,7 +44,6 @@ export class CellsEffects {
           } else if (frequence === 'day') {
             api$ = this.cellsApi.getRainDailyAtTimeAndCell({
               cell_ident: loadAction.id,
-              ref_time: date.toISOString(),
               duration: '1 year',
             })
           }

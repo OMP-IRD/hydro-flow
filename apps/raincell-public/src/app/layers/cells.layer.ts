@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { CellsFacade } from '@hydro-flow/feature/hydro'
+import { matchFilter } from '@hydro-flow/feature/map'
 import { DateFacade, dateToHHmm, dateToyyyMMdd } from '@hydro-flow/feature/time'
+import { LineSymbolizer } from 'geostyler-style'
 import { VectorTile } from 'ol'
 import { Extent } from 'ol/extent'
 import Feature from 'ol/Feature'
@@ -12,9 +14,11 @@ import VectorTileSource from 'ol/source/VectorTile'
 import { Fill, Stroke, Style } from 'ol/style'
 import { filter } from 'rxjs/operators'
 import { RaincellFacade } from '../+state/raincell.facade'
+import { RIVER_SEGMENT_STYLE_GS_WIDTH } from '../../../../hyfaa/src/app/layers/river-segment.style'
 import { setRgbOpacity } from '../../../../hyfaa/src/app/utils'
 import { MapManagerService } from '../map/map-manager.service'
 import SETTINGS from '../settings'
+import { CELLS_RULES } from './cells.rules'
 import { CellDate } from './cells.style'
 
 export const HL_STYLE = new Style({
@@ -130,7 +134,15 @@ export class CellsLayer {
       .find((days) => days.d === this.cellDate.date)
       .v.find((hours) => hours.t === this.cellDate.time).v
 
-    const color = value < 2 ? 'rgb(255,0,0)' : 'rgb(0,0,255)'
+    let color
+    for (let i = 0; i < CELLS_RULES.length; i++) {
+      const rule = CELLS_RULES[i]
+      const { filter } = rule
+      if (matchFilter(value, filter)) {
+        color = rule.color
+        break
+      }
+    }
     const style = new Style({
       stroke: new Stroke({
         color,
@@ -143,7 +155,6 @@ export class CellsLayer {
     if (feature === this.cellHL) {
       style.getStroke().setWidth(3)
     }
-
     return style
   }
 }
