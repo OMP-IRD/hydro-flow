@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core'
-import { take } from 'rxjs/operators'
-import { HyfaaFacade } from '../../+state/hyfaa.facade'
+import SETTINGS from '../../../settings'
 import { RiverSegmentLayer } from '../../layers/river-segment.layer'
 import { StationLayer } from '../../layers/station.layer'
 import { MapManagerService } from '../../map/map-manager.service'
-import SETTINGS from '../../../settings'
 
 @Component({
   selector: 'hyfaa-map-container',
@@ -17,21 +15,11 @@ export class MapContainerComponent implements OnInit {
   constructor(
     public mapManager: MapManagerService,
     private riverLayer: RiverSegmentLayer,
-    private stationLayer: StationLayer,
-    public facade: HyfaaFacade
+    private stationLayer: StationLayer
   ) {}
 
   ngOnInit(): void {
     this.mapManager.map.addLayer(this.riverLayer.getLayer())
     this.mapManager.map.addLayer(this.stationLayer.getLayer())
-  }
-
-  onDateChange(date: Date): void {
-    this.facade.setCurrentDate(date)
-  }
-  onAnimatorIndexChange(index: number): void {
-    this.facade.dates$
-      .pipe(take(1))
-      .subscribe((dates) => this.facade.setCurrentDate(dates[index]))
   }
 }

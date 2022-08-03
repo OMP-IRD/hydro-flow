@@ -2,8 +2,7 @@ import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { HyfaaSegmentFocus } from '@hydro-flow/feature/hydro'
 import { matchFilter } from '@hydro-flow/feature/map'
-import OpenlayersParser from 'geostyler-openlayers-parser'
-import QGISParser from 'geostyler-qgis-parser'
+import { DateFacade } from '@hydro-flow/feature/time'
 import { LineSymbolizer } from 'geostyler-style'
 import { VectorTile } from 'ol'
 import { Extent } from 'ol/extent'
@@ -44,7 +43,8 @@ export class RiverSegmentLayer {
   constructor(
     private http: HttpClient,
     private mapManager: MapManagerService,
-    private facade: HyfaaFacade
+    private facade: HyfaaFacade,
+    private dateFacade: DateFacade
   ) {
     this.source = new VectorTileSource({
       format: new MVT({
@@ -67,8 +67,8 @@ export class RiverSegmentLayer {
       const feature = tile.getFeatures()[0] as Feature
       if (feature) {
         const dates = this.mapManager.getDatesFromSegment(feature)
-        facade.setDates(dates)
-        facade.setCurrentDate(dates[dates.length - 1])
+        dateFacade.setDates(dates)
+        dateFacade.setCurrentDate(dates[dates.length - 1])
         unByKey(subKey)
       }
     })
@@ -82,7 +82,7 @@ export class RiverSegmentLayer {
         )
     })
 
-    this.facade.currentDate$
+    this.dateFacade.currentDate$
       .pipe(
         filter((date) => !!date),
         map((date: Date) => formatDate(date))

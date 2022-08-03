@@ -6,8 +6,6 @@ import * as HyfaaActions from './hyfaa.actions'
 export const HYFAA_FEATURE_KEY = 'hyfaa'
 
 export interface AppState {
-  dates?: Date[]
-  date?: Date
   dataSerie: HyfaaDataSerie
   segmentFocus: HyfaaSegmentFocus
 }
@@ -19,8 +17,6 @@ export const initialState: AppState = {
 
 const hyfaaReducer = createReducer(
   initialState,
-  on(HyfaaActions.setDates, (state, { dates }) => ({ ...state, dates })),
-  on(HyfaaActions.setCurrentDate, (state, { date }) => ({ ...state, date })),
   on(HyfaaActions.setDataSerie, (state, { dataSerie }) => ({
     ...state,
     dataSerie,

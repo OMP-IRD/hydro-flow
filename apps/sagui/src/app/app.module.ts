@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { BASE_PATH } from '@hydro-flow/data-access/hyfaa'
 import { FeatureStationsModule } from '@hydro-flow/feature/hydro'
+import { DateSelectorModule } from '@hydro-flow/feature/time'
 import { UiMapModule } from '@hydro-flow/ui/map'
 import { UiTimeModule } from '@hydro-flow/ui/time'
 import { EffectsModule } from '@ngrx/effects'
@@ -17,10 +18,10 @@ import { AppComponent } from './app.component'
 import { ChartContainerComponent } from './components/chart-container/chart-container.component'
 import { LegendContainerComponent } from './components/legend-container/legend-container.component'
 import { MapContainerComponent } from './components/map-container/map-container.component'
-import { RiverSegmentOverlayComponent } from './layers/river-segment-overlay/river-segment-overlay.component';
-import { SerieSelectorComponent } from './components/serie-selector/serie-selector.component';
+import { RiverSegmentOverlayComponent } from './layers/river-segment-overlay/river-segment-overlay.component'
+import { SerieSelectorComponent } from './components/serie-selector/serie-selector.component'
 import { SegmentLegendComponent } from './components/segment-legend/segment-legend.component'
-import { FeatureMapModule } from '@hydro-flow/feature/map';
+import { FeatureMapModule } from '@hydro-flow/feature/map'
 import { HeaderComponent } from './components/header/header.component'
 
 export const API_URL = '/api/v1'
@@ -39,7 +40,7 @@ export const API_URL = '/api/v1'
   imports: [
     BrowserModule,
     UiMapModule,
-    UiTimeModule,
+    DateSelectorModule,
     HttpClientModule,
     FeatureStationsModule,
     FeatureMapModule,

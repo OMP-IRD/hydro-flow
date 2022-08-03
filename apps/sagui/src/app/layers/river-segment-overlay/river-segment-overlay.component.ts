@@ -5,11 +5,11 @@ import {
   ElementRef,
   OnInit,
 } from '@angular/core'
+import { DateFacade } from '@hydro-flow/feature/time'
 import Feature from 'ol/Feature'
 import Map from 'ol/Map'
 import Overlay from 'ol/Overlay'
 import { filter, map } from 'rxjs/operators'
-import { HyfaaFacade } from '../../+state/hyfaa.facade'
 import { MapManagerService } from '../../map/map-manager.service'
 import { formatDate } from '../../utils'
 import { RiverSegmentLayer } from '../river-segment.layer'
@@ -44,7 +44,7 @@ export class RiverSegmentOverlayComponent implements OnInit {
     private mapManager: MapManagerService,
     private riverSegmentLayer: RiverSegmentLayer,
     private _changeDetectionRef: ChangeDetectorRef,
-    private facade: HyfaaFacade
+    private dateFacade: DateFacade
   ) {}
 
   ngOnInit() {
@@ -97,7 +97,7 @@ export class RiverSegmentOverlayComponent implements OnInit {
       }
     })
 
-    this.facade.currentDate$
+    this.dateFacade.currentDate$
       .pipe(
         filter((date) => !!date),
         map((date: Date) => formatDate(date))
