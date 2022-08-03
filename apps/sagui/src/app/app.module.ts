@@ -23,6 +23,8 @@ import { MapContainerComponent } from './components/map-container/map-container.
 import { SegmentLegendComponent } from './components/segment-legend/segment-legend.component'
 import { SerieSelectorComponent } from './components/serie-selector/serie-selector.component'
 import { RiverSegmentOverlayComponent } from './layers/river-segment-overlay/river-segment-overlay.component'
+import { TabsContainerComponent } from './components/tabs-container/tabs-container.component'
+import { TabPanelComponent } from './ui/tab-panel/tab-panel.component'
 
 export const API_URL = '/api/v1'
 
@@ -36,6 +38,8 @@ export const API_URL = '/api/v1'
     SerieSelectorComponent,
     SegmentLegendComponent,
     HeaderComponent,
+    TabsContainerComponent,
+    TabPanelComponent,
   ],
   imports: [
     BrowserModule,

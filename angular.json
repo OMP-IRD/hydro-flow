@@ -405,7 +405,7 @@
       "projectType": "application",
       "root": "apps/sagui",
       "sourceRoot": "apps/sagui/src",
-      "prefix": "hydro-flow",
+      "prefix": "sagui",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",

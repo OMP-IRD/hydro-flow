@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core'
 import { HyfaaDataSerie, HyfaaSegmentFocus } from '@hydro-flow/feature/hydro'
 
 import { select, Store } from '@ngrx/store'
+import { SaguiTab } from '../ui/ui.model'
 import * as SaguiActions from './sagui.actions'
-import { SaguiTab } from './sagui.models'
 import * as SaguiSelectors from './sagui.selectors'
 
 @Injectable()

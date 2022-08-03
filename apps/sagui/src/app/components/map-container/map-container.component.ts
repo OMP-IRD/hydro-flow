@@ -5,7 +5,7 @@ import { StationLayer } from '../../layers/station.layer'
 import { MapManagerService } from '../../map/map-manager.service'
 
 @Component({
-  selector: 'hyfaa-map-container',
+  selector: 'sagui-map-container',
   templateUrl: './map-container.component.html',
   styleUrls: ['./map-container.component.scss'],
 })

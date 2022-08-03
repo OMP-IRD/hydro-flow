@@ -1,8 +1,8 @@
 import { HyfaaDataSerie, HyfaaSegmentFocus } from '@hydro-flow/feature/hydro'
 import { Action, createReducer, on } from '@ngrx/store'
+import { SAGUI_TAB_TYPES, SaguiTab } from '../ui/ui.model'
 
 import * as SaguiActions from './sagui.actions'
-import { SAGUI_TABS, SaguiTab } from './sagui.models'
 
 export const SAGUI_FEATURE_KEY = 'sagui'
 
@@ -15,7 +15,7 @@ export interface AppState {
 export const initialState: AppState = {
   dataSerie: 'mgbstandard',
   segmentFocus: 'flow',
-  tab: SAGUI_TABS[0],
+  tab: SAGUI_TAB_TYPES[0],
 }
 
 const saguiReducer = createReducer(
