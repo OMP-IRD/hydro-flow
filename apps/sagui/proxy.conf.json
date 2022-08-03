@@ -5,7 +5,7 @@
     "secure": true
   },
   "/tiles": {
-    "target": "https://mgb-hyfaa.pigeo.fr/",
+    "target": "https://sagui.hydro-matters.fr/",
     "changeOrigin": true,
     "secure": true
   }
