@@ -12,3 +12,8 @@ export const getSegmentFocus = createSelector(
   getSaguiState,
   (state: AppState) => state.segmentFocus
 )
+
+export const getTab = createSelector(
+  getSaguiState,
+  (state: AppState) => state.tab
+)

@@ -1,6 +1,6 @@
 {
   "apiUrl": "",
-  "riverMVTUrl": "/tiles/hyfaa.data_aggregated_geo/{z}/{x}/{y}.pbf",
+  "riverMVTUrl": "/tiles/guyane.hyfaa_forecast_aggregated_geo/{z}/{x}/{y}.pbf",
   "stationMVTUrl": "/tiles/geospatial.stations_geo/{z}/{x}/{y}.pbf",
   "backgroundLayers": [
     {

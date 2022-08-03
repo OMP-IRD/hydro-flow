@@ -1,5 +1,6 @@
 import { HyfaaDataSerie, HyfaaSegmentFocus } from '@hydro-flow/feature/hydro'
 import { createAction, props } from '@ngrx/store'
+import { SaguiTab } from './sagui.models'
 
 export const setDataSerie = createAction(
   '[Sagui] Set data serie',
@@ -9,4 +10,9 @@ export const setDataSerie = createAction(
 export const setSegmentFocus = createAction(
   '[Sagui] Set segment focus',
   props<{ segmentFocus: HyfaaSegmentFocus }>()
+)
+
+export const setTab = createAction(
+  '[Sagui] Set active tab',
+  props<{ tab: SaguiTab }>()
 )

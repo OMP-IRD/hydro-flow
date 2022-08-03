@@ -3,12 +3,14 @@ import { HyfaaDataSerie, HyfaaSegmentFocus } from '@hydro-flow/feature/hydro'
 
 import { select, Store } from '@ngrx/store'
 import * as SaguiActions from './sagui.actions'
+import { SaguiTab } from './sagui.models'
 import * as SaguiSelectors from './sagui.selectors'
 
 @Injectable()
 export class SaguiFacade {
   dataSerie$ = this.store.pipe(select(SaguiSelectors.getDataSerie))
   segmentFocus$ = this.store.pipe(select(SaguiSelectors.getSegmentFocus))
+  tab$ = this.store.pipe(select(SaguiSelectors.getTab))
 
   constructor(private store: Store) {}
 
@@ -17,5 +19,8 @@ export class SaguiFacade {
   }
   setSegmentFocus(segmentFocus: HyfaaSegmentFocus): void {
     this.store.dispatch(SaguiActions.setSegmentFocus({ segmentFocus }))
+  }
+  setTab(tab: SaguiTab): void {
+    this.store.dispatch(SaguiActions.setTab({ tab }))
   }
 }

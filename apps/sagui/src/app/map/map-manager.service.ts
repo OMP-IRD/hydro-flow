@@ -22,13 +22,14 @@ export class MapManagerService {
         }),
       ],
       view: new View({
-        center: [-6574404.688680032, 537939.8283076568],
+        center: [-5965966.42614017, 413500.74843450135],
         multiWorld: true,
         constrainResolution: true,
         zoom: 7,
       }),
       pixelRatio: 1,
     })
+    this.map.getView().on('change:center', (event) => console.log(event))
   }
 
   setHLSegment(segment: Feature): void {
