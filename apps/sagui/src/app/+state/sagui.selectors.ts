@@ -1,14 +1,14 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store'
-import { AppState, HYFAA_FEATURE_KEY } from './hyfaa.reducer'
+import { AppState, SAGUI_FEATURE_KEY } from './sagui.reducer'
 
-export const getHyfaaState = createFeatureSelector<AppState>(HYFAA_FEATURE_KEY)
+export const getSaguiState = createFeatureSelector<AppState>(SAGUI_FEATURE_KEY)
 
 export const getDataSerie = createSelector(
-  getHyfaaState,
+  getSaguiState,
   (state: AppState) => state.dataSerie
 )
 
 export const getSegmentFocus = createSelector(
-  getHyfaaState,
+  getSaguiState,
   (state: AppState) => state.segmentFocus
 )

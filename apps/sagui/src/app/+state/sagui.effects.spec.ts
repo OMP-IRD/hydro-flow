@@ -9,24 +9,24 @@ import { hot } from 'jasmine-marbles'
 import { Observable } from 'rxjs'
 import * as HyfaaActions from './hyfaa.actions'
 
-import { HyfaaEffects } from './hyfaa.effects'
+import { SaguiEffects } from './sagui.effects'
 
 describe('HyfaaEffects', () => {
   let actions: Observable<any>
-  let effects: HyfaaEffects
+  let effects: SaguiEffects
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [NxModule.forRoot()],
       providers: [
-        HyfaaEffects,
+        SaguiEffects,
         DataPersistence,
         provideMockActions(() => actions),
         provideMockStore(),
       ],
     })
 
-    effects = TestBed.inject(HyfaaEffects)
+    effects = TestBed.inject(SaguiEffects)
   })
 
   describe('init$', () => {

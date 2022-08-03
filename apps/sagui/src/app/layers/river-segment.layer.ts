@@ -13,7 +13,7 @@ import { unByKey } from 'ol/Observable'
 import VectorTileSource from 'ol/source/VectorTile'
 import { Stroke, Style } from 'ol/style'
 import { filter, map } from 'rxjs/operators'
-import { HyfaaFacade } from '../+state/hyfaa.facade'
+import { SaguiFacade } from '../+state/sagui.facade'
 import SETTINGS from '../../settings'
 import { MapManagerService } from '../map/map-manager.service'
 import { formatDate } from '../utils'
@@ -43,7 +43,7 @@ export class RiverSegmentLayer {
   constructor(
     private http: HttpClient,
     private mapManager: MapManagerService,
-    private facade: HyfaaFacade,
+    private facade: SaguiFacade,
     private dateFacade: DateFacade
   ) {
     this.source = new VectorTileSource({

@@ -1,9 +1,9 @@
 import { HyfaaDataSerie, HyfaaSegmentFocus } from '@hydro-flow/feature/hydro'
 import { Action, createReducer, on } from '@ngrx/store'
 
-import * as HyfaaActions from './hyfaa.actions'
+import * as SaguiActions from './sagui.actions'
 
-export const HYFAA_FEATURE_KEY = 'hyfaa'
+export const SAGUI_FEATURE_KEY = 'sagui'
 
 export interface AppState {
   dataSerie: HyfaaDataSerie
@@ -15,18 +15,18 @@ export const initialState: AppState = {
   segmentFocus: 'flow',
 }
 
-const hyfaaReducer = createReducer(
+const saguiReducer = createReducer(
   initialState,
-  on(HyfaaActions.setDataSerie, (state, { dataSerie }) => ({
+  on(SaguiActions.setDataSerie, (state, { dataSerie }) => ({
     ...state,
     dataSerie,
   })),
-  on(HyfaaActions.setSegmentFocus, (state, { segmentFocus }) => ({
+  on(SaguiActions.setSegmentFocus, (state, { segmentFocus }) => ({
     ...state,
     segmentFocus,
   }))
 )
 
 export function reducer(state: AppState | undefined, action: Action) {
-  return hyfaaReducer(state, action)
+  return saguiReducer(state, action)
 }

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { HyfaaSegmentFocus } from '@hydro-flow/feature/hydro'
 import { LegendSpec } from '@hydro-flow/ui/map'
-import { HyfaaFacade } from '../../+state/hyfaa.facade'
+import { SaguiFacade } from '../../+state/sagui.facade'
 import { RiverSegmentLayer } from '../../layers/river-segment.layer'
 import { STATION_COLOR, StationLayer } from '../../layers/station.layer'
 
@@ -32,7 +32,7 @@ export class LegendContainerComponent {
   constructor(
     private riverLayer: RiverSegmentLayer,
     private stationLayer: StationLayer,
-    public facade: HyfaaFacade
+    public facade: SaguiFacade
   ) {}
 
   onStationVisibilityToggle(visible: boolean): void {

@@ -7,11 +7,11 @@ import {
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { combineLatest, of } from 'rxjs'
 import { startWith, switchMap } from 'rxjs/operators'
-import { setDataSerie } from './hyfaa.actions'
-import { initialState } from './hyfaa.reducer'
+import { setDataSerie } from './sagui.actions'
+import { initialState } from './sagui.reducer'
 
 @Injectable()
-export class HyfaaEffects {
+export class SaguiEffects {
   constructor(private actions$: Actions) {}
 
   loadDataSerie$ = createEffect(() =>

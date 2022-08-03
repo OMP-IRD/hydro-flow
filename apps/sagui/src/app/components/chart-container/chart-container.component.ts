@@ -13,7 +13,7 @@ import {
 } from '@hydro-flow/feature/hydro'
 import { Subscription } from 'rxjs'
 import { filter, map, mergeMap, take } from 'rxjs/operators'
-import { HyfaaFacade } from '../../+state/hyfaa.facade'
+import { SaguiFacade } from '../../+state/sagui.facade'
 
 declare let Chart: any
 declare let bootstrap: any
@@ -37,7 +37,7 @@ export class ChartContainerComponent implements OnDestroy, AfterViewInit {
   constructor(
     public dataFacade: StationDataFacade,
     public stationsFacade: StationsFacade,
-    public hyfaaFacade: HyfaaFacade,
+    public hyfaaFacade: SaguiFacade,
     private chartMapper: ChartMapper
   ) {}
 

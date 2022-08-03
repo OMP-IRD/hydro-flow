@@ -6,8 +6,8 @@ import { Store, StoreModule } from '@ngrx/store'
 
 import { NxModule } from '@nrwl/angular'
 import { readFirst } from '@nrwl/angular/testing'
-import { HyfaaEffects } from './hyfaa.effects'
-import { HyfaaFacade } from './hyfaa.facade'
+import { SaguiEffects } from './sagui.effects'
+import { SaguiFacade } from './sagui.facade'
 
 import { AppState, HYFAA_FEATURE_KEY, reducer } from './hyfaa.reducer'
 
@@ -18,7 +18,7 @@ interface TestSchema {
 class HyfaaEntity {}
 
 describe('HyfaaFacade', () => {
-  let facade: HyfaaFacade
+  let facade: SaguiFacade
   let store: Store<TestSchema>
   const createHyfaaEntity = (id: string, name = '') =>
     ({
@@ -31,9 +31,9 @@ describe('HyfaaFacade', () => {
       @NgModule({
         imports: [
           StoreModule.forFeature(HYFAA_FEATURE_KEY, reducer),
-          EffectsModule.forFeature([HyfaaEffects]),
+          EffectsModule.forFeature([SaguiEffects]),
         ],
-        providers: [HyfaaFacade],
+        providers: [SaguiFacade],
       })
       class CustomFeatureModule {}
 
@@ -49,7 +49,7 @@ describe('HyfaaFacade', () => {
       TestBed.configureTestingModule({ imports: [RootModule] })
 
       store = TestBed.inject(Store)
-      facade = TestBed.inject(HyfaaFacade)
+      facade = TestBed.inject(SaguiFacade)
     })
 
     it('loadAll() should return empty list with loaded == true', async (done) => {
