@@ -1,8 +1,4 @@
-import { LegendRule } from '@hydro-flow/ui/map'
-import { Filter } from 'geostyler-style/dist/style'
-export interface StyleRules extends LegendRule {
-  filter?: Filter
-}
+import { StyleRules } from '@hydro-flow/ui/map'
 
 export const CELLS_RULES: StyleRules[] = [
   {

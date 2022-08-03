@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { HyfaaSegmentFocus } from '@hydro-flow/feature/hydro'
 import { matchFilter } from '@hydro-flow/feature/map'
+import { addOpacity } from '@hydro-flow/feature/shared'
 import { DateFacade } from '@hydro-flow/feature/time'
 import { LineSymbolizer } from 'geostyler-style'
 import { VectorTile } from 'ol'
@@ -11,13 +12,14 @@ import MVT from 'ol/format/MVT'
 import VectorTileLayer from 'ol/layer/VectorTile'
 import { unByKey } from 'ol/Observable'
 import VectorTileSource from 'ol/source/VectorTile'
-import { Stroke, Style } from 'ol/style'
+import { Fill, Stroke, Style } from 'ol/style'
 import { Subscription } from 'rxjs'
 import { filter, map } from 'rxjs/operators'
 import { SaguiFacade } from '../+state/sagui.facade'
 import SETTINGS from '../../settings'
 import { MapManagerService } from '../map/map-manager.service'
 import { formatDate } from '../utils'
+import { BASSIN_RULES } from './bassin.rules'
 import {
   RIVER_SEGMENT_STYLE_GS_COLOR,
   RIVER_SEGMENT_STYLE_GS_WIDTH,
@@ -29,6 +31,8 @@ export const HL_STYLE = new Style({
     width: 2,
   }),
 })
+
+export const bassinStyleCache = {}
 
 @Injectable({
   providedIn: 'root',
@@ -62,6 +66,10 @@ export class RiverSegmentLayer {
       const tabSetting = SETTINGS.tabs[tab]
       if (tabSetting && tabSetting.hasOwnProperty('riverLayer')) {
         this.loadSource(tabSetting.riverLayer)
+        this.layer.setStyle(this.styleFn.bind(this))
+      } else if (tabSetting && tabSetting.hasOwnProperty('bassinLayer')) {
+        this.loadSource(tabSetting.bassinLayer)
+        this.layer.setStyle(this.bassinStyleFn.bind(this))
       }
     })
   }
@@ -84,7 +92,6 @@ export class RiverSegmentLayer {
     this.layer = new VectorTileLayer({
       source: this.source,
       className: 'river-layer',
-      style: this.styleFn.bind(this),
     })
 
     this.tmpSubscription.add(
@@ -127,6 +134,33 @@ export class RiverSegmentLayer {
 
   public clear(): void {
     this.source.clear()
+  }
+
+  private bassinStyleFn(feature: Feature, resolution: number): Style | Style[] {
+    const rain = feature
+      .get('values')
+      .find((value) => value.date === this.currentDate)?.rain
+    let color
+    for (let i = 0; i < BASSIN_RULES.length; i++) {
+      const rule = BASSIN_RULES[i]
+      const { filter } = rule
+      if (matchFilter(rain, filter)) {
+        color = rule.color
+        break
+      }
+    }
+    if (!bassinStyleCache[color]) {
+      bassinStyleCache[color] = new Style({
+        stroke: new Stroke({
+          color: 'rgb(25,25,25)',
+          width: 1,
+        }),
+        fill: new Fill({
+          color: addOpacity(color, 0.8),
+        }),
+      })
+    }
+    return bassinStyleCache[color]
   }
 
   private styleFn(feature: Feature, resolution: number): Style | Style[] {

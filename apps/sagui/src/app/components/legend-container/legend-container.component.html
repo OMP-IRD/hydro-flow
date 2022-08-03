@@ -3,9 +3,16 @@
   (changeVisibility)="onStationVisibilityToggle($event)"
   [visible]="stationVisibility"
 ></ui-legend>
+<ui-legend
+  *ngIf="isBassin(facade.tab$ | async)"
+  [spec]="bassinLegendSpec"
+  (changeVisibility)="onMvtVisibilityToggle($event)"
+  [visible]="mvtVisibility"
+></ui-legend>
 <hyfaa-segment-legend
-  (changeVisibility)="onSegmentVisibilityToggle($event)"
+  *ngIf="isRiver(facade.tab$ | async)"
+  (changeVisibility)="onMvtVisibilityToggle($event)"
   [focus]="facade.segmentFocus$ | async"
-  [visible]="segmentVisibility"
+  [visible]="mvtVisibility"
   (changeFocus)="onFocusChange($event)"
 ></hyfaa-segment-legend>

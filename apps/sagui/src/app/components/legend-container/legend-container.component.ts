@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { HyfaaSegmentFocus } from '@hydro-flow/feature/hydro'
 import { LegendSpec } from '@hydro-flow/ui/map'
 import { SaguiFacade } from '../../+state/sagui.facade'
+import { BASSIN_RULES } from '../../layers/bassin.rules'
 import { RiverSegmentLayer } from '../../layers/river-segment.layer'
 import { STATION_COLOR, StationLayer } from '../../layers/station.layer'
 
@@ -13,16 +14,20 @@ import { STATION_COLOR, StationLayer } from '../../layers/station.layer'
 })
 export class LegendContainerComponent {
   stationLegend: LegendSpec = {
-    title: 'Stations',
+    title: 'sagui.legend.stations',
     rules: [
       {
-        label: 'Locations of interest',
+        label: 'common.legend.locationofinterest',
         color: STATION_COLOR,
       },
     ],
   }
+  bassinLegendSpec: LegendSpec = {
+    title: 'sagui.legend.bassin',
+    rules: BASSIN_RULES,
+  }
 
-  get segmentVisibility(): boolean {
+  get mvtVisibility(): boolean {
     return this.riverLayer.getLayer().getVisible()
   }
   get stationVisibility(): boolean {
@@ -39,11 +44,21 @@ export class LegendContainerComponent {
     this.stationLayer.getLayer().setVisible(visible)
   }
 
-  onSegmentVisibilityToggle(visible: boolean): void {
+  onMvtVisibilityToggle(visible: boolean): void {
     this.riverLayer.getLayer().setVisible(visible)
   }
 
   onFocusChange(focus: HyfaaSegmentFocus): void {
     this.facade.setSegmentFocus(focus)
+  }
+
+  isRiver(tab) {
+    return tab === 'flow_previ' || tab === 'flow_alerts'
+  }
+  isBassin(tab) {
+    return tab === 'rain_alerts'
+  }
+  isAtmo(tab) {
+    return tab === 'atmo_alerts'
   }
 }

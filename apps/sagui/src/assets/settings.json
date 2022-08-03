@@ -5,6 +5,9 @@
     },
     "flow_alerts": {
       "riverLayer": "guyane.hyfaa_data_aggregated_geo"
+    },
+    "rain_alerts": {
+      "bassinLayer": "guyane.mvt_rainfall"
     }
   },
   "backgroundLayers": [
