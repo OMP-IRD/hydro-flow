@@ -1,6 +1,8 @@
 <div
-  class="d-flex align-items-center h-100 inset-shadow"
+  class="d-flex align-items-center h-100 rounded"
   [style.background-color]="tab.color"
+  [style.border-color]="tab.color"
+  [class.active]="active"
 >
   <div class="d-flex flex-column flex-grow-1 align-items-center">
     <div>{{ tab.title }}</div>

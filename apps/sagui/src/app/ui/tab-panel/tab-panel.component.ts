@@ -14,6 +14,7 @@ import { TabModel } from '../ui.model'
 })
 export class TabPanelComponent implements OnInit {
   @Input() tab: TabModel
+  @Input() active = false
 
   constructor() {}
 
