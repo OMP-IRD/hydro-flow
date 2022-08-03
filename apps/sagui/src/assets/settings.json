@@ -1,7 +1,12 @@
 {
-  "apiUrl": "",
-  "riverMVTUrl": "/tiles/guyane.hyfaa_forecast_aggregated_geo/{z}/{x}/{y}.pbf",
-  "stationMVTUrl": "/tiles/geospatial.stations_geo/{z}/{x}/{y}.pbf",
+  "tabs": {
+    "flow_previ": {
+      "riverLayer": "guyane.hyfaa_forecast_aggregated_geo"
+    },
+    "flow_alerts": {
+      "riverLayer": "guyane.hyfaa_data_aggregated_geo"
+    }
+  },
   "backgroundLayers": [
     {
       "id": "street",

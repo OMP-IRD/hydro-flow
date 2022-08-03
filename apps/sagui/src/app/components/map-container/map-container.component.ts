@@ -19,7 +19,6 @@ export class MapContainerComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.mapManager.map.addLayer(this.riverLayer.getLayer())
     this.mapManager.map.addLayer(this.stationLayer.getLayer())
   }
 }

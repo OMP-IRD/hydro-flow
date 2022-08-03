@@ -12,6 +12,7 @@ import VectorTileLayer from 'ol/layer/VectorTile'
 import { unByKey } from 'ol/Observable'
 import VectorTileSource from 'ol/source/VectorTile'
 import { Stroke, Style } from 'ol/style'
+import { Subscription } from 'rxjs'
 import { filter, map } from 'rxjs/operators'
 import { SaguiFacade } from '../+state/sagui.facade'
 import SETTINGS from '../../settings'
@@ -39,6 +40,7 @@ export class RiverSegmentLayer {
   widthStyleFn: (feature, resolution) => undefined
   currentDate: string
   segmentFocus: HyfaaSegmentFocus
+  tmpSubscription: Subscription
 
   constructor(
     private http: HttpClient,
@@ -46,11 +48,35 @@ export class RiverSegmentLayer {
     private facade: SaguiFacade,
     private dateFacade: DateFacade
   ) {
+    this.dateFacade.currentDate$
+      .pipe(
+        filter((date) => !!date),
+        map((date: Date) => formatDate(date))
+      )
+      .subscribe((date) => {
+        this.currentDate = date
+        this.layer.changed()
+      })
+
+    this.facade.tab$.subscribe((tab) => {
+      const tabSetting = SETTINGS.tabs[tab]
+      if (tabSetting && tabSetting.hasOwnProperty('riverLayer')) {
+        this.loadSource(tabSetting.riverLayer)
+      }
+    })
+  }
+
+  loadSource(layerName: string) {
+    if (this.tmpSubscription) {
+      this.tmpSubscription.unsubscribe()
+    }
+    this.tmpSubscription = new Subscription()
+    this.mapManager.map.removeLayer(this.layer)
     this.source = new VectorTileSource({
       format: new MVT({
         featureClass: Feature,
       }),
-      url: SETTINGS.riverMVTUrl,
+      url: `/tiles/${layerName}/{z}/{x}/{y}.pbf`,
       maxZoom: 14,
       wrapX: false,
     })
@@ -61,14 +87,21 @@ export class RiverSegmentLayer {
       style: this.styleFn.bind(this),
     })
 
+    this.tmpSubscription.add(
+      this.facade.segmentFocus$.subscribe((focus) => {
+        this.segmentFocus = focus
+        this.layer.changed()
+      })
+    )
+
     // store dates from MVT in state.dates
     const subKey = this.source.on('tileloadend', (event) => {
       const tile = event.tile as VectorTile
       const feature = tile.getFeatures()[0] as Feature
       if (feature) {
         const dates = this.mapManager.getDatesFromSegment(feature)
-        dateFacade.setDates(dates)
-        dateFacade.setCurrentDate(dates[dates.length - 1])
+        this.dateFacade.setDates(dates)
+        this.dateFacade.setCurrentDate(dates[dates.length - 1])
         unByKey(subKey)
       }
     })
@@ -81,21 +114,7 @@ export class RiverSegmentLayer {
           feature.set('values', JSON.parse(feature.get('values')))
         )
     })
-
-    this.dateFacade.currentDate$
-      .pipe(
-        filter((date) => !!date),
-        map((date: Date) => formatDate(date))
-      )
-      .subscribe((date) => {
-        this.currentDate = date
-        this.layer.changed()
-      })
-
-    this.facade.segmentFocus$.pipe().subscribe((focus) => {
-      this.segmentFocus = focus
-      this.layer.changed()
-    })
+    this.mapManager.map.addLayer(this.layer)
   }
 
   public getLayer(): VectorTileLayer {

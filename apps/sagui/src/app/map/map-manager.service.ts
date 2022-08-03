@@ -29,7 +29,6 @@ export class MapManagerService {
       }),
       pixelRatio: 1,
     })
-    this.map.getView().on('change:center', (event) => console.log(event))
   }
 
   setHLSegment(segment: Feature): void {

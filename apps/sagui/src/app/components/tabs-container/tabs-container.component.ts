@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { SaguiFacade } from '../../+state/sagui.facade'
 import { ApiService } from '../../api/api.service'
 import { TabModel } from '../../ui/ui.model'
+import { alertCodeToColor } from '../../ui/ui.utils'
 
 @Component({
   selector: 'sagui-tabs-container',
@@ -17,7 +18,7 @@ export class TabsContainerComponent implements OnInit {
       (tabs) =>
         (this.tabs = tabs.map((tab) => ({
           key: tab.id,
-          color: tab.alert_code,
+          color: alertCodeToColor(tab.alert_code),
           title: `sagui.tab.title.${tab.id}`,
           icon: tab.id,
         })))

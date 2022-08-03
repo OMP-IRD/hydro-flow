@@ -1,10 +1,12 @@
 <div class="d-flex flex-column h-100" *ngIf="facade.tab$ | async as tabKey">
   <div
     *ngFor="let tab of tabs"
-    class="flex-grow-1"
+    class="flex-grow-1 rounded mx-4 my-2"
     (click)="onTabClick(tab)"
-    [class.border]="tabKey === tab.key"
   >
-    <sagui-tab-panel [tab]="tab"></sagui-tab-panel>
+    <sagui-tab-panel
+      [tab]="tab"
+      [active]="tabKey === tab.key"
+    ></sagui-tab-panel>
   </div>
 </div>

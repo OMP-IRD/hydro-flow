@@ -1,9 +1,11 @@
 import 'whatwg-fetch'
 
+interface TabItem {
+  riverLayer?: string
+  bassinLayer?: string
+}
 class Settings {
-  apiUrl = ''
-  riverMVTUrl = ''
-  stationMVTUrl = ''
+  tabs: TabItem[]
   backgroundLayers = []
   mapContext = {}
 
