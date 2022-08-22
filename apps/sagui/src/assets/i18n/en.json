@@ -1,0 +1,9 @@
+{
+  "common.legend.locationofinterest": "Location of Interest",
+  "sagui.legend.bassin": "Bassins",
+  "sagui.legend.stations": "Stations",
+  "sagui.tab.title.atmo_alerts": "Atmospheric alerts",
+  "sagui.tab.title.flow_alerts": "Flow alerts",
+  "sagui.tab.title.flow_previ": "Flow forecast",
+  "sagui.tab.title.rain_alerts": "Rain alerts"
+}

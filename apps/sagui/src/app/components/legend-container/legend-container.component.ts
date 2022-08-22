@@ -1,10 +1,15 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { HyfaaSegmentFocus } from '@hydro-flow/feature/hydro'
 import { LegendSpec } from '@hydro-flow/ui/map'
 import { SaguiFacade } from '../../+state/sagui.facade'
 import { BASSIN_RULES } from '../../layers/bassin.rules'
 import { RiverSegmentLayer } from '../../layers/river-segment.layer'
 import { STATION_COLOR, StationLayer } from '../../layers/station.layer'
+
+marker('sagui.legend.stations')
+marker('common.legend.locationofinterest')
+marker('sagui.legend.bassin')
 
 @Component({
   selector: 'hyfaa-legend-container',

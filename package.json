@@ -28,7 +28,8 @@
     "workspace-generator": "nx workspace-generator",
     "dep-graph": "nx dep-graph",
     "generate-api": "tools/generators/generate-api.sh",
-    "help": "nx help"
+    "help": "nx help",
+    "i18n:extract:sagui": "ngx-translate-extract -s --fi '  ' --input ./apps/sagui ./libs --output ./apps/sagui/src/assets/i18n/{en,fr,pt}.json --clean --format json && npm run format:write"
   },
   "private": true,
   "dependencies": {
