@@ -4,11 +4,16 @@ import { BrowserModule } from '@angular/platform-browser'
 import { BASE_PATH } from '@hydro-flow/data-access/hyfaa'
 import { FeatureStationsModule } from '@hydro-flow/feature/hydro'
 import { FeatureMapModule } from '@hydro-flow/feature/map'
+import {
+  DEFAULT_LANG,
+  TRANSLATE_DEFAULT_CONFIG,
+} from '@hydro-flow/feature/shared'
 import { DateSelectorModule } from '@hydro-flow/feature/time'
 import { UiMapModule } from '@hydro-flow/ui/map'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { environment } from '../environments/environment'
 import { SaguiEffects } from './+state/sagui.effects'
 import { SaguiFacade } from './+state/sagui.facade'
@@ -62,6 +67,7 @@ export const API_URL = '/api/v1'
     StoreModule.forFeature(SAGUI_FEATURE_KEY, fromSagui.reducer),
     EffectsModule.forFeature([SaguiEffects]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
+    TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
   ],
   providers: [
     SaguiFacade,
@@ -72,4 +78,9 @@ export const API_URL = '/api/v1'
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(translate: TranslateService) {
+    translate.setDefaultLang(DEFAULT_LANG)
+    translate.use(DEFAULT_LANG)
+  }
+}
