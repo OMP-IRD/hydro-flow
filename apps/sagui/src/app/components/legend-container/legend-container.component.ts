@@ -2,6 +2,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { HyfaaSegmentFocus } from '@hydro-flow/feature/hydro'
 import { LegendSpec } from '@hydro-flow/ui/map'
+import { TranslateService } from '@ngx-translate/core'
+import { Observable } from 'rxjs'
+import { map } from 'rxjs/operators'
 import { SaguiFacade } from '../../+state/sagui.facade'
 import { BASSIN_RULES } from '../../layers/bassin.rules'
 import { RiverSegmentLayer } from '../../layers/river-segment.layer'
@@ -18,19 +21,30 @@ marker('sagui.legend.bassin')
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LegendContainerComponent {
-  stationLegend: LegendSpec = {
-    title: 'sagui.legend.stations',
-    rules: [
-      {
-        label: 'common.legend.locationofinterest',
-        color: STATION_COLOR,
-      },
-    ],
-  }
-  bassinLegendSpec: LegendSpec = {
-    title: 'sagui.legend.bassin',
-    rules: BASSIN_RULES,
-  }
+  stationLegend$: Observable<LegendSpec> = this.translate
+    .get('sagui.legend.stations')
+    .pipe(
+      map(() => {
+        return {
+          title: this.translate.instant('sagui.legend.stations'),
+          rules: [
+            {
+              label: this.translate.instant('common.legend.locationofinterest'),
+              color: STATION_COLOR,
+            },
+          ],
+        }
+      })
+    )
+
+  bassinLegendSpec$: Observable<LegendSpec> = this.translate
+    .get('sagui.legend.bassin')
+    .pipe(
+      map((title) => ({
+        title,
+        rules: BASSIN_RULES,
+      }))
+    )
 
   get mvtVisibility(): boolean {
     return this.riverLayer.getLayer().getVisible()
@@ -42,8 +56,13 @@ export class LegendContainerComponent {
   constructor(
     private riverLayer: RiverSegmentLayer,
     private stationLayer: StationLayer,
+    private translate: TranslateService,
     public facade: SaguiFacade
-  ) {}
+  ) {
+    console.log(translate.getLangs())
+    console.log(translate.getDefaultLang())
+    console.log(translate.getBrowserLang())
+  }
 
   onStationVisibilityToggle(visible: boolean): void {
     this.stationLayer.getLayer().setVisible(visible)

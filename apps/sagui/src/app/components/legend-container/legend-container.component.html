@@ -1,10 +1,14 @@
 <ui-legend
+  *ngIf="stationLegend$ | async as stationLegend"
   [spec]="stationLegend"
   (changeVisibility)="onStationVisibilityToggle($event)"
   [visible]="stationVisibility"
 ></ui-legend>
 <ui-legend
-  *ngIf="isBassin(facade.tab$ | async)"
+  *ngIf="
+    isBassin(facade.tab$ | async) && bassinLegendSpec$
+      | async as bassinLegendSpec
+  "
   [spec]="bassinLegendSpec"
   (changeVisibility)="onMvtVisibilityToggle($event)"
   [visible]="mvtVisibility"

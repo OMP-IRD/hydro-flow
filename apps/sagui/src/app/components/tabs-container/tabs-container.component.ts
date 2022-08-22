@@ -18,7 +18,11 @@ marker('sagui.tab.title.atmo_alerts')
 })
 export class TabsContainerComponent implements OnInit {
   tabs: TabModel[]
-  constructor(public facade: SaguiFacade, private api: ApiService) {}
+  constructor(
+    public facade: SaguiFacade,
+    private api: ApiService,
+    private translate: TranslateService
+  ) {}
 
   ngOnInit(): void {
     this.api.dashboard().subscribe(
@@ -26,7 +30,7 @@ export class TabsContainerComponent implements OnInit {
         (this.tabs = tabs.map((tab) => ({
           key: tab.id,
           color: alertCodeToColor(tab.alert_code),
-          title: `sagui.tab.title.${tab.id}`,
+          title: this.translate.instant(`sagui.tab.title.${tab.id}`),
           icon: tab.id,
         })))
     )
