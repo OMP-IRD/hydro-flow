@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core'
 import { StationsFacade } from '@hydro-flow/feature/hydro'
+import { DateFacade } from '@hydro-flow/feature/time'
 import { Extent } from 'ol/extent'
 import Feature from 'ol/Feature'
 import VectorLayer from 'ol/layer/Vector'
 import Map from 'ol/Map'
 import VectorSource from 'ol/source/Vector'
-import { skip } from 'rxjs/operators'
+import { Style } from 'ol/style'
+import { filter, map, skip } from 'rxjs/operators'
+import { SaguiFacade } from '../+state/sagui.facade'
 import { MapManagerService } from '../map/map-manager.service'
+import { formatDate } from '../utils'
 import { stationStyleFn } from './station.style'
 
 export const STATION_COLOR = 'rgb(222, 43, 178)'
@@ -17,10 +21,13 @@ export class StationLayer {
   map: Map
   private layer: VectorLayer<VectorSource>
   private source: VectorSource
+  private currentDate: string
 
   constructor(
     private mapManager: MapManagerService,
-    private stationFacade: StationsFacade
+    private facade: SaguiFacade,
+    private stationFacade: StationsFacade,
+    private dateFacade: DateFacade
   ) {
     this.map = this.mapManager.map
 
@@ -31,14 +38,25 @@ export class StationLayer {
     this.layer = new VectorLayer({
       source: this.source,
       className: 'station-layer',
-      style: stationStyleFn,
+      style: this.stationStyleFn.bind(this),
     })
 
-    this.stationFacade.init()
+    this.facade.tab$.subscribe((tab) => {})
+
     this.stationFacade.allStations$
       .pipe(skip(1))
       .subscribe((stations) => this.source.addFeatures(stations))
     this.initInteractions_()
+
+    this.dateFacade.currentDate$
+      .pipe(
+        filter((date) => !!date),
+        map((date: Date) => formatDate(date))
+      )
+      .subscribe((date) => {
+        this.currentDate = date
+        this.layer.changed()
+      })
   }
 
   private initInteractions_(): void {
@@ -75,6 +93,14 @@ export class StationLayer {
 
   public clear(): void {
     this.source.clear()
+  }
+
+  stationStyleFn(feature: Feature, resolution: number): Style {
+    const level = feature
+      .get('levels')
+      .find((value) => value.date === this.currentDate)?.level
+
+    return stationStyleFn(level)
   }
 
   private getHit(pixel: number[]) {

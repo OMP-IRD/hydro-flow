@@ -1,6 +1,6 @@
 <div class="d-flex flex-column h-100" *ngIf="facade.tab$ | async as tabKey">
   <div
-    *ngFor="let tab of tabs"
+    *ngFor="let tab of tabs$ | async"
     class="flex-grow-1 rounded mx-4 my-2"
     (click)="onTabClick(tab)"
   >

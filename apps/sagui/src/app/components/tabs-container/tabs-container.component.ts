@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { TranslateService } from '@ngx-translate/core'
+import { Observable } from 'rxjs'
+import { map } from 'rxjs/operators'
 import { SaguiFacade } from '../../+state/sagui.facade'
 import { ApiService } from '../../api/api.service'
 import { TabModel } from '../../ui/ui.model'
@@ -17,24 +19,24 @@ marker('sagui.tab.title.atmo_alerts')
   styleUrls: ['./tabs-container.component.css'],
 })
 export class TabsContainerComponent implements OnInit {
-  tabs: TabModel[]
+  tabs$: Observable<TabModel[]> = this.api.dashboard().pipe(
+    map((tabs) =>
+      tabs.map((tab) => ({
+        key: tab.id,
+        color: alertCodeToColor(tab.alert_code),
+        title: this.translate.instant(`sagui.tab.title.${tab.id}`),
+        icon: tab.id,
+      }))
+    )
+  )
+
   constructor(
     public facade: SaguiFacade,
     private api: ApiService,
     private translate: TranslateService
   ) {}
 
-  ngOnInit(): void {
-    this.api.dashboard().subscribe(
-      (tabs) =>
-        (this.tabs = tabs.map((tab) => ({
-          key: tab.id,
-          color: alertCodeToColor(tab.alert_code),
-          title: this.translate.instant(`sagui.tab.title.${tab.id}`),
-          icon: tab.id,
-        })))
-    )
-  }
+  ngOnInit(): void {}
 
   onTabClick(tab: TabModel) {
     this.facade.setTab(tab.key)

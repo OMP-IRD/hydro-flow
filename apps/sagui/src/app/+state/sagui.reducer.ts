@@ -9,13 +9,12 @@ export const SAGUI_FEATURE_KEY = 'sagui'
 export interface AppState {
   dataSerie: HyfaaDataSerie
   segmentFocus: HyfaaSegmentFocus
-  tab: SaguiTab
+  tab?: SaguiTab
 }
 
 export const initialState: AppState = {
   dataSerie: 'mgbstandard',
   segmentFocus: 'flow',
-  tab: SAGUI_TAB_TYPES[0],
 }
 
 const saguiReducer = createReducer(
