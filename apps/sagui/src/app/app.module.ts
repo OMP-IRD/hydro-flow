@@ -1,7 +1,7 @@
 import { HttpClientModule } from '@angular/common/http'
 import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
-import { BASE_PATH } from '@hydro-flow/data-access/hyfaa'
+import { BASE_PATH, StationsApiService } from '@hydro-flow/data-access/hyfaa'
 import { FeatureStationsModule } from '@hydro-flow/feature/hydro'
 import { FeatureMapModule } from '@hydro-flow/feature/map'
 import {
@@ -19,6 +19,8 @@ import { SaguiEffects } from './+state/sagui.effects'
 import { SaguiFacade } from './+state/sagui.facade'
 import * as fromSagui from './+state/sagui.reducer'
 import { SAGUI_FEATURE_KEY } from './+state/sagui.reducer'
+import { ApiService } from './api/api.service'
+import { StationsSaguiApiService } from './api/stations-sagui.api.service'
 
 import { AppComponent } from './app.component'
 import { ChartContainerComponent } from './components/chart-container/chart-container.component'
@@ -74,6 +76,10 @@ export const API_URL = '/api/v1'
     {
       provide: BASE_PATH,
       useFactory: () => API_URL,
+    },
+    {
+      provide: StationsApiService,
+      useClass: StationsSaguiApiService,
     },
   ],
   bootstrap: [AppComponent],
