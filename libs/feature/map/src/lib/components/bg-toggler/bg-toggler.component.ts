@@ -20,6 +20,7 @@ import {
 export class BGTogglerComponent implements OnInit {
   @Input() map: Map
   @Input() config: LayerSpec[]
+  @Input() width = 90
 
   layerIndex = 0
   layers: Layer[]

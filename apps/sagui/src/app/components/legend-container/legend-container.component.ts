@@ -58,11 +58,7 @@ export class LegendContainerComponent {
     private stationLayer: StationLayer,
     private translate: TranslateService,
     public facade: SaguiFacade
-  ) {
-    console.log(translate.getLangs())
-    console.log(translate.getDefaultLang())
-    console.log(translate.getBrowserLang())
-  }
+  ) {}
 
   onStationVisibilityToggle(visible: boolean): void {
     this.stationLayer.getLayer().setVisible(visible)
