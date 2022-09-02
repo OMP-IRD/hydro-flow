@@ -22,7 +22,7 @@ export class MapManagerService {
         }),
       ],
       view: new View({
-        center: [-5965966.42614017, 413500.74843450135],
+        center: [-6143300.331761774, 413500.74843450135],
         multiWorld: true,
         constrainResolution: true,
         zoom: 7,
