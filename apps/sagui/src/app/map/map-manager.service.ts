@@ -40,6 +40,8 @@ export class MapManagerService {
   }
 
   getDatesFromSegment(segment: Feature): string[] {
-    return JSON.parse(segment.get('values')).map((value) => value.date)
+    return JSON.parse(segment.get('values'))
+      .map((value) => value.date)
+      .reverse()
   }
 }

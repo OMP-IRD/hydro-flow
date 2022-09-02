@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { take } from 'rxjs/operators'
 import { DateFacade } from '../../+state'
-import { formatDate } from '../../../../../../../../apps/sagui/src/app/utils'
 
 @Component({
   selector: 'hydro-flow-date-player',
@@ -12,8 +11,8 @@ import { formatDate } from '../../../../../../../../apps/sagui/src/app/utils'
 export class DatePlayerComponent {
   constructor(public facade: DateFacade) {}
 
-  onDateChange(date: Date): void {
-    this.facade.setCurrentDate(formatDate(date))
+  onDateChange(date: string): void {
+    this.facade.setCurrentDate(date)
   }
   onAnimatorIndexChange(index: number): void {
     this.facade.dates$

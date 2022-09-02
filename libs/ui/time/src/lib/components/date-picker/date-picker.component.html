@@ -8,7 +8,7 @@
     {{ format(currentDate) }}
   </button>
   <ul class="dropdown-menu small w-100">
-    <li *ngFor="let date of dates" (click)="setDate(date)" class="small">
+    <li *ngFor="let date of sortedDates" (click)="setDate(date)" class="small">
       <button
         class="dropdown-item"
         [class.active]="currentDate === date"

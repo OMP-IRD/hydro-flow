@@ -29,6 +29,9 @@ export class DatePickerComponent {
   @Input() currentDate: string
   @Output() currentDateChange = new EventEmitter<string>()
 
+  get sortedDates() {
+    return [...this.dates].reverse()
+  }
   constructor(
     @Inject(DATEPICKER_CONFIG)
     private dateFormatOptions: Intl.DateTimeFormatOptions
@@ -38,7 +41,6 @@ export class DatePickerComponent {
   }
 
   setDate(date: string): void {
-    // this.currentDate = date
     this.currentDateChange.emit(date)
   }
 }
