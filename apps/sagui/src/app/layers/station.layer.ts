@@ -38,13 +38,15 @@ export class StationLayer {
       source: this.source,
       className: 'station-layer',
       style: this.stationStyleFn.bind(this),
+      zIndex: 10,
     })
 
-    this.facade.tab$.subscribe((tab) => {})
+    this.stationFacade.allStations$.pipe(skip(1)).subscribe((stations) => {
+      this.clear()
+      this.source.addFeatures(stations)
+      this.layer.changed()
+    })
 
-    this.stationFacade.allStations$
-      .pipe(skip(1))
-      .subscribe((stations) => this.source.addFeatures(stations))
     this.initInteractions_()
 
     this.dateFacade.currentDate$
