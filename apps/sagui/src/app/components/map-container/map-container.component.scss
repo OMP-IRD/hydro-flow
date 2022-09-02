@@ -15,7 +15,9 @@
   bottom: 1em;
 }
 
-::ng-deep .date {
-  left: 300px;
-  top: 1em;
+::ng-deep {
+  .date {
+    left: 300px;
+    top: 1em;
+  }
 }
