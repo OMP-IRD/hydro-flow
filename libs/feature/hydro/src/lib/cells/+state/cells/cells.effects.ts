@@ -39,7 +39,7 @@ export class CellsEffects {
           if (frequence === 'min') {
             api$ = this.cellsApi.getRainAtTimeAndCell({
               cell_ident: loadAction.id,
-              ref_time: date.toISOString(),
+              ref_time: date,
             })
           } else if (frequence === 'day') {
             api$ = this.cellsApi.getRainDailyAtTimeAndCell({

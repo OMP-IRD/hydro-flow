@@ -7,10 +7,9 @@ import VectorLayer from 'ol/layer/Vector'
 import Map from 'ol/Map'
 import VectorSource from 'ol/source/Vector'
 import { Style } from 'ol/style'
-import { filter, map, skip } from 'rxjs/operators'
+import { filter, skip } from 'rxjs/operators'
 import { SaguiFacade } from '../+state/sagui.facade'
 import { MapManagerService } from '../map/map-manager.service'
-import { formatDate } from '../utils'
 import { stationStyleFn } from './station.style'
 
 export const STATION_COLOR = 'rgb(222, 43, 178)'
@@ -49,10 +48,7 @@ export class StationLayer {
     this.initInteractions_()
 
     this.dateFacade.currentDate$
-      .pipe(
-        filter((date) => !!date),
-        map((date: Date) => formatDate(date))
-      )
+      .pipe(filter((date) => !!date))
       .subscribe((date) => {
         this.currentDate = date
         this.layer.changed()

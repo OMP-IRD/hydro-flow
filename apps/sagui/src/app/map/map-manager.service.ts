@@ -39,16 +39,7 @@ export class MapManagerService {
     return this.hlSegment
   }
 
-  getDatesFromSegment(segment: Feature): Date[] {
-    const values = JSON.parse(segment.get('values'))
-    return values
-      .reduce((dates, value) => {
-        const date = new Date(value.date)
-        return [
-          ...dates,
-          new Date(date.getTime() + Math.abs(date.getTimezoneOffset() * 60000)),
-        ]
-      }, [])
-      .reverse()
+  getDatesFromSegment(segment: Feature): string[] {
+    return JSON.parse(segment.get('values')).map((value) => value.date)
   }
 }

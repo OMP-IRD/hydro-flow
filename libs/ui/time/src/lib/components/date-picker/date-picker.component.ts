@@ -25,19 +25,19 @@ export const DATEPICKER_CONFIG = new InjectionToken<Intl.DateTimeFormatOptions>(
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DatePickerComponent {
-  @Input() dates!: Date[]
-  @Input() currentDate: Date
-  @Output() currentDateChange = new EventEmitter<Date>()
+  @Input() dates!: string[]
+  @Input() currentDate: string
+  @Output() currentDateChange = new EventEmitter<string>()
 
   constructor(
     @Inject(DATEPICKER_CONFIG)
     private dateFormatOptions: Intl.DateTimeFormatOptions
   ) {}
-  format(date: Date) {
-    return date.toLocaleDateString(undefined, this.dateFormatOptions)
+  format(date: string) {
+    return new Date(date).toLocaleDateString(undefined, this.dateFormatOptions)
   }
 
-  setDate(date: Date): void {
+  setDate(date: string): void {
     // this.currentDate = date
     this.currentDateChange.emit(date)
   }

@@ -54,8 +54,8 @@ export class RiverSegmentLayer {
   ) {
     this.dateFacade.currentDate$
       .pipe(
-        filter((date) => !!date),
-        map((date: Date) => formatDate(date))
+        filter((date) => !!date)
+        // map((date: Date) => formatDate(date))
       )
       .subscribe((date) => {
         this.currentDate = date

@@ -4,8 +4,8 @@ import { setCurrentDate, setDates } from './date.actions'
 export const DATE_FEATURE_KEY = 'date-selector'
 
 export interface AppState {
-  dates?: Date[]
-  date?: Date
+  dates?: string[]
+  date?: string
 }
 export const initialState: AppState = {}
 

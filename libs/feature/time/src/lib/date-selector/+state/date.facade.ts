@@ -14,11 +14,11 @@ export class DateFacade {
 
   constructor(private store: Store) {}
 
-  setDates(dates: Date[]): void {
+  setDates(dates: string[]): void {
     this.store.dispatch(setDates({ dates }))
   }
 
-  setCurrentDate(date: Date): void {
+  setCurrentDate(date: string): void {
     this.store.dispatch(setCurrentDate({ date }))
   }
 }
