@@ -14,10 +14,12 @@
           {{ station.get('city') }}
         </h5>
         <div class="flex-grow-1 text-center">
-          <hyfaa-serie-selector
-            [serieType]="hyfaaFacade.dataSerie$ | async"
+          <sagui-serie-selector
+            *ngIf="series"
+            [series]="series"
+            [serieType]="currentSerie.id"
             (serieChange)="onDataSerieChange($event)"
-          ></hyfaa-serie-selector>
+          ></sagui-serie-selector>
         </div>
         <button
           type="button"

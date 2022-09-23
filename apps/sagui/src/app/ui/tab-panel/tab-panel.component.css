@@ -8,5 +8,5 @@
     transform: scale(1.02);
 }
 .active {
-    border-color: #3D405B !important;
+    border-color: rgba(230, 84, 129, 0.8) !important;
 }

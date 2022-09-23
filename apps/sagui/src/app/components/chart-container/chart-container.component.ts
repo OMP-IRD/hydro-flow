@@ -7,13 +7,18 @@ import {
 } from '@angular/core'
 import {
   ChartMapper,
-  HyfaaDataSerie,
   StationDataFacade,
   StationsFacade,
 } from '@hydro-flow/feature/hydro'
 import { Subscription } from 'rxjs'
-import { filter, map, mergeMap, take } from 'rxjs/operators'
+import { filter, map, tap } from 'rxjs/operators'
 import { SaguiFacade } from '../../+state/sagui.facade'
+import {
+  ChartDataModel,
+  Reference,
+  SaguiStationDataResponse,
+} from '../../services/sagui.chart.mapper'
+import { ChartSerieType } from '../serie-selector/serie-selector.component'
 
 declare let Chart: any
 declare let bootstrap: any
@@ -33,6 +38,10 @@ export class ChartContainerComponent implements OnDestroy, AfterViewInit {
     return `${this.chartHeight}px`
   }
   subscription = new Subscription()
+  series: ChartSerieType[]
+  currentSerie: ChartSerieType
+  chartData: ChartDataModel
+  references
 
   constructor(
     public dataFacade: StationDataFacade,
@@ -71,91 +80,99 @@ export class ChartContainerComponent implements OnDestroy, AfterViewInit {
     this.subscription.add(
       this.dataFacade.stationData$
         .pipe(
-          filter((data) => !!data),
-          mergeMap((stationData) =>
-            this.hyfaaFacade.dataSerie$.pipe(
-              take(1),
-              map((dataSerie) => {
-                return {
-                  ...this.chartMapper.toChart(stationData, dataSerie),
-                  dataSerie,
-                }
-              })
-            )
-          )
+          filter((response: SaguiStationDataResponse) => !!response),
+          tap(
+            (response: SaguiStationDataResponse) =>
+              (this.references = response.data.references)
+          ),
+          tap(
+            (response: SaguiStationDataResponse) =>
+              (this.series = response.data.references.map((ref) => ({
+                id: ref.id,
+              })))
+          ),
+          tap(() => (this.currentSerie = this.series[0])),
+          map((response: SaguiStationDataResponse) =>
+            this.chartMapper.toChart(response)
+          ),
+          tap((chartData) => (this.chartData = chartData))
         )
         .subscribe((chartData) => {
-          const tooltipKeys = []
-          this.chart = new Chart({
-            renderTo: this.chartElt.nativeElement,
-            y_title: 'Flow (m³/sec)',
-            x_title: 'Date',
-            drawCircles: false,
-          })
-            .read(chartData)
-            .draw()
-          if (chartData.dataSerie === 'forecast') {
-            const todayIndex =
-              chartData.dates.filter((date) => new Date(date) < new Date())
-                .length - 1
-            this.chart.addSerie(
-              {
-                data: chartData.h.slice(todayIndex),
-                name: 'forecast',
-                type: 'line',
-                className: 'forecast-line',
-              },
-              chartData.dates.slice(todayIndex)
-            )
-          }
-          if (chartData.variance?.length > 0) {
-            const range = chartData.h.reduce(
-              (output, waterHeight, index) => {
-                const variance = chartData.variance[index]
-                output.top.push(waterHeight + variance)
-                output.bottom.push(waterHeight - variance)
-                return output
-              },
-              { top: [], bottom: [] }
-            )
-            this.chart.addSerie(
-              {
-                ...range,
-                name: 'variance',
-                type: 'range',
-                className: 'variance-area',
-              },
-              chartData.dates
-            )
-            tooltipKeys.push({ key: 'variance' })
-          }
-          if (chartData.expected?.length > 0) {
-            this.chart.addSerie(
-              {
-                data: chartData.expected,
-                name: 'expected',
-                type: 'line',
-                className: 'expected-line',
-              },
-              chartData.dates
-            )
-            tooltipKeys.push({ key: 'expected', title: 'History' })
-          }
-          this.chart.scaleYDomain()
-          this.chart.scaleXDomain()
-          this.chart.addControl()
-          this.chart.redrawSeries()
-          this.chart.addTooltip(tooltipKeys)
+          this.createChart(chartData)
         })
     )
   }
 
-  onDataSerieChange(serieType: HyfaaDataSerie): void {
-    this.hyfaaFacade.setDataSerie(serieType)
+  createChart(chartData: ChartDataModel) {
+    const tooltipKeys = []
+    this.chart = new Chart({
+      renderTo: this.chartElt.nativeElement,
+      y_title: 'Flow (m³/sec)',
+      x_title: 'Date',
+      drawCircles: false,
+    })
+      .read(chartData)
+      .draw()
+    this.chart.addSerie(
+      {
+        data: chartData.forecast,
+        name: 'forecast',
+        type: 'line',
+        className: 'forecast-line',
+      },
+      chartData.forecast_dates
+    )
+
+    if (chartData.variance?.length > 0) {
+      const range = chartData.h.reduce(
+        (output, waterHeight, index) => {
+          const variance = chartData.variance[index]
+          output.top.push(waterHeight + variance)
+          output.bottom.push(waterHeight - variance)
+          return output
+        },
+        { top: [], bottom: [] }
+      )
+      this.chart.addSerie(
+        {
+          ...range,
+          name: 'variance',
+          type: 'range',
+          className: 'variance-area',
+        },
+        chartData.dates
+      )
+      tooltipKeys.push({ key: 'variance' })
+    }
+    const reference: Reference = this.references.find(
+      (ref) => ref.id === this.currentSerie.id
+    )
+    this.chart.addSerie(
+      {
+        data: reference.data.map((ref) => ref.flow),
+        name: 'expected',
+        type: 'line',
+        className: 'expected-line',
+      },
+      reference.data.map((ref) => ref.date)
+    )
+    tooltipKeys.push({ key: 'expected', title: 'Référence' })
+
+    this.chart.scaleYDomain()
+    this.chart.scaleXDomain()
+    this.chart.addControl()
+    this.chart.redrawSeries()
+    this.chart.addTooltip(tooltipKeys)
+  }
+
+  onDataSerieChange(serieType: string): void {
+    this.currentSerie = this.series.find((serie) => serie.id === serieType)
+    this.chart.destroy()
+    this.createChart(this.chartData)
   }
 
   close() {
-    this.chart.destroy()
+    this.chart?.destroy()
     this.stationsFacade.selectStation(undefined)
   }
 }

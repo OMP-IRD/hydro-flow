@@ -20,4 +20,12 @@ export class ApiService {
       `${BASE_PATH}/${tab}/stations.json`
     )
   }
+  stationData(
+    tab: SaguiTab,
+    stationId: number
+  ): Observable<DashboardItemModel[]> {
+    return this.http.get<DashboardItemModel[]>(
+      `${BASE_PATH}/${tab}/stations/${stationId}/data.json`
+    )
+  }
 }

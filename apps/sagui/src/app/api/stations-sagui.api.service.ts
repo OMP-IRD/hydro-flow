@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core'
+import { HyfaaDataSerie } from '@hydro-flow/feature/hydro'
 import { Observable } from 'rxjs'
 import { first, pluck, switchMap } from 'rxjs/operators'
 import { SaguiFacade } from '../+state/sagui.facade'
@@ -14,6 +15,13 @@ export class StationsSaguiApiService {
       first(),
       switchMap((tab) => this.api.stations(tab)),
       pluck('results')
+    )
+  }
+
+  getStationData(serie: HyfaaDataSerie, stationId: number) {
+    return this.facade.tab$.pipe(
+      first(),
+      switchMap((tab) => this.api.stationData(tab, stationId))
     )
   }
 }

@@ -2,7 +2,7 @@ import { HttpClientModule } from '@angular/common/http'
 import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { BASE_PATH, StationsApiService } from '@hydro-flow/data-access/hyfaa'
-import { FeatureStationsModule } from '@hydro-flow/feature/hydro'
+import { ChartMapper, FeatureStationsModule } from '@hydro-flow/feature/hydro'
 import { FeatureMapModule } from '@hydro-flow/feature/map'
 import {
   DEFAULT_LANG,
@@ -19,7 +19,6 @@ import { SaguiEffects } from './+state/sagui.effects'
 import { SaguiFacade } from './+state/sagui.facade'
 import * as fromSagui from './+state/sagui.reducer'
 import { SAGUI_FEATURE_KEY } from './+state/sagui.reducer'
-import { ApiService } from './api/api.service'
 import { StationsSaguiApiService } from './api/stations-sagui.api.service'
 
 import { AppComponent } from './app.component'
@@ -29,8 +28,9 @@ import { LegendContainerComponent } from './components/legend-container/legend-c
 import { MapContainerComponent } from './components/map-container/map-container.component'
 import { SegmentLegendComponent } from './components/segment-legend/segment-legend.component'
 import { SerieSelectorComponent } from './components/serie-selector/serie-selector.component'
-import { RiverSegmentOverlayComponent } from './layers/river-segment-overlay/river-segment-overlay.component'
 import { TabsContainerComponent } from './components/tabs-container/tabs-container.component'
+import { RiverSegmentOverlayComponent } from './layers/river-segment-overlay/river-segment-overlay.component'
+import { SaguiChartMapper } from './services/sagui.chart.mapper'
 import { TabPanelComponent } from './ui/tab-panel/tab-panel.component'
 
 export const API_URL = '/api/v1'
@@ -80,6 +80,10 @@ export const API_URL = '/api/v1'
     {
       provide: StationsApiService,
       useClass: StationsSaguiApiService,
+    },
+    {
+      provide: ChartMapper,
+      useClass: SaguiChartMapper,
     },
   ],
   bootstrap: [AppComponent],

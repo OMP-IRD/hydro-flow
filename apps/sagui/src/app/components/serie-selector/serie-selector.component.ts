@@ -1,43 +1,32 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { HyfaaDataSerie } from '@hydro-flow/feature/hydro'
 
-interface SerieType {
+export interface ChartSerieType {
   label?: string
-  value: HyfaaDataSerie
+  id: string
 }
 
 @Component({
-  selector: 'hyfaa-serie-selector',
+  selector: 'sagui-serie-selector',
   templateUrl: './serie-selector.component.html',
   styleUrls: ['./serie-selector.component.scss'],
 })
 export class SerieSelectorComponent implements OnInit {
-  @Input() serieType: HyfaaDataSerie
-  @Output() serieChange = new EventEmitter<HyfaaDataSerie>()
-  series: SerieType[] = [
-    {
-      label: 'MGB Standard',
-      value: 'mgbstandard',
-    },
-    {
-      value: 'assimilated',
-    },
-    {
-      value: 'forecast',
-    },
-  ]
-  current: SerieType
+  @Input() serieType: string
+  @Input() series: ChartSerieType[]
+  @Output() serieChange = new EventEmitter<string>()
+  current: ChartSerieType
 
-  setCurrent(serie: SerieType): void {
+  setCurrent(serie: ChartSerieType): void {
     this.current = serie
-    this.serieChange.emit(this.current.value)
+    this.serieChange.emit(this.current.id)
   }
 
-  getLabel(serie: SerieType): string {
-    return serie.label || serie.value
+  getLabel(serie: ChartSerieType): string {
+    return serie.label || serie.id
   }
 
   ngOnInit(): void {
-    this.current = this.series.find((serie) => serie.value === this.serieType)
+    this.current = this.series.find((serie) => serie.id === this.serieType)
   }
 }

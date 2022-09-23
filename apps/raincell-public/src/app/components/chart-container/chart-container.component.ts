@@ -110,7 +110,7 @@ export class ChartContainerComponent implements OnDestroy, AfterViewInit {
   }
 
   close() {
-    this.chart.destroy()
+    this.chart?.destroy()
     this.cellsFacade.reset()
   }
 }
