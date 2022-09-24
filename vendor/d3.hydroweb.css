@@ -32,6 +32,22 @@ body {
   clip-path: url(#clip);
 }
 
+.threshold_flood_high {
+  stroke: red;
+  stroke-dasharray: 4, 4;
+  clip-path: url(#clip);
+}
+.threshold_flood_low {
+  stroke: green;
+  stroke-dasharray: 4, 4;
+  clip-path: url(#clip);
+}
+.threshold_drought, .threshold_flood_mid {
+  stroke-dasharray: 4, 4;
+  stroke: orange;
+  clip-path: url(#clip);
+}
+
 .decilMax, .decilMin {
   stroke: #aaa;
   clip-path: url(#clip);

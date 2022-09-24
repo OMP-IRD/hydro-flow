@@ -81,17 +81,15 @@ export class ChartContainerComponent implements OnDestroy, AfterViewInit {
       this.dataFacade.stationData$
         .pipe(
           filter((response: SaguiStationDataResponse) => !!response),
-          tap(
-            (response: SaguiStationDataResponse) =>
-              (this.references = response.data.references)
-          ),
-          tap(
-            (response: SaguiStationDataResponse) =>
-              (this.series = response.data.references.map((ref) => ({
+          tap((response: SaguiStationDataResponse) => {
+            this.references = response.data.references
+            if (this.references) {
+              this.series = response.data.references.map((ref) => ({
                 id: ref.id,
-              })))
-          ),
-          tap(() => (this.currentSerie = this.series[0])),
+              }))
+              this.currentSerie = this.series[0]
+            }
+          }),
           map((response: SaguiStationDataResponse) =>
             this.chartMapper.toChart(response)
           ),
@@ -144,19 +142,36 @@ export class ChartContainerComponent implements OnDestroy, AfterViewInit {
       )
       tooltipKeys.push({ key: 'variance' })
     }
-    const reference: Reference = this.references.find(
-      (ref) => ref.id === this.currentSerie.id
-    )
-    this.chart.addSerie(
-      {
-        data: reference.data.map((ref) => ref.flow),
-        name: 'expected',
-        type: 'line',
-        className: 'expected-line',
-      },
-      reference.data.map((ref) => ref.date)
-    )
-    tooltipKeys.push({ key: 'expected', title: 'Référence' })
+    if (this.references) {
+      const reference: Reference = this.references.find(
+        (ref) => ref.id === this.currentSerie.id
+      )
+      this.chart.addSerie(
+        {
+          data: reference.data.map((ref) => ref.flow),
+          name: 'expected',
+          type: 'line',
+          className: 'expected-line',
+        },
+        reference.data.map((ref) => ref.date)
+      )
+      tooltipKeys.push({ key: 'expected', title: 'Référence' })
+    }
+    if (chartData.thresholds) {
+      chartData.thresholds.forEach((threshold) => {
+        Object.keys(threshold).forEach((thresholdKey) => {
+          this.chart.addSerie(
+            {
+              data: chartData.dates.map(() => threshold[thresholdKey]),
+              name: thresholdKey,
+              type: 'line',
+              className: thresholdKey,
+            },
+            chartData.dates
+          )
+        })
+      })
+    }
 
     this.chart.scaleYDomain()
     this.chart.scaleXDomain()
