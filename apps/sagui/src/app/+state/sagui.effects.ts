@@ -57,13 +57,17 @@ export class SaguiEffects {
       ofType(setTab),
       fetch({
         run: (action) => {
-          return this.api.stations(action.tab).pipe(
-            pluck('results'),
-            map((collection: FeatureCollection) =>
-              readFeatureCollection(collection)
-            ),
-            map((olFeatures) => loadStationsSuccess({ stations: olFeatures }))
-          )
+          return action.tab === 'rain_alerts'
+            ? loadStationsSuccess({ stations: [] })
+            : this.api.stations(action.tab).pipe(
+                pluck('results'),
+                map((collection: FeatureCollection) =>
+                  readFeatureCollection(collection)
+                ),
+                map((olFeatures) =>
+                  loadStationsSuccess({ stations: olFeatures })
+                )
+              )
         },
 
         onError: (action, error) => {
