@@ -6,6 +6,7 @@ import { ChartMapper, FeatureStationsModule } from '@hydro-flow/feature/hydro'
 import { FeatureMapModule } from '@hydro-flow/feature/map'
 import {
   DEFAULT_LANG,
+  FeatureSharedModule,
   TRANSLATE_DEFAULT_CONFIG,
 } from '@hydro-flow/feature/shared'
 import { DateSelectorModule } from '@hydro-flow/feature/time'
@@ -55,6 +56,7 @@ export const API_URL = '/api/v1'
     HttpClientModule,
     FeatureStationsModule,
     FeatureMapModule,
+    FeatureSharedModule,
     StoreModule.forRoot(
       {},
       {
