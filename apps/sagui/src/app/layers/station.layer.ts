@@ -93,7 +93,7 @@ export class StationLayer {
     this.source.clear()
   }
 
-  stationStyleFn(feature: Feature, resolution: number): Style {
+  stationStyleFn(feature: Feature, resolution: number): Style | Style[] {
     const level = feature
       .get('levels')
       .find((value) => value.date === this.currentDate)?.level
