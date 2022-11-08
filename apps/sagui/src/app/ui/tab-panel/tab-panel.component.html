@@ -1,11 +1,16 @@
 <div
-  class="d-flex align-items-center h-100 rounded"
+  class="d-flex align-items-center rounded h-100"
   [style.background-color]="tab.color"
   [style.border-color]="tab.color"
   [class.active]="active"
 >
   <div class="d-flex flex-column flex-grow-1 align-items-center">
-    <div>{{ tab.title }}</div>
-    <div>{{ tab.icon }}</div>
+    <div class="text-base fs-4 pb-3 fw-bold">{{ tab.title }}</div>
+    <img
+      *ngIf="tab.icon"
+      [src]="tab.icon | safe: 'url'"
+      width="64"
+      height="64"
+    />
   </div>
 </div>

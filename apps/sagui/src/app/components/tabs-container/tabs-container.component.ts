@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators'
 import { SaguiFacade } from '../../+state/sagui.facade'
 import { ApiService } from '../../api/api.service'
 import { TabModel } from '../../ui/ui.model'
-import { alertCodeToColor } from '../../ui/ui.utils'
+import { alertCodeToColor, alertCodeToIcon } from '../../ui/ui.utils'
 
 marker('sagui.tab.title.flow_previ')
 marker('sagui.tab.title.flow_alerts')
@@ -25,7 +25,7 @@ export class TabsContainerComponent implements OnInit {
         key: tab.id,
         color: alertCodeToColor(tab.alert_code),
         title: this.translate.instant(`sagui.tab.title.${tab.id}`),
-        icon: tab.id,
+        icon: alertCodeToIcon(tab.alert_code),
       }))
     )
   )

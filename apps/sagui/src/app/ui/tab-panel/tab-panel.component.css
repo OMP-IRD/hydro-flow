@@ -1,12 +1,12 @@
 .rounded {
     border-radius: 1rem !important;
     transition: transform 100ms ease-in;
-    border: 3px solid;
+    border: 5px solid;
 }
 .rounded:hover {
     cursor: pointer;
     transform: scale(1.02);
 }
 .active {
-    border-color: rgba(230, 84, 129, 0.8) !important;
+    border-color: #3d405b !important;
 }
