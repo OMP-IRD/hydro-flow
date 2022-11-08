@@ -160,7 +160,17 @@ export class RiverSegmentLayer {
         }),
       })
     }
-    return bassinStyleCache[color]
+    const style = bassinStyleCache[color]
+    const hlFeature = this.mapManager.getHLSegment()
+    if (hlFeature) {
+      if (feature.get('id') === hlFeature.get('id')) {
+        HL_STYLE.getStroke().setWidth(
+          Math.max(style.getStroke().getWidth() * 3, 8)
+        )
+        return [HL_STYLE, style]
+      }
+    }
+    return style
   }
 
   private styleFn(feature: Feature, resolution: number): Style | Style[] {
