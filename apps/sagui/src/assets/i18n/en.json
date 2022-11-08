@@ -5,5 +5,7 @@
   "sagui.tab.title.atmo_alerts": "Atmospheric alerts",
   "sagui.tab.title.flow_alerts": "Flow alerts",
   "sagui.tab.title.flow_previ": "Flow forecast",
-  "sagui.tab.title.rain_alerts": "Rain alerts"
+  "sagui.tab.title.rain_alerts": "Rain alerts",
+  "sagui.header.title": "SAGUI: Suivi hydrométéorologique de la Guyane depuis l'espace pour la société",
+  "sagui.header.subtitle": "Rain alerts"
 }
