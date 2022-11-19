@@ -33,6 +33,7 @@ import { TabsContainerComponent } from './components/tabs-container/tabs-contain
 import { RiverSegmentOverlayComponent } from './layers/river-segment-overlay/river-segment-overlay.component'
 import { SaguiChartMapper } from './services/sagui.chart.mapper'
 import { TabPanelComponent } from './ui/tab-panel/tab-panel.component'
+import { FooterComponent } from './components/footer/footer.component'
 
 export const API_URL = '/api/v1'
 
@@ -48,6 +49,7 @@ export const API_URL = '/api/v1'
     HeaderComponent,
     TabsContainerComponent,
     TabPanelComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
