@@ -1,11 +1,11 @@
 {
   "common.legend.locationofinterest": "Location of Interest",
+  "sagui.footer.description": "Cette plateforme a été développée par F. Gravin, Pi-GeoSolutions et Hydro Matters avec le concours des partenaires et grâce au soutien des financeurs. Elle vise à fournir, sur les bassins versants de Guyane, des informations hydrométéorologiques temps réel avec l’appui de données spatiales et de modélisation, et se nourrit de données spatiales et/ou générées dans le cadre du projet OpHySE financé par le SCO.\n",
+  "sagui.header.title": "SAGUI: Suivi hydrométéorologique de la Guyane depuis l'espace pour la société",
   "sagui.legend.bassin": "Bassins",
   "sagui.legend.stations": "Stations",
   "sagui.tab.title.atmo_alerts": "Atmospheric alerts",
   "sagui.tab.title.flow_alerts": "Flow alerts",
   "sagui.tab.title.flow_previ": "Flow forecast",
-  "sagui.tab.title.rain_alerts": "Rain alerts",
-  "sagui.header.title": "SAGUI: Suivi hydrométéorologique de la Guyane depuis l'espace pour la société",
-  "sagui.header.subtitle": "Rain alerts"
+  "sagui.tab.title.rain_alerts": "Rain alerts"
 }

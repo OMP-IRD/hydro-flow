@@ -6,8 +6,13 @@ module.exports = {
     join(__dirname, 'src/**/!(*.stories|*.spec).{ts,html}'),
     ...createGlobPatternsForDependencies(__dirname),
   ],
+  blocklist: ['collapse'],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        main: '#3d405b',
+      },
+    },
   },
   plugins: [],
 }
