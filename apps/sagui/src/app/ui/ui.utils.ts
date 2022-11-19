@@ -1,8 +1,8 @@
 const TAB_COLOR_MAPPING = {
-  n: '#81B29A',
-  '1': '#F2CC8F',
-  '2': '#E07A5F',
-  '3': '#F4F1DE',
+  n: '#00eb6c',
+  '1': '#ffeb3b',
+  '2': '#fcbd00',
+  '3': '#ff4538',
   null: '#efefef',
 }
 
