@@ -427,7 +427,10 @@
             "allowedCommonJsDependencies": [
               "toggle-fullscreen",
               "geostyler-openlayers-parser",
-              "geostyler-qgis-parser"
+              "geostyler-qgis-parser",
+              "rbush",
+              "pbf",
+              "chroma-js"
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.bundle.js",
