@@ -9,6 +9,7 @@ import { SaguiFacade } from '../../+state/sagui.facade'
 import { BASSIN_RULES } from '../../layers/bassin.rules'
 import { RiverSegmentLayer } from '../../layers/river-segment.layer'
 import { STATION_COLOR, StationLayer } from '../../layers/station.layer'
+import { TAB_COLOR_MAPPING } from '../../ui/ui.utils'
 
 marker('sagui.legend.stations')
 marker('common.legend.locationofinterest')
@@ -27,10 +28,25 @@ export class LegendContainerComponent {
       map(() => {
         return {
           title: this.translate.instant('sagui.legend.stations'),
+          description: this.translate.instant(
+            'sagui.stations.legend.description'
+          ),
           rules: [
             {
-              label: this.translate.instant('common.legend.locationofinterest'),
-              color: STATION_COLOR,
+              label: this.translate.instant('sagui.stations.legend.equal'),
+              color: TAB_COLOR_MAPPING.n,
+            },
+            {
+              label: this.translate.instant('sagui.stations.legend.1'),
+              color: TAB_COLOR_MAPPING['1'],
+            },
+            {
+              label: this.translate.instant('sagui.stations.legend.2'),
+              color: TAB_COLOR_MAPPING['2'],
+            },
+            {
+              label: this.translate.instant('sagui.stations.legend.3'),
+              color: TAB_COLOR_MAPPING['3'],
             },
           ],
         }

@@ -1,7 +1,7 @@
-const TAB_COLOR_MAPPING = {
+export const TAB_COLOR_MAPPING = {
   n: '#00eb6c',
   '1': '#ffeb3b',
-  '2': '#fcbd00',
+  '2': '#fd7a00',
   '3': '#ff4538',
   null: '#efefef',
 }
