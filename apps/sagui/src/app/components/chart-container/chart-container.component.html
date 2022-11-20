@@ -11,7 +11,7 @@
         *ngIf="stationsFacade.selectedStations$ | async as station"
       >
         <h5 class="modal-title fw-bold" id="staticBackdropLabel">
-          {{ station.get('city') }}
+          {{ station.get('name') }}
         </h5>
         <div class="flex-grow-1 text-center">
           <sagui-serie-selector
