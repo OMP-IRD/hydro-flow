@@ -13,6 +13,7 @@ import { filter, map } from 'rxjs/operators'
 import { MapManagerService } from '../../map/map-manager.service'
 import { formatDate } from '../../utils'
 import { RiverSegmentLayer } from '../river-segment.layer'
+import { StationLayer } from '../station.layer'
 
 export const SEGMENT_HOVER_MIN_RESOLUTION = 615
 
@@ -43,6 +44,7 @@ export class RiverSegmentOverlayComponent implements OnInit {
     private _element: ElementRef,
     private mapManager: MapManagerService,
     private riverSegmentLayer: RiverSegmentLayer,
+    private stationsLayer: StationLayer,
     private _changeDetectionRef: ChangeDetectorRef,
     private dateFacade: DateFacade
   ) {}
@@ -63,11 +65,17 @@ export class RiverSegmentOverlayComponent implements OnInit {
     this.map.addOverlay(this._overlay)
 
     this.map.on('pointermove', (event) => {
-      const hovering = this.map.forEachLayerAtPixel(event.pixel, () => true, {
-        layerFilter: (layer) => layer === this.riverSegmentLayer.getLayer(),
-      })
+      const hovering = this.map.forEachLayerAtPixel(
+        event.pixel,
+        (layer) => (this.riverSegmentLayer.getLayer() ? layer : true),
+        {
+          layerFilter: (layer) =>
+            layer === this.riverSegmentLayer.getLayer() ||
+            layer === this.stationsLayer.getLayer(),
+        }
+      )
       const target = this.map.getTarget() as HTMLElement
-      if (hovering) {
+      if (hovering === this.riverSegmentLayer.getLayer()) {
         const hit = this.getHit(event.pixel)
         const target = this.map.getTarget() as HTMLElement
         if (hit) {

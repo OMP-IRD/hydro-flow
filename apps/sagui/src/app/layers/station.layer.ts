@@ -70,8 +70,8 @@ export class StationLayer {
           this.hoverStation = features[0]
           this.layer.changed()
         } else {
-          target.style.cursor = ''
           if (this.hoverStation) {
+            target.style.cursor = ''
             this.hoverStation = null
             this.layer.changed()
           }
