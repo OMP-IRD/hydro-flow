@@ -5,6 +5,7 @@ import {
   ElementRef,
   OnInit,
 } from '@angular/core'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { DateFacade } from '@hydro-flow/feature/time'
 import Feature from 'ol/Feature'
 import Map from 'ol/Map'
@@ -17,6 +18,9 @@ import { StationLayer } from '../station.layer'
 
 export const SEGMENT_HOVER_MIN_RESOLUTION = 615
 
+marker('hydro.flow.history')
+marker('hydro.rain.history')
+
 @Component({
   selector: 'hyfaa-river-segment-overlay',
   templateUrl: './river-segment-overlay.component.html',
@@ -28,16 +32,16 @@ export class RiverSegmentOverlayComponent implements OnInit {
   private _overlay: Overlay
   currentDate: string
 
-  get properties(): object {
+  get properties(): any {
     return this.mapManager.getHLSegment()?.getProperties()
   }
 
-  get currentFlow(): number {
-    return
-    this.mapManager
-      .getHLSegment()
-      ?.get('values')
-      ?.find((value) => value.date === this.currentDate).flow
+  get isBassin(): boolean {
+    return this.properties?.values[0]?.hasOwnProperty('rain')
+  }
+
+  get label(): string {
+    return this.isBassin ? 'hydro.rain.history' : 'hydro.flow.history'
   }
 
   constructor(

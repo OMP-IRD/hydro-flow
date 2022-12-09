@@ -1,13 +1,11 @@
 <div *ngIf="properties" class="overlay m-0 text-white p-2">
-  <div class="fw-bold mb-1">Flow History</div>
-  <div>{{ currentFlow }}</div>
+  <div class="fw-bold mb-1 capitalize">{{ label | translate }}</div>
   <div
     *ngFor="let value of properties.values"
-    [class.bg-white]="value.date === currentDate"
-    [class.text-dark]="value.date === currentDate"
-    class="small px-1"
+    [ngClass]="value.date === currentDate ? 'bg-white text-dark' : ''"
+    class="small px-1 flex justify-between"
   >
-    <span>{{ value.date }}</span>
-    <span class="mx-4">{{ value.flow }}</span>
+    <div>{{ value.date }}</div>
+    <div class="mx-4">{{ value.flow || value.rain }}</div>
   </div>
 </div>

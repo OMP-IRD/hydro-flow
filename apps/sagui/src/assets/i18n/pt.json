@@ -1,5 +1,7 @@
 {
   "common.legend.locationofinterest": "",
+  "hydro.flow.history": "",
+  "hydro.rain.history": "",
   "sagui.footer.description": "",
   "sagui.header.title": "",
   "sagui.legend.bassin": "",
