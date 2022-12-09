@@ -12,14 +12,14 @@
   },
   "backgroundLayers": [
     {
-      "id": "raster",
-      "type": "xyz",
-      "url": "https://api.mapbox.com/styles/v1/adrienon/ckneltjbf372i18o1oqu5m1jb/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYWRyaWVub24iLCJhIjoiY2tuZWxycmlxMXNtMjJwbXJ5MjcyaWtjZiJ9.MGxPcwnAG_fYOT1pFHqdng"
-    },
-    {
       "id": "street",
       "type": "xyz",
       "url": "https://api.mapbox.com/styles/v1/adrienon/cla8e3saj00w115mg4n7y4fu6/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYWRyaWVub24iLCJhIjoiY2tuZWxycmlxMXNtMjJwbXJ5MjcyaWtjZiJ9.MGxPcwnAG_fYOT1pFHqdng"
+    },
+    {
+      "id": "raster",
+      "type": "xyz",
+      "url": "https://api.mapbox.com/styles/v1/adrienon/ckneltjbf372i18o1oqu5m1jb/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYWRyaWVub24iLCJhIjoiY2tuZWxycmlxMXNtMjJwbXJ5MjcyaWtjZiJ9.MGxPcwnAG_fYOT1pFHqdng"
     }
   ]
 }
