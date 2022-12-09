@@ -2,6 +2,8 @@
   "common.header.findoutmore": "En savoir plus",
   "common.legend.locationofinterest": "Points d'intérêt",
   "hydro.flow.history": "historique des débits",
+  "hydro.legend.byanomaly": "par anomalie (%)",
+  "hydro.legend.bydailyflow": "par débit journalier (m³/sec)",
   "hydro.rain.history": "historique des pluies",
   "sagui.footer.description": "Cette plateforme a été développée par F. Gravin, Pi-GeoSolutions et Hydro Matters avec le concours des partenaires et grâce au soutien des financeurs. Elle vise à fournir, sur les bassins versants de Guyane, des informations hydrométéorologiques temps réel avec l’appui de données spatiales et de modélisation, et se nourrit de données spatiales et/ou générées dans le cadre du projet OpHySE financé par le SCO.\n",
   "sagui.header.title": "SAGUI: Suivi hydrométéorologique de la Guyane depuis l'espace pour la société",

@@ -2,6 +2,8 @@
   "common.header.findoutmore": "",
   "common.legend.locationofinterest": "",
   "hydro.flow.history": "",
+  "hydro.legend.byanomaly": "",
+  "hydro.legend.bydailyflow": "",
   "hydro.rain.history": "",
   "sagui.footer.description": "",
   "sagui.header.title": "",

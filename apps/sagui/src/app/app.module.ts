@@ -5,8 +5,9 @@ import { BASE_PATH, StationsApiService } from '@hydro-flow/data-access/hyfaa'
 import { ChartMapper, FeatureStationsModule } from '@hydro-flow/feature/hydro'
 import { FeatureMapModule } from '@hydro-flow/feature/map'
 import {
-  DEFAULT_LANG,
   FeatureSharedModule,
+  getDefaultLang,
+  getLangFromBrowser,
   TRANSLATE_DEFAULT_CONFIG,
 } from '@hydro-flow/feature/shared'
 import { DateSelectorModule } from '@hydro-flow/feature/time'
@@ -24,6 +25,7 @@ import { StationsSaguiApiService } from './api/stations-sagui.api.service'
 
 import { AppComponent } from './app.component'
 import { ChartContainerComponent } from './components/chart-container/chart-container.component'
+import { FooterComponent } from './components/footer/footer.component'
 import { HeaderComponent } from './components/header/header.component'
 import { LegendContainerComponent } from './components/legend-container/legend-container.component'
 import { MapContainerComponent } from './components/map-container/map-container.component'
@@ -33,7 +35,6 @@ import { TabsContainerComponent } from './components/tabs-container/tabs-contain
 import { RiverSegmentOverlayComponent } from './layers/river-segment-overlay/river-segment-overlay.component'
 import { SaguiChartMapper } from './services/sagui.chart.mapper'
 import { TabPanelComponent } from './ui/tab-panel/tab-panel.component'
-import { FooterComponent } from './components/footer/footer.component'
 
 export const API_URL = '/api/v1'
 
@@ -94,7 +95,8 @@ export const API_URL = '/api/v1'
 })
 export class AppModule {
   constructor(translate: TranslateService) {
-    translate.setDefaultLang(DEFAULT_LANG)
-    translate.use(DEFAULT_LANG)
+    const lang = getLangFromBrowser() || getDefaultLang()
+    translate.setDefaultLang(lang)
+    translate.use(lang)
   }
 }
