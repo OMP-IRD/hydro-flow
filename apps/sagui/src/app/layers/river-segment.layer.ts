@@ -30,6 +30,7 @@ export const HL_STYLE = new Style({
     color: '#53f6f7',
     width: 2,
   }),
+  zIndex: 10,
 })
 
 export const bassinStyleCache = {}
@@ -136,7 +137,7 @@ export class RiverSegmentLayer {
     this.source.clear()
   }
 
-  private bassinStyleFn(feature: Feature, resolution: number): Style | Style[] {
+  private bassinStyleFn(feature: Feature): Style | Style[] {
     const rain = feature
       .get('values')
       .find((value) => value.date === this.currentDate)?.rain
