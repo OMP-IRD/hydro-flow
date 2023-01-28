@@ -16,7 +16,7 @@ Run `ng serve hyfaa` to run hyfaa application in dev mode.
 Run `ng serve raincell-public` to run raincell-public application in dev mode.
 
 > You can open the application in http://localhost:4200
-> 
+
 ### Build
 
 Run `npm run build:all` to build all the applications of the workspace.

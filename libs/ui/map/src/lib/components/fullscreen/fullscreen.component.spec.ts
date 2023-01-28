@@ -5,14 +5,12 @@ fdescribe('FullscreenComponent', () => {
   let component: FullscreenComponent
   let fixture: ComponentFixture<FullscreenComponent>
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [FullscreenComponent],
-        providers: [],
-      }).compileComponents()
-    })
-  )
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [FullscreenComponent],
+      providers: [],
+    }).compileComponents()
+  }))
 
   beforeEach(() => {
     fixture = TestBed.createComponent(FullscreenComponent)

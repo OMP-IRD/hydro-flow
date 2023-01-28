@@ -1,5 +1,5 @@
-$expected-color:  #446624;
-$variance-color:  lightgray;
+$expected-color: #446624;
+$variance-color: lightgray;
 
 .modal-dialog {
   max-width: 60rem;
@@ -13,7 +13,7 @@ $variance-color:  lightgray;
 }
 
 .fa-spin {
-  margin-top:20%;
+  margin-top: 20%;
 }
 ::ng-deep {
   .expected-line {
@@ -28,7 +28,7 @@ $variance-color:  lightgray;
     fill: $variance-color;
     stroke: $variance-color;
     opacity: 0.5;
-    stroke-width: 2.0px;
+    stroke-width: 2px;
     clip-path: url(#clip);
     z-index: 10;
   }
@@ -43,10 +43,9 @@ $variance-color:  lightgray;
   }
 
   .tooltip-expected {
-    fill : $expected-color;
+    fill: $expected-color;
   }
   .tooltip-variance {
-    fill : darken($variance-color, 20);
+    fill: darken($variance-color, 20);
   }
-
 }

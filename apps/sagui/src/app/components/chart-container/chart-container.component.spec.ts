@@ -1,25 +1,24 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { ChartContainerComponent } from './chart-container.component';
+import { ChartContainerComponent } from './chart-container.component'
 
 describe('ChartContainerComponent', () => {
-  let component: ChartContainerComponent;
-  let fixture: ComponentFixture<ChartContainerComponent>;
+  let component: ChartContainerComponent
+  let fixture: ComponentFixture<ChartContainerComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ChartContainerComponent ]
-    })
-    .compileComponents();
-  });
+      declarations: [ChartContainerComponent],
+    }).compileComponents()
+  })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ChartContainerComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(ChartContainerComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

@@ -1,4 +1,6 @@
-<div class="toolbar-container position-absolute d-none d-sm-flex flex-column p-2">
+<div
+  class="toolbar-container position-absolute d-none d-sm-flex flex-column p-2"
+>
   <div class="d-flex flex-column shadow-sm bg-white border-0">
     <ui-zoom [map]="mapManager.map"></ui-zoom>
   </div>
@@ -24,14 +26,19 @@
     ></ui-animator>
   </ng-container>
 </div>
-<div class="d-none d-lg-block position-absolute legend-container bg-white px-2 small shadow-sm">
+<div
+  class="d-none d-lg-block position-absolute legend-container bg-white px-2 small shadow-sm"
+>
   <hyfaa-legend-container></hyfaa-legend-container>
 </div>
 <div class="">
   <hyfaa-chart-container></hyfaa-chart-container>
 </div>
 <div class="bg-toggler position-absolute bg-white small shadow-sm">
-  <map-bg-toggler [map]="mapManager.map" [config]="bgLayerConfig"></map-bg-toggler>
+  <map-bg-toggler
+    [map]="mapManager.map"
+    [config]="bgLayerConfig"
+  ></map-bg-toggler>
 </div>
 <ui-map [map]="mapManager.map"></ui-map>
 <hyfaa-river-segment-overlay></hyfaa-river-segment-overlay>

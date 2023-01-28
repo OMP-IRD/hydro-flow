@@ -6,13 +6,11 @@ describe('ZoomComponent', () => {
   let component: ZoomComponent
   let fixture: ComponentFixture<ZoomComponent>
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [ZoomComponent],
-      }).compileComponents()
-    })
-  )
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [ZoomComponent],
+    }).compileComponents()
+  }))
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ZoomComponent)

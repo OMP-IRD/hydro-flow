@@ -1,25 +1,24 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { AnimatorComponent } from './animator.component';
+import { AnimatorComponent } from './animator.component'
 
 describe('AnimatorComponent', () => {
-  let component: AnimatorComponent;
-  let fixture: ComponentFixture<AnimatorComponent>;
+  let component: AnimatorComponent
+  let fixture: ComponentFixture<AnimatorComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AnimatorComponent ]
-    })
-    .compileComponents();
-  });
+      declarations: [AnimatorComponent],
+    }).compileComponents()
+  })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AnimatorComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(AnimatorComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

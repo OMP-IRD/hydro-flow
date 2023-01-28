@@ -21,14 +21,12 @@ describe('ScaleLineComponent', () => {
     },
   }
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [ScaleLineComponent],
-        providers: [],
-      }).compileComponents()
-    })
-  )
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [ScaleLineComponent],
+      providers: [],
+    }).compileComponents()
+  }))
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ScaleLineComponent)

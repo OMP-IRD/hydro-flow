@@ -1,25 +1,24 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { CellLegendComponent } from './cell-legend.component';
+import { CellLegendComponent } from './cell-legend.component'
 
 describe('CellLegendComponent', () => {
-  let component: CellLegendComponent;
-  let fixture: ComponentFixture<CellLegendComponent>;
+  let component: CellLegendComponent
+  let fixture: ComponentFixture<CellLegendComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CellLegendComponent ]
-    })
-    .compileComponents();
-  });
+      declarations: [CellLegendComponent],
+    }).compileComponents()
+  })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CellLegendComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(CellLegendComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})
