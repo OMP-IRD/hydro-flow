@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
 import { SaguiTab } from '../ui/ui.model'
-import { DashboardItemModel } from './api.model'
+import { AtmoAlertModel, DashboardItemModel } from './api.model'
 
 const BASE_PATH = '/api/v1'
 
@@ -27,5 +27,8 @@ export class ApiService {
     return this.http.get<DashboardItemModel[]>(
       `${BASE_PATH}/${tab}/stations/${stationId}/data.json`
     )
+  }
+  atmo() {
+    return this.http.get<AtmoAlertModel>(`${BASE_PATH}/atmo/files`)
   }
 }

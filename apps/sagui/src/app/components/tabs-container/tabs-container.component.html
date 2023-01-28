@@ -4,7 +4,6 @@
     *ngFor="let tab of tabs$ | async"
     class="flex-grow-1 rounded mx-4 my-2"
     style="flex-basis: 0"
-    [disabled]="!tab.icon"
     (click)="onTabClick(tab)"
   >
     <sagui-tab-panel

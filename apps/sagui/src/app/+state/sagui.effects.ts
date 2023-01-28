@@ -11,7 +11,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { fetch } from '@nrwl/angular'
 import { FeatureCollection } from 'geojson'
 import { combineLatest, of } from 'rxjs'
-import { map, pluck, startWith, switchMap } from 'rxjs/operators'
+import { filter, map, pluck, startWith, switchMap } from 'rxjs/operators'
 import { ApiService } from '../api/api.service'
 import { setDataSerie, setTab } from './sagui.actions'
 import { SaguiFacade } from './sagui.facade'
@@ -55,6 +55,7 @@ export class SaguiEffects {
   loadStations$ = createEffect(() =>
     this.actions$.pipe(
       ofType(setTab),
+      filter((action) => action.tab !== 'atmo_alerts'),
       fetch({
         run: (action) => {
           return action.tab === 'rain_alerts'
